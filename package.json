@@ -12,6 +12,7 @@
     "prepare": "npm run prod"
   },
   "files": [
+    "index.ts",
     "src/",
     "spec/",
     "itest/",

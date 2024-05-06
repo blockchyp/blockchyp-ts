@@ -1,7 +1,6 @@
 **/.DS_Store
 
 # js files
-index.js
 src/*.js
 itest/**/*.js
 spec/**/*.js

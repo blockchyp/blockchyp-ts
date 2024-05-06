@@ -1,4 +1,4 @@
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 import fs from 'fs';
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',

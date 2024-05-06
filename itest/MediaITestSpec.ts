@@ -8,13 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient } from '../index';
-import { MediaRequest } from '../index';
-import { MediaLibraryResponse } from '../index';
+import * as BlockChyp from '../index';
 
 describe('Media', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -23,7 +21,7 @@ describe('Media', function () {
   });
 
   it('returns media for the given tenant.', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -39,11 +37,11 @@ describe('Media', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const request = new MediaRequest();
+        const request = new BlockChyp.MediaRequest();
 
 
         const httpResponse = await client.media(request)
-        const response: MediaLibraryResponse = httpResponse.data;
+        const response: BlockChyp.MediaLibraryResponse = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
 

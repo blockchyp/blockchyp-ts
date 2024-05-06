@@ -103,9 +103,9 @@ might be maliciously running on the point-of-sale system.
 **Common Variations**
 
 * **Gift Card Redemption**:  There's no special API for gift card redemption in BlockChyp. Simply execute a plain charge transaction and if the customer swipes a gift card, our terminals will identify the gift card and run a gift card redemption. Also note that if for some reason the gift card's original purchase transaction is associated with fraud or a chargeback, the transaction will be rejected.
-* **EBT**: Set the `CardType` field to `CardType.EBT` to process an EBT SNAP transaction. Note that test EBT transactions always assume a balance of $100.00, so test EBT transactions over that amount may be declined.
+* **EBT**: Set the `CardType` field to `BlockChyp.CardType.EBT` to process an EBT SNAP transaction. Note that test EBT transactions always assume a balance of $100.00, so test EBT transactions over that amount may be declined.
 * **Cash Back**: To enable cash back for debit transactions, set the `CashBack` field. If the card presented isn't a debit card, the `CashBack` field will be ignored.
-* **Manual Card Entry**: Set the `ManualEntry` field to enable manual card entry. Good as a backup when chips and MSR's don't work or for more secure phone orders. You can even combine the `ManualEntry` field with the `CardType` field set to `CardType.EBT` for manual EBT card entry.
+* **Manual Card Entry**: Set the `ManualEntry` field to enable manual card entry. Good as a backup when chips and MSR's don't work or for more secure phone orders. You can even combine the `ManualEntry` field with the `CardType` field set to `BlockChyp.CardType.EBT` for manual EBT card entry.
 * **Inline Tokenization**: You can enroll the payment method in the token vault inline with a charge transaction by setting the `Enroll` field. You'll get a token back in the response. You can even bind the token to a customer record if you also pass in customer data.
 * **Prompting for Tips**: Set the `PromptForTip` field if you'd like to prompt the customer for a tip before authorization. Good for pay-at-the-table and other service related scenarios.
 * **Cash Discounting and Surcharging**:  The `Surcharge` and `CashDiscount` fields can be used together to support cash discounting or surcharge problems. Consult the Cash Discount documentation for more details.
@@ -114,7 +114,7 @@ might be maliciously running on the point-of-sale system.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -177,7 +177,7 @@ Note that preauths are not supported for cryptocurrency.
 
 **Common Variations**
 
-* **Manual Card Entry**: Set the `ManualEntry` field to enable manual card entry. Good as a backup when chips and MSR's don't work or for more secure phone orders. You can even combine the `ManualEntry` field with `CardType` set to `CardType.EBT` for manual EBT card entry.
+* **Manual Card Entry**: Set the `ManualEntry` field to enable manual card entry. Good as a backup when chips and MSR's don't work or for more secure phone orders. You can even combine the `ManualEntry` field with `CardType` set to `BlockChyp.CardType.EBT` for manual EBT card entry.
 * **Inline Tokenization**: You can enroll the payment method in the token vault in line with a charge transaction by setting the `Enroll` field. You'll get a token back in the response. You can even bind the token to a customer record if you also pass in customer data.
 * **Prompting for Tips**: Set the `PromptForTip` field if you'd like to prompt the customer for a tip before authorization. You can prompt for tips as part of a preauthorization, although it's not a very common approach.
 * **Cash Discounting and Surcharging**: The `Surcharge` and `CashDiscount` fields can be used together to support cash discounting or surcharge problems. Consult the Cash Discount documentation for more details.
@@ -186,7 +186,7 @@ Note that preauths are not supported for cryptocurrency.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -231,7 +231,7 @@ sometimes reduce your interchange fees. (Level II Processing, for example.)
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -317,7 +317,7 @@ manually from your cryptocurrency wallet.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -362,7 +362,7 @@ manually from your cryptocurrency wallet.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -418,7 +418,7 @@ manually from your cryptocurrency wallet.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -502,7 +502,7 @@ support@blockchyp.com if you need to white list a BIN range.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -564,7 +564,7 @@ test EBT balance checks always return a balance of $100.00.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -576,7 +576,7 @@ try {
   const request = new BlockChyp.BalanceRequest();
   request.test = true;
   request.terminalName = 'Test Terminal';
-  request.cardType = CardType.EBT;
+  request.cardType = BlockChyp.CardType.EBT;
 
   const httpResponse = await client.balance(request)
   const response: BlockChyp.BalanceResponse = httpResponse.data;
@@ -607,7 +607,7 @@ close the batch manually.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -735,7 +735,7 @@ to constantly poll for status updates.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -750,12 +750,12 @@ try {
   request.description = 'Widget';
   request.subject = 'Widget invoice';
 
-  const transaction = new TransactionDisplayTransaction();
+  const transaction = new BlockChyp.TransactionDisplayTransaction();
   transaction.subtotal = '195.00';
   transaction.tax = '4.99';
   transaction.total = '199.99';
 
-  const items = new TransactionDisplayItem();
+  const items = new BlockChyp.TransactionDisplayItem();
   items.description = 'Widget';
   items.price = '195.00';
   items.quantity = 1;
@@ -764,7 +764,7 @@ try {
   request.transaction = transaction;
   request.autoSend = true;
 
-  const customer = new Customer();
+  const customer = new BlockChyp.Customer();
   customer.customerRef = 'Customer reference string';
   customer.firstName = 'FirstName';
   customer.lastName = 'LastName';
@@ -797,7 +797,7 @@ cancelled, or has already been paid.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -832,7 +832,7 @@ This API cancels a payment link.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -877,7 +877,7 @@ You must pass the `linkCode` value associated with the payment link. It is inclu
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -917,7 +917,7 @@ Transaction Ref is returned.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -956,7 +956,7 @@ with transactions processed by BlockChyp.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -1013,7 +1013,7 @@ in conjunction with `maxResults` and `startIndex`
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -1055,7 +1055,7 @@ History API.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -1134,7 +1134,7 @@ batch id filters are not supported.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -1172,7 +1172,7 @@ API.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -1209,7 +1209,7 @@ returned if the passed transaction ref is not queued on the terminal.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -1264,7 +1264,7 @@ If you get a positive response, you've successfully verified all of the followin
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -1304,7 +1304,7 @@ The terminal will also return the public key for the terminal.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -1341,7 +1341,7 @@ idle state.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -1409,7 +1409,7 @@ The table below lists all possible status responses.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -1461,7 +1461,7 @@ width, preserving the aspect ratio of the original image.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -1472,7 +1472,7 @@ const client = BlockChyp.newClient({
 try {
   const request = new BlockChyp.CaptureSignatureRequest();
   request.terminalName = 'Test Terminal';
-  request.sigFormat = SignatureFormat.PNG;
+  request.sigFormat = BlockChyp.SignatureFormat.PNG;
   request.sigWidth = 200;
 
   const httpResponse = await client.captureSignature(request)
@@ -1516,7 +1516,7 @@ and amount.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -1529,18 +1529,18 @@ try {
   request.test = true;
   request.terminalName = 'Test Terminal';
 
-  const transaction = new TransactionDisplayTransaction();
+  const transaction = new BlockChyp.TransactionDisplayTransaction();
   transaction.subtotal = '60.00';
   transaction.tax = '5.00';
   transaction.total = '65.00';
 
-  const items = new TransactionDisplayItem();
+  const items = new BlockChyp.TransactionDisplayItem();
   items.description = 'Leki Trekking Poles';
   items.price = '35.00';
   items.quantity = 2;
   items.extended = '70.00';
 
-  const discounts = new TransactionDisplayDiscount();
+  const discounts = new BlockChyp.TransactionDisplayDiscount();
   discounts.description = 'memberDiscount';
   discounts.amount = '10.00';
 
@@ -1598,7 +1598,7 @@ and amount.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -1611,18 +1611,18 @@ try {
   request.test = true;
   request.terminalName = 'Test Terminal';
 
-  const transaction = new TransactionDisplayTransaction();
+  const transaction = new BlockChyp.TransactionDisplayTransaction();
   transaction.subtotal = '60.00';
   transaction.tax = '5.00';
   transaction.total = '65.00';
 
-  const items = new TransactionDisplayItem();
+  const items = new BlockChyp.TransactionDisplayItem();
   items.description = 'Leki Trekking Poles';
   items.price = '35.00';
   items.quantity = 2;
   items.extended = '70.00';
 
-  const discounts = new TransactionDisplayDiscount();
+  const discounts = new BlockChyp.TransactionDisplayDiscount();
   discounts.description = 'memberDiscount';
   discounts.amount = '10.00';
 
@@ -1656,7 +1656,7 @@ Just specify the target terminal and the message using the `message` parameter.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -1704,7 +1704,7 @@ using the `yesCaption` and `noCaption` request parameters.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -1763,7 +1763,7 @@ the response is returned in the `response` field.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -1775,7 +1775,7 @@ try {
   const request = new BlockChyp.TextPromptRequest();
   request.test = true;
   request.terminalName = 'Test Terminal';
-  request.promptType = PromptType.EMAIL;
+  request.promptType = BlockChyp.PromptType.EMAIL;
 
   const httpResponse = await client.textPrompt(request)
   const response: BlockChyp.TextPromptResponse = httpResponse.data;
@@ -1803,7 +1803,7 @@ current branding image displayed on the terminal
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -1841,7 +1841,7 @@ terminal inventory.  The terminal will be remotely cleared and factory reset.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -1886,7 +1886,7 @@ Optional Parameters
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -1922,7 +1922,7 @@ This API reboots the terminal.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -2015,7 +2015,7 @@ Transaction ID or Transaction Ref for the associated transaction.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -2030,7 +2030,7 @@ try {
   request.tcAlias = 'hippa';
   request.tcName = 'HIPPA Disclosure';
   request.tcContent = 'Full contract text';
-  request.sigFormat = SignatureFormat.PNG;
+  request.sigFormat = BlockChyp.SignatureFormat.PNG;
   request.sigWidth = 200;
   request.sigRequired = true;
 
@@ -2057,7 +2057,7 @@ This API returns all terms and conditions templates associated with a merchant a
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -2092,7 +2092,7 @@ This API returns as single terms and conditions template.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -2135,7 +2135,7 @@ merge behavior is supported.  Only plain text is supported.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -2176,7 +2176,7 @@ a complete independent copy of the agreement text.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -2221,7 +2221,7 @@ Optional parameters can be used to filter and query the data set.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -2259,7 +2259,7 @@ The default format is PNG.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -2320,7 +2320,7 @@ are the same tokens and can be used interchangeably.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -2362,7 +2362,7 @@ even if those customer associations are related to other tokens.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -2398,7 +2398,7 @@ to reverse a previous unlink operation.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -2437,7 +2437,7 @@ for the same underlying card.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -2474,7 +2474,7 @@ for a year.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -2545,7 +2545,7 @@ be returned.  You won't need to ask the customer to provide any additional infor
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -2556,7 +2556,7 @@ const client = BlockChyp.newClient({
 try {
   const request = new BlockChyp.UpdateCustomerRequest();
 
-  const customer = new Customer();
+  const customer = new BlockChyp.Customer();
   customer.id = '<CUSTOMER ID>';
   customer.customerRef = 'Customer reference string';
   customer.firstName = 'FirstName';
@@ -2592,7 +2592,7 @@ Customers can be looked up by `customerId` or `customerRef`.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -2630,7 +2630,7 @@ first or last names contain the query string.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -2665,7 +2665,7 @@ This API deletes a customer record.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -2716,7 +2716,7 @@ All questions are returned, whether enabled or disabled.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -2751,7 +2751,7 @@ This API returns a single survey question with response data.  `questionId` is r
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -2795,7 +2795,7 @@ the number of questions minimal.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -2834,7 +2834,7 @@ This API deletes a survey question. `questionId` is a required parameter.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -2881,7 +2881,7 @@ By default, all results based on all responses are returned.  However, developer
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -2956,7 +2956,7 @@ to reference a media asset in slide shows and branding assets along with the ful
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -3022,7 +3022,7 @@ return video transcoding information.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 import fs from 'fs';
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -3068,7 +3068,7 @@ also be returned.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -3105,7 +3105,7 @@ and the thumbnail.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -3141,7 +3141,7 @@ show or in the terminal branding stack.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -3178,7 +3178,7 @@ Note that slide level data is not returned with this API.   Use the Get Slide Sh
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -3216,7 +3216,7 @@ for each slide.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -3258,7 +3258,7 @@ parameter.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -3271,7 +3271,7 @@ try {
   request.name = 'Test Slide Show';
   request.delay = 5;
 
-  const slides = new Slide();
+  const slides = new BlockChyp.Slide();
   slides.mediaId = '<MEDIA ID>';
 
   request.slides = [slides];
@@ -3299,7 +3299,7 @@ This API deletes a slide show  `slideShowId` is the only required parameter.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -3343,7 +3343,7 @@ intended to show how an asset would actually look when displayed on the terminal
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -3441,7 +3441,7 @@ These fields are:
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -3488,7 +3488,7 @@ show from the slide show library.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -3600,7 +3600,7 @@ The following fields are used to control batch closure and high level terminal c
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -3641,7 +3641,7 @@ and `startIndex` field can be used to reduce the page size and page through mult
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -3739,7 +3739,7 @@ The following fields are used to control batch closure and high level terminal c
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -3754,7 +3754,7 @@ try {
   request.dbaName = 'Test Merchant';
   request.companyName = 'Test Merchant';
 
-  const billingAddress = new Address();
+  const billingAddress = new BlockChyp.Address();
   billingAddress.address1 = '1060 West Addison';
   billingAddress.city = 'Chicago';
   billingAddress.stateOrProvince = 'IL';
@@ -3784,7 +3784,7 @@ This API returns all users and pending invites associated with a merchant accoun
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -3826,7 +3826,7 @@ Otherwise, the user will be given the default merchant user role. (STDMERCHANT)
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -3864,7 +3864,7 @@ Settings can be changed by using the Update Merchant API.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -3900,7 +3900,7 @@ This partner API can be used to delete unused test merchant accounts. `merchantI
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -3971,7 +3971,7 @@ the partner can use when changing prices.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -4011,7 +4011,7 @@ Use the `id` returned with each statement summary with the *Partner Statement De
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -4050,7 +4050,7 @@ to get the merchant statement and the card brand fee cost breakdown respectively
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -4090,7 +4090,7 @@ as those generated when ordering terminals or gift cards, or invoices could be m
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -4131,7 +4131,7 @@ are also returned.
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -4168,7 +4168,7 @@ The `statementId` is required and must be the id of a valid merchant invoice of 
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -4211,7 +4211,7 @@ By default no roles will be assigned unless valid, comma-delimited, role codes a
 
 
 ```typescript
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',

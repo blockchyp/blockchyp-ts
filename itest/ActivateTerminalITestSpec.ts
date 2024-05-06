@@ -8,13 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient } from '../index';
-import { TerminalActivationRequest } from '../index';
-import { Acknowledgement } from '../index';
+import * as BlockChyp from '../index';
 
 describe('ActivateTerminal', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -23,7 +21,7 @@ describe('ActivateTerminal', function () {
   });
 
   it('activates a terminal.', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -39,12 +37,12 @@ describe('ActivateTerminal', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const request = new TerminalActivationRequest();
+        const request = new BlockChyp.TerminalActivationRequest();
         request.terminalName = 'Bad Terminal Code';
         request.activationCode = 'XXXXXX';
 
         const httpResponse = await client.activateTerminal(request)
-        const response: Acknowledgement = httpResponse.data;
+        const response: BlockChyp.Acknowledgement = httpResponse.data;
         // response assertions
         expect(response.success).toBe(false);
         expect(response.error)?.toEqual('Invalid Activation Code');

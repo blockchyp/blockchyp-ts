@@ -1,4 +1,4 @@
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -13,7 +13,7 @@ try {
   request.tcAlias = 'hippa';
   request.tcName = 'HIPPA Disclosure';
   request.tcContent = 'Full contract text';
-  request.sigFormat = SignatureFormat.PNG;
+  request.sigFormat = BlockChyp.SignatureFormat.PNG;
   request.sigWidth = 200;
   request.sigRequired = true;
 

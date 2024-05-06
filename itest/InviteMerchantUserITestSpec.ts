@@ -8,13 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient } from '../index';
-import { InviteMerchantUserRequest } from '../index';
-import { Acknowledgement } from '../index';
+import * as BlockChyp from '../index';
 
 describe('InviteMerchantUser', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -23,7 +21,7 @@ describe('InviteMerchantUser', function () {
   });
 
   it('invites a user to join a merchant account.', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -39,13 +37,13 @@ describe('InviteMerchantUser', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const request = new InviteMerchantUserRequest();
+        const request = new BlockChyp.InviteMerchantUserRequest();
         request.email = 'doublea@blockchypteam.m8r.co';
         request.firstName = 'Aaron';
         request.lastName = 'Anderson';
 
         const httpResponse = await client.inviteMerchantUser(request)
-        const response: Acknowledgement = httpResponse.data;
+        const response: BlockChyp.Acknowledgement = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
 

@@ -8,15 +8,11 @@
 import * as fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient } from '../index';
-import { UploadStatusRequest } from '../index';
-import { UploadStatus } from '../index';
-import { UploadMetadata } from '../index';
-import { MediaMetadata } from '../index';
+import * as BlockChyp from '../index';
 
 describe('UploadStatus', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -25,7 +21,7 @@ describe('UploadStatus', function () {
   });
 
   it('checks the status of a file upload.', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -41,11 +37,11 @@ describe('UploadStatus', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const setupRequest = new UploadMetadata();
+        const setupRequest = new BlockChyp.UploadMetadata();
           setupRequest.fileName = 'aviato.png';
         setupRequest.fileSize = 18843;
         setupRequest.uploadId = uuidv4();
-        let setupResponse: MediaMetadata = new MediaMetadata();
+        let setupResponse: BlockChyp.MediaMetadata = new BlockChyp.MediaMetadata();
         const content = fs.readFileSync('support/aviato.png');
         const setupHttpResponse = await client.uploadMedia(setupRequest, content);
                 if (setupHttpResponse.status !== 200) {
@@ -56,11 +52,11 @@ describe('UploadStatus', function () {
         setupResponse = setupHttpResponse.data
 
         // setup request object
-        const request = new UploadStatusRequest();
+        const request = new BlockChyp.UploadStatusRequest();
         request.uploadId = setupResponse.id;
 
         const httpResponse = await client.uploadStatus(request)
-        const response: UploadStatus = httpResponse.data;
+        const response: BlockChyp.UploadStatus = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
 

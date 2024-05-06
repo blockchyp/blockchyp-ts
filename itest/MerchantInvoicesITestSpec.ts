@@ -8,13 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient } from '../index';
-import { MerchantInvoiceListRequest } from '../index';
-import { MerchantInvoiceListResponse } from '../index';
+import * as BlockChyp from '../index';
 
 describe('MerchantInvoices', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -23,7 +21,7 @@ describe('MerchantInvoices', function () {
   });
 
   it('can list merchant statements and invoices', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -39,11 +37,11 @@ describe('MerchantInvoices', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const request = new MerchantInvoiceListRequest();
+        const request = new BlockChyp.MerchantInvoiceListRequest();
         request.test = true;
 
         const httpResponse = await client.merchantInvoices(request)
-        const response: MerchantInvoiceListResponse = httpResponse.data;
+        const response: BlockChyp.MerchantInvoiceListResponse = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
 

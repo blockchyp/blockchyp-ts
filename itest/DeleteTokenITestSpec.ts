@@ -8,16 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient } from '../index';
-import { DeleteTokenRequest } from '../index';
-import { DeleteTokenResponse } from '../index';
-import { EnrollRequest } from '../index';
-import { EnrollResponse } from '../index';
-import { Customer } from '../index';
+import * as BlockChyp from '../index';
 
 describe('DeleteToken', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -26,7 +21,7 @@ describe('DeleteToken', function () {
   });
 
   it('can delete a token', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -42,16 +37,16 @@ describe('DeleteToken', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const setupRequest = new EnrollRequest();
+        const setupRequest = new BlockChyp.EnrollRequest();
           setupRequest.pan = '4111111111111111';
         setupRequest.test = true;
 
-        const customer = new Customer();
+        const customer = new BlockChyp.Customer();
         customer.customerRef = 'TESTCUSTOMER';
         customer.firstName = 'Test';
         customer.lastName = 'Customer';
         setupRequest.customer = customer;
-        let setupResponse: EnrollResponse = new EnrollResponse();
+        let setupResponse: BlockChyp.EnrollResponse = new BlockChyp.EnrollResponse();
         const setupHttpResponse = await client.enroll(setupRequest);
         if (setupHttpResponse.status !== 200) {
           console.log('Error:', setupHttpResponse.statusText);
@@ -61,11 +56,11 @@ describe('DeleteToken', function () {
         setupResponse = setupHttpResponse.data
 
         // setup request object
-        const request = new DeleteTokenRequest();
+        const request = new BlockChyp.DeleteTokenRequest();
         request.token = setupResponse.token ?? null;
 
         const httpResponse = await client.deleteToken(request)
-        const response: DeleteTokenResponse = httpResponse.data;
+        const response: BlockChyp.DeleteTokenResponse = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
 

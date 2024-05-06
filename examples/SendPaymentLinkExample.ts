@@ -1,4 +1,4 @@
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -13,12 +13,12 @@ try {
   request.description = 'Widget';
   request.subject = 'Widget invoice';
 
-  const transaction = new TransactionDisplayTransaction();
+  const transaction = new BlockChyp.TransactionDisplayTransaction();
   transaction.subtotal = '195.00';
   transaction.tax = '4.99';
   transaction.total = '199.99';
 
-  const items = new TransactionDisplayItem();
+  const items = new BlockChyp.TransactionDisplayItem();
   items.description = 'Widget';
   items.price = '195.00';
   items.quantity = 1;
@@ -27,7 +27,7 @@ try {
   request.transaction = transaction;
   request.autoSend = true;
 
-  const customer = new Customer();
+  const customer = new BlockChyp.Customer();
   customer.customerRef = 'Customer reference string';
   customer.firstName = 'FirstName';
   customer.lastName = 'LastName';

@@ -1,4 +1,4 @@
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -9,7 +9,7 @@ const client = BlockChyp.newClient({
 try {
   const request = new BlockChyp.CaptureSignatureRequest();
   request.terminalName = 'Test Terminal';
-  request.sigFormat = SignatureFormat.PNG;
+  request.sigFormat = BlockChyp.SignatureFormat.PNG;
   request.sigWidth = 200;
 
   const httpResponse = await client.captureSignature(request)

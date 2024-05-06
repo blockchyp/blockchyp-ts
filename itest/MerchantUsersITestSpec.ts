@@ -8,13 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient } from '../index';
-import { MerchantProfileRequest } from '../index';
-import { MerchantUsersResponse } from '../index';
+import * as BlockChyp from '../index';
 
 describe('MerchantUsers', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -23,7 +21,7 @@ describe('MerchantUsers', function () {
   });
 
   it('returns a list of all merchant users and invites.', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -39,11 +37,11 @@ describe('MerchantUsers', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const request = new MerchantProfileRequest();
+        const request = new BlockChyp.MerchantProfileRequest();
 
 
         const httpResponse = await client.merchantUsers(request)
-        const response: MerchantUsersResponse = httpResponse.data;
+        const response: BlockChyp.MerchantUsersResponse = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
 

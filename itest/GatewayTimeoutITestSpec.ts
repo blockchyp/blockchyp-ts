@@ -8,13 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient, MessageRequest, Acknowledgement } from '../index';
-import { AuthorizationRequest } from '../index';
-import { AuthorizationResponse } from '../index';
+import * as BlockChyp from '../index';
 
 describe('GatewayTimeout', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -23,7 +21,7 @@ describe('GatewayTimeout', function () {
   });
 
   it('Can specify gateway request timeouts.', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -35,7 +33,7 @@ describe('GatewayTimeout', function () {
     }
 
     if (testDelayInt > 0) {
-      const messageRequest = new MessageRequest();
+      const messageRequest = new BlockChyp.MessageRequest();
       messageRequest.test = true;
       messageRequest.terminalName = Config.getTerminalName();
       messageRequest.message = 'Running GatewayTimeout in ' + testDelay + ' seconds...';
@@ -54,7 +52,7 @@ describe('GatewayTimeout', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const request = new AuthorizationRequest();
+        const request = new BlockChyp.AuthorizationRequest();
         request.timeout = 1;
         request.pan = '5555555555554444';
         request.expMonth = '12';
@@ -64,7 +62,7 @@ describe('GatewayTimeout', function () {
         request.transactionRef = uuidv4();
 
         const httpResponse = await client.charge(request)
-        const response: AuthorizationResponse = httpResponse.data;
+        const response: BlockChyp.AuthorizationResponse = httpResponse.data;
         fail('Request should time out');
         } catch (error) {
       } finally {

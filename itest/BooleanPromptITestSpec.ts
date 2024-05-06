@@ -8,13 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient, MessageRequest, Acknowledgement } from '../index';
-import { BooleanPromptRequest } from '../index';
-import { BooleanPromptResponse } from '../index';
+import * as BlockChyp from '../index';
 
 describe('BooleanPrompt', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -23,7 +21,7 @@ describe('BooleanPrompt', function () {
   });
 
   it('Can prompt the consumer for boolean input', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -35,7 +33,7 @@ describe('BooleanPrompt', function () {
     }
 
     if (testDelayInt > 0) {
-      const messageRequest = new MessageRequest();
+      const messageRequest = new BlockChyp.MessageRequest();
       messageRequest.test = true;
       messageRequest.terminalName = Config.getTerminalName();
       messageRequest.message = 'Running BooleanPrompt in ' + testDelay + ' seconds...';
@@ -54,7 +52,7 @@ describe('BooleanPrompt', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const request = new BooleanPromptRequest();
+        const request = new BlockChyp.BooleanPromptRequest();
         request.test = true;
         request.terminalName = Config.getTerminalName();
         request.prompt = 'Would you like to become a member?';
@@ -62,7 +60,7 @@ describe('BooleanPrompt', function () {
         request.noCaption = 'No';
 
         const httpResponse = await client.booleanPrompt(request)
-        const response: BooleanPromptResponse = httpResponse.data;
+        const response: BlockChyp.BooleanPromptResponse = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
         expect(response.response).toBe(true);

@@ -8,15 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient } from '../index';
-import { CustomerRequest } from '../index';
-import { CustomerResponse } from '../index';
-import { UpdateCustomerRequest } from '../index';
-import { Customer } from '../index';
+import * as BlockChyp from '../index';
 
 describe('GetCustomer', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -25,7 +21,7 @@ describe('GetCustomer', function () {
   });
 
   it('can get a customer', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -41,16 +37,16 @@ describe('GetCustomer', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const setupRequest = new UpdateCustomerRequest();
+        const setupRequest = new BlockChyp.UpdateCustomerRequest();
 
-        const customer = new Customer();
+        const customer = new BlockChyp.Customer();
         customer.firstName = 'Test';
         customer.lastName = 'Customer';
         customer.companyName = 'Test Company';
         customer.emailAddress = 'support@blockchyp.com';
         customer.smsNumber = '(123) 123-1234';
         setupRequest.customer = customer;
-        let setupResponse: CustomerResponse = new CustomerResponse();
+        let setupResponse: BlockChyp.CustomerResponse = new BlockChyp.CustomerResponse();
         const setupHttpResponse = await client.updateCustomer(setupRequest);
         if (setupHttpResponse.status !== 200) {
           console.log('Error:', setupHttpResponse.statusText);
@@ -60,11 +56,11 @@ describe('GetCustomer', function () {
         setupResponse = setupHttpResponse.data
 
         // setup request object
-        const request = new CustomerRequest();
+        const request = new BlockChyp.CustomerRequest();
         request.customerId = setupResponse.customer?.id ?? null;
 
         const httpResponse = await client.customer(request)
-        const response: CustomerResponse = httpResponse.data;
+        const response: BlockChyp.CustomerResponse = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
 

@@ -8,15 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient } from '../index';
-import { MerchantProfileRequest } from '../index';
-import { Acknowledgement } from '../index';
-import { AddTestMerchantRequest } from '../index';
-import { MerchantProfileResponse } from '../index';
+import * as BlockChyp from '../index';
 
 describe('DeleteTestMerchant', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -25,7 +21,7 @@ describe('DeleteTestMerchant', function () {
   });
 
   it('deletes a test merchant account.', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds("partner"));
+    client = BlockChyp.newClient(Config.getCreds("partner"));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -41,10 +37,10 @@ describe('DeleteTestMerchant', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const setupRequest = new AddTestMerchantRequest();
+        const setupRequest = new BlockChyp.AddTestMerchantRequest();
           setupRequest.dbaName = 'Test Merchant';
         setupRequest.companyName = 'Test Merchant';
-        let setupResponse: MerchantProfileResponse = new MerchantProfileResponse();
+        let setupResponse: BlockChyp.MerchantProfileResponse = new BlockChyp.MerchantProfileResponse();
         const setupHttpResponse = await client.addTestMerchant(setupRequest);
         if (setupHttpResponse.status !== 200) {
           console.log('Error:', setupHttpResponse.statusText);
@@ -54,11 +50,11 @@ describe('DeleteTestMerchant', function () {
         setupResponse = setupHttpResponse.data
 
         // setup request object
-        const request = new MerchantProfileRequest();
+        const request = new BlockChyp.MerchantProfileRequest();
         request.merchantId = setupResponse.merchantId;
 
         const httpResponse = await client.deleteTestMerchant(request)
-        const response: Acknowledgement = httpResponse.data;
+        const response: BlockChyp.Acknowledgement = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
 

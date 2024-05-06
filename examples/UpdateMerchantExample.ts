@@ -1,4 +1,4 @@
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -13,7 +13,7 @@ try {
   request.dbaName = 'Test Merchant';
   request.companyName = 'Test Merchant';
 
-  const billingAddress = new Address();
+  const billingAddress = new BlockChyp.Address();
   billingAddress.address1 = '1060 West Addison';
   billingAddress.city = 'Chicago';
   billingAddress.stateOrProvince = 'IL';

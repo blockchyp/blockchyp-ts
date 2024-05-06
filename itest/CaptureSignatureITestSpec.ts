@@ -8,14 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient, MessageRequest, Acknowledgement } from '../index';
-import { CaptureSignatureRequest } from '../index';
-import { CaptureSignatureResponse } from '../index';
-import { SignatureFormat } from '../index';
+import * as BlockChyp from '../index';
 
 describe('CaptureSignature', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -24,7 +21,7 @@ describe('CaptureSignature', function () {
   });
 
   it('Can capture a signature and return it.', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -36,7 +33,7 @@ describe('CaptureSignature', function () {
     }
 
     if (testDelayInt > 0) {
-      const messageRequest = new MessageRequest();
+      const messageRequest = new BlockChyp.MessageRequest();
       messageRequest.test = true;
       messageRequest.terminalName = Config.getTerminalName();
       messageRequest.message = 'Running CaptureSignature in ' + testDelay + ' seconds...';
@@ -55,13 +52,13 @@ describe('CaptureSignature', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const request = new CaptureSignatureRequest();
+        const request = new BlockChyp.CaptureSignatureRequest();
         request.terminalName = Config.getTerminalName();
-        request.sigFormat = SignatureFormat.PNG;
+        request.sigFormat = BlockChyp.SignatureFormat.PNG;
         request.sigWidth = 200;
 
         const httpResponse = await client.captureSignature(request)
-        const response: CaptureSignatureResponse = httpResponse.data;
+        const response: BlockChyp.CaptureSignatureResponse = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
 

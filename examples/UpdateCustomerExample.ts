@@ -1,4 +1,4 @@
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -9,7 +9,7 @@ const client = BlockChyp.newClient({
 try {
   const request = new BlockChyp.UpdateCustomerRequest();
 
-  const customer = new Customer();
+  const customer = new BlockChyp.Customer();
   customer.id = '<CUSTOMER ID>';
   customer.customerRef = 'Customer reference string';
   customer.firstName = 'FirstName';

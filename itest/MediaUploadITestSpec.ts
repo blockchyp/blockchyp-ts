@@ -8,13 +8,11 @@
 import * as fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient } from '../index';
-import { UploadMetadata } from '../index';
-import { MediaMetadata } from '../index';
+import * as BlockChyp from '../index';
 
 describe('MediaUpload', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -23,7 +21,7 @@ describe('MediaUpload', function () {
   });
 
   it('mediaUpload.', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -39,14 +37,14 @@ describe('MediaUpload', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const request = new UploadMetadata();
+        const request = new BlockChyp.UploadMetadata();
         request.fileName = 'aviato.png';
         request.fileSize = 18843;
         request.uploadId = uuidv4();
 
         const content = fs.readFileSync('support/aviato.png');
         const httpResponse = await client.uploadMedia(request, content)
-        const response: MediaMetadata = httpResponse.data;
+        const response: BlockChyp.MediaMetadata = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
         expect(response.id?.trim().length).toBeGreaterThan(0);

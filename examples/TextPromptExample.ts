@@ -1,4 +1,4 @@
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -10,7 +10,7 @@ try {
   const request = new BlockChyp.TextPromptRequest();
   request.test = true;
   request.terminalName = 'Test Terminal';
-  request.promptType = PromptType.EMAIL;
+  request.promptType = BlockChyp.PromptType.EMAIL;
 
   const httpResponse = await client.textPrompt(request)
   const response: BlockChyp.TextPromptResponse = httpResponse.data;

@@ -1,4 +1,4 @@
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -11,7 +11,7 @@ try {
   request.name = 'Test Slide Show';
   request.delay = 5;
 
-  const slides = new Slide();
+  const slides = new BlockChyp.Slide();
   slides.mediaId = '<MEDIA ID>';
 
   request.slides = [slides];

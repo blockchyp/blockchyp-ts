@@ -8,13 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient } from '../index';
-import { SlideShowRequest } from '../index';
-import { SlideShow } from '../index';
+import * as BlockChyp from '../index';
 
 describe('SlideShow', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -23,7 +21,7 @@ describe('SlideShow', function () {
   });
 
   it('returns a single slide show.', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -39,10 +37,10 @@ describe('SlideShow', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const setupRequest = new SlideShow();
+        const setupRequest = new BlockChyp.SlideShow();
           setupRequest.name = 'Test Slide Show';
         setupRequest.delay = 5;
-        let setupResponse: SlideShow = new SlideShow();
+        let setupResponse: BlockChyp.SlideShow = new BlockChyp.SlideShow();
         const setupHttpResponse = await client.updateSlideShow(setupRequest);
         if (setupHttpResponse.status !== 200) {
           console.log('Error:', setupHttpResponse.statusText);
@@ -52,11 +50,11 @@ describe('SlideShow', function () {
         setupResponse = setupHttpResponse.data
 
         // setup request object
-        const request = new SlideShowRequest();
+        const request = new BlockChyp.SlideShowRequest();
         request.slideShowId = setupResponse.id;
 
         const httpResponse = await client.slideShow(request)
-        const response: SlideShow = httpResponse.data;
+        const response: BlockChyp.SlideShow = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
         expect(response.name)?.toEqual('Test Slide Show');

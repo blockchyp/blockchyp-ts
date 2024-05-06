@@ -8,13 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient } from '../index';
-import { TermsAndConditionsLogRequest } from '../index';
-import { TermsAndConditionsLogResponse } from '../index';
+import * as BlockChyp from '../index';
 
 describe('TCLog', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -23,7 +21,7 @@ describe('TCLog', function () {
   });
 
   it('returns Terms and Conditions log entries.', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -39,11 +37,11 @@ describe('TCLog', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const request = new TermsAndConditionsLogRequest();
+        const request = new BlockChyp.TermsAndConditionsLogRequest();
 
 
         const httpResponse = await client.tcLog(request)
-        const response: TermsAndConditionsLogResponse = httpResponse.data;
+        const response: BlockChyp.TermsAndConditionsLogResponse = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
 

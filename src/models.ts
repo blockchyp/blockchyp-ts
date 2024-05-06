@@ -25,63 +25,20 @@ enum CardType {
 // SignatureFormat is used to specify the output format for customer signature images.
 type SignatureFormat = "" | "png" | "jpg" | "gif";
 
-// SignatureFormats
-const SignatureFormatNone: SignatureFormat = "";
-const SignatureFormatPNG: SignatureFormat = "png";
-const SignatureFormatJPG: SignatureFormat = "jpg";
-const SignatureFormatGIF: SignatureFormat = "gif";
-
 // CVMType designates a customer verification method.
 type CVMType = 'Signature' | 'Offline PIN' | 'Online PIN' | 'CDCVM' | 'No CVM';
-
-// CVMTypes
-const CVMTypeSignature: CVMType = "Signature"
-const CVMTypeOfflinePIN: CVMType = "Offline PIN"
-const CVMTypeOnlinePIN: CVMType = "Online PIN"
-const CVMTypeCDCVM: CVMType = "CDCVM"
-const CVMTypeNoCVM: CVMType = "No CVM"
 
 // PromptType is used to specify the type of text input data being requested from a customer.
 type PromptType = 'amount' | 'email' | 'phone' | 'customer-number' | 'rewards-number' | 'first-name' | 'last-name';
 
-// PromptTypes
-const PromptTypeAmount: PromptType         = "amount"
-const PromptTypeEmail: PromptType          = "email"
-const PromptTypePhone: PromptType          = "phone"
-const PromptTypeCustomerNumber: PromptType = "customer-number"
-const PromptTypeRewardsNumber: PromptType  = "rewards-number"
-const PromptTypeFirstName: PromptType      = "first-name"
-const PromptTypeLastName: PromptType       = "last-name"
-
 // AVSResponse indicates the result of address verification.
 type AVSResponse = '' | 'not_supported' | 'retry' | 'no_match' | 'address_match' | 'zip_match' | 'match';
-
-// AVSResponses
-const AVSResponseNotApplicable: AVSResponse = ""
-const AVSResponseNotSupported: AVSResponse = "not_supported"
-const AVSResponseRetry: AVSResponse = "retry"
-const AVSResponseNoMatch: AVSResponse = "no_match"
-const AVSResponseAddressMatch: AVSResponse = "address_match"
-const AVSResponsePostalCodeMatch: AVSResponse = "zip_match"
-const AVSResponseAddressAndPostalCodeMatch: AVSResponse = "match"
 
 // HealthcareType is a category of healthcare.
 type HealthcareType = 'healthcare' | 'prescription' | 'vision' | 'clinic' | 'dental';
 
-// HealthcareTypes
-const HealthcareTypeHealthcare: HealthcareType   = "healthcare"
-const HealthcareTypePrescription: HealthcareType = "prescription"
-const HealthcareTypeVision: HealthcareType       = "vision"
-const HealthcareTypeClinic: HealthcareType       = "clinic"
-const HealthcareTypeDental: HealthcareType       = "dental"
-
 // RoundingMode indicates how partial penny rounding operations should work.
 type RoundingMode = 'up' | 'nearest' | 'down';
-
-// RoundingModes
-const RoundingModeUp: RoundingMode = "up"
-const RoundingModeNearest: RoundingMode = "nearest"
-const RoundingModeDown: RoundingMode = "down"
 
 
   /**

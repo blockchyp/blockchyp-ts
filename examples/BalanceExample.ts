@@ -1,4 +1,4 @@
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -10,7 +10,7 @@ try {
   const request = new BlockChyp.BalanceRequest();
   request.test = true;
   request.terminalName = 'Test Terminal';
-  request.cardType = CardType.EBT;
+  request.cardType = BlockChyp.CardType.EBT;
 
   const httpResponse = await client.balance(request)
   const response: BlockChyp.BalanceResponse = httpResponse.data;

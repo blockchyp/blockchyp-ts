@@ -8,14 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient } from '../index';
-import { SurveyQuestionRequest } from '../index';
-import { Acknowledgement } from '../index';
-import { SurveyQuestion } from '../index';
+import * as BlockChyp from '../index';
 
 describe('DeleteSurveyQuestion', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -24,7 +21,7 @@ describe('DeleteSurveyQuestion', function () {
   });
 
   it('delete a survey question.', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -40,11 +37,11 @@ describe('DeleteSurveyQuestion', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const setupRequest = new SurveyQuestion();
+        const setupRequest = new BlockChyp.SurveyQuestion();
           setupRequest.ordinal = 1;
         setupRequest.questionText = 'Would you shop here again?';
         setupRequest.questionType = 'yes_no';
-        let setupResponse: SurveyQuestion = new SurveyQuestion();
+        let setupResponse: BlockChyp.SurveyQuestion = new BlockChyp.SurveyQuestion();
         const setupHttpResponse = await client.updateSurveyQuestion(setupRequest);
         if (setupHttpResponse.status !== 200) {
           console.log('Error:', setupHttpResponse.statusText);
@@ -54,11 +51,11 @@ describe('DeleteSurveyQuestion', function () {
         setupResponse = setupHttpResponse.data
 
         // setup request object
-        const request = new SurveyQuestionRequest();
+        const request = new BlockChyp.SurveyQuestionRequest();
         request.questionId = setupResponse.id;
 
         const httpResponse = await client.deleteSurveyQuestion(request)
-        const response: Acknowledgement = httpResponse.data;
+        const response: BlockChyp.Acknowledgement = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
 

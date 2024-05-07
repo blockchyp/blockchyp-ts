@@ -39,6 +39,7 @@ all: clean build test
 # Cleans build artifacts
 .PHONY: clean
 clean:
+	$(NPM) run clean
 	$(RM) -rf node_modules
 
 # Compiles the package
@@ -81,4 +82,5 @@ stage:
 # Publish packages
 .PHONY: publish
 publish:
-	$(NPM) publish --access=restricted
+    $(NPM) run clean
+	$(NPM) publish --access=public

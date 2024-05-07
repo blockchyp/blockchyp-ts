@@ -7,8 +7,8 @@
     "lint": "eslint . --ext .ts",
     "clean": "tsc --build --clean",
     "test": "npm run build && jasmine",
-    "build": "tsc",
-    "prod": "npm run lint && npm run build",
+    "build": "npm run lint && tsc",
+    "prod": "npm run build && browserify src/global.js -o src/blockchyp-js-all.js && uglifyjs src/blockchyp-js-all.js -o src/blockchyp-js-all.min.js",
     "prepare": "npm run prod"
   },
   "files": [
@@ -42,6 +42,7 @@
     "@types/sha.js": "^2.4.4",
     "@typescript-eslint/eslint-plugin": "^7.8.0",
     "@typescript-eslint/parser": "^7.8.0",
+    "browserify": "^16.2.2",
     "eslint": "^8.57.0",
     "eslint-config-standard": "^11.0.0",
     "eslint-plugin-import": "^2.12.0",
@@ -54,6 +55,7 @@
     "jasmine-promises": "^0.4.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5",
+    "uglify-js": "^3.4.2",
     "uuid": "^3.3.3"
   },
   "dependencies": {

@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint . --ext .ts",
     "clean": "tsc --build --clean",
-    "test": "jasmine itest/*Spec.js",
+    "test": "npm run build && jasmine",
     "build": "tsc",
     "prod": "npm run lint && npm run build",
     "prepare": "npm run prod"

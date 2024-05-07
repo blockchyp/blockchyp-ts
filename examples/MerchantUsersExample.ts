@@ -6,14 +6,14 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.MerchantProfileRequest();
-  request.merchantId = '<MERCHANT ID>';
+const request = new BlockChyp.MerchantProfileRequest();
+request.merchantId = '<MERCHANT ID>';
 
-  const httpResponse = await client.merchantUsers(request)
-  const response: BlockChyp.MerchantUsersResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.merchantUsers(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.MerchantUsersResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });

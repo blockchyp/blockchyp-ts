@@ -1,9 +1,9 @@
 
 # BlockChyp TypeScript SDK
 
-[![Build Status](https://github.com/blockchyp/blockchyp-js/actions/workflows/main.yml/badge.svg)](https://github.com/blockchyp/blockchyp-js/actions/workflows/main.yml)
-[![NPM](https://img.shields.io/npm/v/@blockchyp/blockchyp-js)](https://www.npmjs.com/package/@blockchyp/blockchyp-js)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/blockchyp/blockchyp-js/blob/master/LICENSE)
+[![Build Status](https://github.com/blockchyp/blockchyp-ts/actions/workflows/main.yml/badge.svg)](https://github.com/blockchyp/blockchyp-ts/actions/workflows/main.yml)
+[![NPM](https://img.shields.io/npm/v/@blockchyp/blockchyp-ts)](https://www.npmjs.com/package/@blockchyp/blockchyp-ts)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/blockchyp/blockchyp-ts/blob/master/LICENSE)
 
 This is the SDK for TypeScript. Like all BlockChyp SDKs, it provides a full
 client for the BlockChyp gateway and BlockChyp payment terminals.
@@ -122,19 +122,19 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.AuthorizationRequest();
-  request.test = true;
-  request.terminalName = 'Test Terminal';
-  request.amount = '55.00';
+const request = new BlockChyp.AuthorizationRequest();
+request.test = true;
+request.terminalName = 'Test Terminal';
+request.amount = '55.00';
 
-  const httpResponse = await client.charge(request)
-  const response: BlockChyp.AuthorizationResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.charge(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.AuthorizationResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -194,19 +194,19 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.AuthorizationRequest();
-  request.test = true;
-  request.terminalName = 'Test Terminal';
-  request.amount = '27.00';
+const request = new BlockChyp.AuthorizationRequest();
+request.test = true;
+request.terminalName = 'Test Terminal';
+request.amount = '27.00';
 
-  const httpResponse = await client.preauth(request)
-  const response: BlockChyp.AuthorizationResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.preauth(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.AuthorizationResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -239,19 +239,19 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.CaptureRequest();
-  request.test = true;
-  request.transactionId = '<ORIGINAL TRANSACTION ID>';
-  request.amount = '32.00';
+const request = new BlockChyp.CaptureRequest();
+request.test = true;
+request.transactionId = '<ORIGINAL TRANSACTION ID>';
+request.amount = '32.00';
 
-  const httpResponse = await client.capture(request)
-  const response: BlockChyp.CaptureResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.capture(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.CaptureResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -325,18 +325,18 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.RefundRequest();
-  request.transactionId = '<PREVIOUS TRANSACTION ID>';
-  request.amount = '5.00';
+const request = new BlockChyp.RefundRequest();
+request.transactionId = '<PREVIOUS TRANSACTION ID>';
+request.amount = '5.00';
 
-  const httpResponse = await client.refund(request)
-  const response: BlockChyp.AuthorizationResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.refund(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.AuthorizationResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -370,18 +370,18 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.VoidRequest();
-  request.test = true;
-  request.transactionId = '<PREVIOUS TRANSACTION ID>';
+const request = new BlockChyp.VoidRequest();
+request.test = true;
+request.transactionId = '<PREVIOUS TRANSACTION ID>';
 
-  const httpResponse = await client.void(request)
-  const response: BlockChyp.VoidResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.void(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.VoidResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -426,17 +426,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.AuthorizationRequest();
-  request.transactionRef = '<LAST TRANSACTION REF>';
+const request = new BlockChyp.AuthorizationRequest();
+request.transactionRef = '<LAST TRANSACTION REF>';
 
-  const httpResponse = await client.reverse(request)
-  const response: BlockChyp.AuthorizationResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.reverse(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.AuthorizationResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -510,19 +510,19 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.GiftActivateRequest();
-  request.test = true;
-  request.terminalName = 'Test Terminal';
-  request.amount = '50.00';
+const request = new BlockChyp.GiftActivateRequest();
+request.test = true;
+request.terminalName = 'Test Terminal';
+request.amount = '50.00';
 
-  const httpResponse = await client.giftActivate(request)
-  const response: BlockChyp.GiftActivateResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.giftActivate(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.GiftActivateResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -572,19 +572,19 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.BalanceRequest();
-  request.test = true;
-  request.terminalName = 'Test Terminal';
-  request.cardType = BlockChyp.CardType.EBT;
+const request = new BlockChyp.BalanceRequest();
+request.test = true;
+request.terminalName = 'Test Terminal';
+request.cardType = BlockChyp.CardType.EBT;
 
-  const httpResponse = await client.balance(request)
-  const response: BlockChyp.BalanceResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.balance(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.BalanceResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -615,17 +615,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.CloseBatchRequest();
-  request.test = true;
+const request = new BlockChyp.CloseBatchRequest();
+request.test = true;
 
-  const httpResponse = await client.closeBatch(request)
-  const response: BlockChyp.CloseBatchResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.closeBatch(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.CloseBatchResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -743,43 +743,43 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.PaymentLinkRequest();
-  request.transactionRef = '<TX REF>';
-  request.amount = '199.99';
-  request.description = 'Widget';
-  request.subject = 'Widget invoice';
+const request = new BlockChyp.PaymentLinkRequest();
+request.transactionRef = '<TX REF>';
+request.amount = '199.99';
+request.description = 'Widget';
+request.subject = 'Widget invoice';
 
-  const transaction = new BlockChyp.TransactionDisplayTransaction();
-  transaction.subtotal = '195.00';
-  transaction.tax = '4.99';
-  transaction.total = '199.99';
+const transaction = new BlockChyp.TransactionDisplayTransaction();
+transaction.subtotal = '195.00';
+transaction.tax = '4.99';
+transaction.total = '199.99';
 
-  const items = new BlockChyp.TransactionDisplayItem();
-  items.description = 'Widget';
-  items.price = '195.00';
-  items.quantity = 1;
+const items = new BlockChyp.TransactionDisplayItem();
+items.description = 'Widget';
+items.price = '195.00';
+items.quantity = 1;
 
-  transaction.items = [items];
-  request.transaction = transaction;
-  request.autoSend = true;
+transaction.items = [items];
+request.transaction = transaction;
+request.autoSend = true;
 
-  const customer = new BlockChyp.Customer();
-  customer.customerRef = 'Customer reference string';
-  customer.firstName = 'FirstName';
-  customer.lastName = 'LastName';
-  customer.companyName = 'Company Name';
-  customer.emailAddress = 'notifications@blockchypteam.m8r.co';
-  customer.smsNumber = '(123) 123-1231';
-  request.customer = customer;
+const customer = new BlockChyp.Customer();
+customer.customerRef = 'Customer reference string';
+customer.firstName = 'FirstName';
+customer.lastName = 'LastName';
+customer.companyName = 'Company Name';
+customer.emailAddress = 'notifications@blockchypteam.m8r.co';
+customer.smsNumber = '(123) 123-1231';
+request.customer = customer;
 
-  const httpResponse = await client.sendPaymentLink(request)
-  const response: BlockChyp.PaymentLinkResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.sendPaymentLink(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.PaymentLinkResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -805,17 +805,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.ResendPaymentLinkRequest();
-  request.linkCode = '<PAYMENT LINK CODE>';
+const request = new BlockChyp.ResendPaymentLinkRequest();
+request.linkCode = '<PAYMENT LINK CODE>';
 
-  const httpResponse = await client.resendPaymentLink(request)
-  const response: BlockChyp.ResendPaymentLinkResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.resendPaymentLink(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.ResendPaymentLinkResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -840,17 +840,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.CancelPaymentLinkRequest();
-  request.linkCode = '<PAYMENT LINK CODE>';
+const request = new BlockChyp.CancelPaymentLinkRequest();
+request.linkCode = '<PAYMENT LINK CODE>';
 
-  const httpResponse = await client.cancelPaymentLink(request)
-  const response: BlockChyp.CancelPaymentLinkResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.cancelPaymentLink(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.CancelPaymentLinkResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -885,17 +885,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.PaymentLinkStatusRequest();
-  request.linkCode = '<PAYMENT LINK CODE>';
+const request = new BlockChyp.PaymentLinkStatusRequest();
+request.linkCode = '<PAYMENT LINK CODE>';
 
-  const httpResponse = await client.paymentLinkStatus(request)
-  const response: BlockChyp.PaymentLinkStatusResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.paymentLinkStatus(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.PaymentLinkStatusResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -925,17 +925,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.TransactionStatusRequest();
-  request.transactionId = '<TRANSACTION ID>';
+const request = new BlockChyp.TransactionStatusRequest();
+request.transactionId = '<TRANSACTION ID>';
 
-  const httpResponse = await client.transactionStatus(request)
-  const response: BlockChyp.AuthorizationResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.transactionStatus(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.AuthorizationResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -964,19 +964,19 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.CashDiscountRequest();
-  request.amount = '100.00';
-  request.cashDiscount = true;
-  request.surcharge = true;
+const request = new BlockChyp.CashDiscountRequest();
+request.amount = '100.00';
+request.cashDiscount = true;
+request.surcharge = true;
 
-  const httpResponse = await client.cashDiscount(request)
-  const response: BlockChyp.CashDiscountResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.cashDiscount(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.CashDiscountResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -1021,18 +1021,18 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.BatchHistoryRequest();
-  request.maxResults = 250;
-  request.startIndex = 0;
+const request = new BlockChyp.BatchHistoryRequest();
+request.maxResults = 250;
+request.startIndex = 0;
 
-  const httpResponse = await client.batchHistory(request)
-  const response: BlockChyp.BatchHistoryResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.batchHistory(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.BatchHistoryResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -1063,17 +1063,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.BatchDetailsRequest();
-  request.batchId = '<BATCH ID>';
+const request = new BlockChyp.BatchDetailsRequest();
+request.batchId = '<BATCH ID>';
 
-  const httpResponse = await client.batchDetails(request)
-  const response: BlockChyp.BatchDetailsResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.batchDetails(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.BatchDetailsResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -1142,18 +1142,18 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.TransactionHistoryRequest();
-  request.maxResults = 10;
-  request.batchId = '<BATCH ID>';
+const request = new BlockChyp.TransactionHistoryRequest();
+request.maxResults = 10;
+request.batchId = '<BATCH ID>';
 
-  const httpResponse = await client.transactionHistory(request)
-  const response: BlockChyp.TransactionHistoryResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.transactionHistory(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.TransactionHistoryResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -1180,17 +1180,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.ListQueuedTransactionsRequest();
-  request.terminalName = 'Test Terminal';
+const request = new BlockChyp.ListQueuedTransactionsRequest();
+request.terminalName = 'Test Terminal';
 
-  const httpResponse = await client.listQueuedTransactions(request)
-  const response: BlockChyp.ListQueuedTransactionsResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.listQueuedTransactions(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.ListQueuedTransactionsResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -1217,18 +1217,18 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.DeleteQueuedTransactionRequest();
-  request.terminalName = 'Test Terminal';
-  request.transactionRef = '*';
+const request = new BlockChyp.DeleteQueuedTransactionRequest();
+request.terminalName = 'Test Terminal';
+request.transactionRef = '*';
 
-  const httpResponse = await client.deleteQueuedTransaction(request)
-  const response: BlockChyp.DeleteQueuedTransactionResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.deleteQueuedTransaction(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.DeleteQueuedTransactionResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -1272,17 +1272,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.PingRequest();
-  request.terminalName = 'Test Terminal';
+const request = new BlockChyp.PingRequest();
+request.terminalName = 'Test Terminal';
 
-  const httpResponse = await client.ping(request)
-  const response: BlockChyp.PingResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.ping(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.PingResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -1312,17 +1312,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.LocateRequest();
-  request.terminalName = 'Test Terminal';
+const request = new BlockChyp.LocateRequest();
+request.terminalName = 'Test Terminal';
 
-  const httpResponse = await client.locate(request)
-  const response: BlockChyp.LocateResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.locate(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.LocateResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -1349,18 +1349,18 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.ClearTerminalRequest();
-  request.test = true;
-  request.terminalName = 'Test Terminal';
+const request = new BlockChyp.ClearTerminalRequest();
+request.test = true;
+request.terminalName = 'Test Terminal';
 
-  const httpResponse = await client.clear(request)
-  const response: BlockChyp.Acknowledgement = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.clear(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.Acknowledgement = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -1417,17 +1417,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.TerminalStatusRequest();
-  request.terminalName = 'Test Terminal';
+const request = new BlockChyp.TerminalStatusRequest();
+request.terminalName = 'Test Terminal';
 
-  const httpResponse = await client.terminalStatus(request)
-  const response: BlockChyp.TerminalStatusResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.terminalStatus(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.TerminalStatusResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -1469,19 +1469,19 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.CaptureSignatureRequest();
-  request.terminalName = 'Test Terminal';
-  request.sigFormat = BlockChyp.SignatureFormat.PNG;
-  request.sigWidth = 200;
+const request = new BlockChyp.CaptureSignatureRequest();
+request.terminalName = 'Test Terminal';
+request.sigFormat = BlockChyp.SignatureFormat.PNG;
+request.sigWidth = 200;
 
-  const httpResponse = await client.captureSignature(request)
-  const response: BlockChyp.CaptureSignatureResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.captureSignature(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.CaptureSignatureResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -1524,38 +1524,38 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.TransactionDisplayRequest();
-  request.test = true;
-  request.terminalName = 'Test Terminal';
+const request = new BlockChyp.TransactionDisplayRequest();
+request.test = true;
+request.terminalName = 'Test Terminal';
 
-  const transaction = new BlockChyp.TransactionDisplayTransaction();
-  transaction.subtotal = '60.00';
-  transaction.tax = '5.00';
-  transaction.total = '65.00';
+const transaction = new BlockChyp.TransactionDisplayTransaction();
+transaction.subtotal = '60.00';
+transaction.tax = '5.00';
+transaction.total = '65.00';
 
-  const items = new BlockChyp.TransactionDisplayItem();
-  items.description = 'Leki Trekking Poles';
-  items.price = '35.00';
-  items.quantity = 2;
-  items.extended = '70.00';
+const items = new BlockChyp.TransactionDisplayItem();
+items.description = 'Leki Trekking Poles';
+items.price = '35.00';
+items.quantity = 2;
+items.extended = '70.00';
 
-  const discounts = new BlockChyp.TransactionDisplayDiscount();
-  discounts.description = 'memberDiscount';
-  discounts.amount = '10.00';
+const discounts = new BlockChyp.TransactionDisplayDiscount();
+discounts.description = 'memberDiscount';
+discounts.amount = '10.00';
 
-  items.discounts = [discounts];
+items.discounts = [discounts];
 
-  transaction.items = [items];
-  request.transaction = transaction;
+transaction.items = [items];
+request.transaction = transaction;
 
-  const httpResponse = await client.newTransactionDisplay(request)
-  const response: BlockChyp.Acknowledgement = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.newTransactionDisplay(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.Acknowledgement = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -1606,38 +1606,38 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.TransactionDisplayRequest();
-  request.test = true;
-  request.terminalName = 'Test Terminal';
+const request = new BlockChyp.TransactionDisplayRequest();
+request.test = true;
+request.terminalName = 'Test Terminal';
 
-  const transaction = new BlockChyp.TransactionDisplayTransaction();
-  transaction.subtotal = '60.00';
-  transaction.tax = '5.00';
-  transaction.total = '65.00';
+const transaction = new BlockChyp.TransactionDisplayTransaction();
+transaction.subtotal = '60.00';
+transaction.tax = '5.00';
+transaction.total = '65.00';
 
-  const items = new BlockChyp.TransactionDisplayItem();
-  items.description = 'Leki Trekking Poles';
-  items.price = '35.00';
-  items.quantity = 2;
-  items.extended = '70.00';
+const items = new BlockChyp.TransactionDisplayItem();
+items.description = 'Leki Trekking Poles';
+items.price = '35.00';
+items.quantity = 2;
+items.extended = '70.00';
 
-  const discounts = new BlockChyp.TransactionDisplayDiscount();
-  discounts.description = 'memberDiscount';
-  discounts.amount = '10.00';
+const discounts = new BlockChyp.TransactionDisplayDiscount();
+discounts.description = 'memberDiscount';
+discounts.amount = '10.00';
 
-  items.discounts = [discounts];
+items.discounts = [discounts];
 
-  transaction.items = [items];
-  request.transaction = transaction;
+transaction.items = [items];
+request.transaction = transaction;
 
-  const httpResponse = await client.updateTransactionDisplay(request)
-  const response: BlockChyp.Acknowledgement = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.updateTransactionDisplay(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.Acknowledgement = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -1664,19 +1664,19 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.MessageRequest();
-  request.test = true;
-  request.terminalName = 'Test Terminal';
-  request.message = 'Thank you for your business.';
+const request = new BlockChyp.MessageRequest();
+request.test = true;
+request.terminalName = 'Test Terminal';
+request.message = 'Thank you for your business.';
 
-  const httpResponse = await client.message(request)
-  const response: BlockChyp.Acknowledgement = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.message(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.Acknowledgement = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -1712,21 +1712,21 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.BooleanPromptRequest();
-  request.test = true;
-  request.terminalName = 'Test Terminal';
-  request.prompt = 'Would you like to become a member?';
-  request.yesCaption = 'Yes';
-  request.noCaption = 'No';
+const request = new BlockChyp.BooleanPromptRequest();
+request.test = true;
+request.terminalName = 'Test Terminal';
+request.prompt = 'Would you like to become a member?';
+request.yesCaption = 'Yes';
+request.noCaption = 'No';
 
-  const httpResponse = await client.booleanPrompt(request)
-  const response: BlockChyp.BooleanPromptResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.booleanPrompt(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.BooleanPromptResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -1771,19 +1771,19 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.TextPromptRequest();
-  request.test = true;
-  request.terminalName = 'Test Terminal';
-  request.promptType = BlockChyp.PromptType.EMAIL;
+const request = new BlockChyp.TextPromptRequest();
+request.test = true;
+request.terminalName = 'Test Terminal';
+request.promptType = BlockChyp.PromptType.EMAIL;
 
-  const httpResponse = await client.textPrompt(request)
-  const response: BlockChyp.TextPromptResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.textPrompt(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.TextPromptResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -1811,17 +1811,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.TerminalProfileRequest();
+const request = new BlockChyp.TerminalProfileRequest();
 
 
-  const httpResponse = await client.terminals(request)
-  const response: BlockChyp.TerminalProfileResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.terminals(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.TerminalProfileResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -1849,17 +1849,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.TerminalDeactivationRequest();
-  request.terminalId = '<TERMINAL ID>';
+const request = new BlockChyp.TerminalDeactivationRequest();
+request.terminalId = '<TERMINAL ID>';
 
-  const httpResponse = await client.deactivateTerminal(request)
-  const response: BlockChyp.Acknowledgement = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.deactivateTerminal(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.Acknowledgement = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -1894,18 +1894,18 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.TerminalActivationRequest();
-  request.terminalName = 'Test Terminal';
-  request.activationCode = '<ACTIVATION CODE>';
+const request = new BlockChyp.TerminalActivationRequest();
+request.terminalName = 'Test Terminal';
+request.activationCode = '<ACTIVATION CODE>';
 
-  const httpResponse = await client.activateTerminal(request)
-  const response: BlockChyp.Acknowledgement = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.activateTerminal(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.Acknowledgement = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -1930,17 +1930,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.PingRequest();
-  request.terminalName = 'Test Terminal';
+const request = new BlockChyp.PingRequest();
+request.terminalName = 'Test Terminal';
 
-  const httpResponse = await client.reboot(request)
-  const response: BlockChyp.Acknowledgement = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.reboot(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.Acknowledgement = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -2023,24 +2023,24 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.TermsAndConditionsRequest();
-  request.test = true;
-  request.terminalName = 'Test Terminal';
-  request.tcAlias = 'hippa';
-  request.tcName = 'HIPPA Disclosure';
-  request.tcContent = 'Full contract text';
-  request.sigFormat = BlockChyp.SignatureFormat.PNG;
-  request.sigWidth = 200;
-  request.sigRequired = true;
+const request = new BlockChyp.TermsAndConditionsRequest();
+request.test = true;
+request.terminalName = 'Test Terminal';
+request.tcAlias = 'hippa';
+request.tcName = 'HIPPA Disclosure';
+request.tcContent = 'Full contract text';
+request.sigFormat = BlockChyp.SignatureFormat.PNG;
+request.sigWidth = 200;
+request.sigRequired = true;
 
-  const httpResponse = await client.termsAndConditions(request)
-  const response: BlockChyp.TermsAndConditionsResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.termsAndConditions(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.TermsAndConditionsResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -2065,17 +2065,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.TermsAndConditionsTemplateRequest();
+const request = new BlockChyp.TermsAndConditionsTemplateRequest();
 
 
-  const httpResponse = await client.tcTemplates(request)
-  const response: BlockChyp.TermsAndConditionsTemplateResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.tcTemplates(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.TermsAndConditionsTemplateResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -2100,17 +2100,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.TermsAndConditionsTemplateRequest();
-  request.templateId = '<TEMPLATE ID>';
+const request = new BlockChyp.TermsAndConditionsTemplateRequest();
+request.templateId = '<TEMPLATE ID>';
 
-  const httpResponse = await client.tcTemplate(request)
-  const response: BlockChyp.TermsAndConditionsTemplate = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.tcTemplate(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.TermsAndConditionsTemplate = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -2143,19 +2143,19 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.TermsAndConditionsTemplate();
-  request.alias = 'HIPPA';
-  request.name = 'HIPPA Disclosure';
-  request.content = 'Lorem ipsum dolor sit amet.';
+const request = new BlockChyp.TermsAndConditionsTemplate();
+request.alias = 'HIPPA';
+request.name = 'HIPPA Disclosure';
+request.content = 'Lorem ipsum dolor sit amet.';
 
-  const httpResponse = await client.tcUpdateTemplate(request)
-  const response: BlockChyp.TermsAndConditionsTemplate = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.tcUpdateTemplate(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.TermsAndConditionsTemplate = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -2184,17 +2184,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.TermsAndConditionsTemplateRequest();
-  request.templateId = '<TEMPLATE ID>';
+const request = new BlockChyp.TermsAndConditionsTemplateRequest();
+request.templateId = '<TEMPLATE ID>';
 
-  const httpResponse = await client.tcDeleteTemplate(request)
-  const response: BlockChyp.Acknowledgement = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.tcDeleteTemplate(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.Acknowledgement = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -2229,17 +2229,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.TermsAndConditionsLogRequest();
-  request.logEntryId = '<LOG ENTRY ID>';
+const request = new BlockChyp.TermsAndConditionsLogRequest();
+request.logEntryId = '<LOG ENTRY ID>';
 
-  const httpResponse = await client.tcLog(request)
-  const response: BlockChyp.TermsAndConditionsLogResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.tcLog(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.TermsAndConditionsLogResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -2267,17 +2267,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.TermsAndConditionsLogRequest();
-  request.logEntryId = '<ENTRY ID>';
+const request = new BlockChyp.TermsAndConditionsLogRequest();
+request.logEntryId = '<ENTRY ID>';
 
-  const httpResponse = await client.tcEntry(request)
-  const response: BlockChyp.TermsAndConditionsLogEntry = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.tcEntry(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.TermsAndConditionsLogEntry = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -2328,18 +2328,18 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.EnrollRequest();
-  request.test = true;
-  request.terminalName = 'Test Terminal';
+const request = new BlockChyp.EnrollRequest();
+request.test = true;
+request.terminalName = 'Test Terminal';
 
-  const httpResponse = await client.enroll(request)
-  const response: BlockChyp.EnrollResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.enroll(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.EnrollResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -2370,17 +2370,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.TokenMetadataRequest();
-  request.token = '<TOKEN>';
+const request = new BlockChyp.TokenMetadataRequest();
+request.token = '<TOKEN>';
 
-  const httpResponse = await client.tokenMetadata(request)
-  const response: BlockChyp.TokenMetadataResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.tokenMetadata(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.TokenMetadataResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -2406,18 +2406,18 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.LinkTokenRequest();
-  request.token = '<TOKEN>';
-  request.customerId = '<CUSTOMER ID>';
+const request = new BlockChyp.LinkTokenRequest();
+request.token = '<TOKEN>';
+request.customerId = '<CUSTOMER ID>';
 
-  const httpResponse = await client.linkToken(request)
-  const response: BlockChyp.Acknowledgement = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.linkToken(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.Acknowledgement = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -2445,18 +2445,18 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.UnlinkTokenRequest();
-  request.token = '<TOKEN>';
-  request.customerId = '<CUSTOMER ID>';
+const request = new BlockChyp.UnlinkTokenRequest();
+request.token = '<TOKEN>';
+request.customerId = '<CUSTOMER ID>';
 
-  const httpResponse = await client.unlinkToken(request)
-  const response: BlockChyp.Acknowledgement = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.unlinkToken(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.Acknowledgement = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -2482,17 +2482,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.DeleteTokenRequest();
-  request.token = '<TOKEN>';
+const request = new BlockChyp.DeleteTokenRequest();
+request.token = '<TOKEN>';
 
-  const httpResponse = await client.deleteToken(request)
-  const response: BlockChyp.DeleteTokenResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.deleteToken(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.DeleteTokenResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -2553,26 +2553,26 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.UpdateCustomerRequest();
+const request = new BlockChyp.UpdateCustomerRequest();
 
-  const customer = new BlockChyp.Customer();
-  customer.id = '<CUSTOMER ID>';
-  customer.customerRef = 'Customer reference string';
-  customer.firstName = 'FirstName';
-  customer.lastName = 'LastName';
-  customer.companyName = 'Company Name';
-  customer.emailAddress = 'notifications@blockchypteam.m8r.co';
-  customer.smsNumber = '(123) 123-1231';
-  request.customer = customer;
+const customer = new BlockChyp.Customer();
+customer.id = '<CUSTOMER ID>';
+customer.customerRef = 'Customer reference string';
+customer.firstName = 'FirstName';
+customer.lastName = 'LastName';
+customer.companyName = 'Company Name';
+customer.emailAddress = 'notifications@blockchypteam.m8r.co';
+customer.smsNumber = '(123) 123-1231';
+request.customer = customer;
 
-  const httpResponse = await client.updateCustomer(request)
-  const response: BlockChyp.CustomerResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.updateCustomer(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.CustomerResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -2600,17 +2600,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.CustomerRequest();
-  request.customerId = '<CUSTOMER ID>';
+const request = new BlockChyp.CustomerRequest();
+request.customerId = '<CUSTOMER ID>';
 
-  const httpResponse = await client.customer(request)
-  const response: BlockChyp.CustomerResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.customer(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.CustomerResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -2638,17 +2638,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.CustomerSearchRequest();
-  request.query = '(123) 123-1234';
+const request = new BlockChyp.CustomerSearchRequest();
+request.query = '(123) 123-1234';
 
-  const httpResponse = await client.customerSearch(request)
-  const response: BlockChyp.CustomerSearchResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.customerSearch(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.CustomerSearchResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -2673,17 +2673,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.DeleteCustomerRequest();
-  request.customerId = '<CUSTOMER ID>';
+const request = new BlockChyp.DeleteCustomerRequest();
+request.customerId = '<CUSTOMER ID>';
 
-  const httpResponse = await client.deleteCustomer(request)
-  const response: BlockChyp.DeleteCustomerResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.deleteCustomer(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.DeleteCustomerResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -2724,17 +2724,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.SurveyQuestionRequest();
+const request = new BlockChyp.SurveyQuestionRequest();
 
 
-  const httpResponse = await client.surveyQuestions(request)
-  const response: BlockChyp.SurveyQuestionResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.surveyQuestions(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.SurveyQuestionResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -2759,17 +2759,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.SurveyQuestionRequest();
-  request.questionId = '<QUESTION ID>';
+const request = new BlockChyp.SurveyQuestionRequest();
+request.questionId = '<QUESTION ID>';
 
-  const httpResponse = await client.surveyQuestion(request)
-  const response: BlockChyp.SurveyQuestion = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.surveyQuestion(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.SurveyQuestion = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -2803,21 +2803,21 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.SurveyQuestion();
-  request.id = '<QUESTION ID>';
-  request.ordinal = 1;
-  request.questionText = 'Would you shop here again?';
-  request.questionType = 'yes_no';
-  request.enabled = true;
+const request = new BlockChyp.SurveyQuestion();
+request.id = '<QUESTION ID>';
+request.ordinal = 1;
+request.questionText = 'Would you shop here again?';
+request.questionType = 'yes_no';
+request.enabled = true;
 
-  const httpResponse = await client.updateSurveyQuestion(request)
-  const response: BlockChyp.SurveyQuestion = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.updateSurveyQuestion(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.SurveyQuestion = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -2842,17 +2842,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.SurveyQuestionRequest();
-  request.questionId = '<QUESTION ID>';
+const request = new BlockChyp.SurveyQuestionRequest();
+request.questionId = '<QUESTION ID>';
 
-  const httpResponse = await client.deleteSurveyQuestion(request)
-  const response: BlockChyp.Acknowledgement = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.deleteSurveyQuestion(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.Acknowledgement = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -2889,17 +2889,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.SurveyResultsRequest();
-  request.questionId = '<QUESTION ID>';
+const request = new BlockChyp.SurveyResultsRequest();
+request.questionId = '<QUESTION ID>';
 
-  const httpResponse = await client.surveyResults(request)
-  const response: BlockChyp.SurveyQuestion = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.surveyResults(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.SurveyQuestion = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -2964,17 +2964,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.MediaRequest();
+const request = new BlockChyp.MediaRequest();
 
 
-  const httpResponse = await client.media(request)
-  const response: BlockChyp.MediaLibraryResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.media(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.MediaLibraryResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -3030,21 +3030,21 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.UploadMetadata();
-  request.fileName = 'aviato.png';
-  request.fileSize = 18843;
-  request.uploadId = '<RANDOM ID>';
+const request = new BlockChyp.UploadMetadata();
+request.fileName = 'aviato.png';
+request.fileSize = 18843;
+request.uploadId = '<RANDOM ID>';
 
-  const content = fs.readFileSync('aviato.png');
+const content = fs.readFileSync('aviato.png');
 
-  const httpResponse = await client.uploadMedia(request, content)
-  const response: BlockChyp.MediaMetadata = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.uploadMedia(request, content)
+.then(function(httpResponse) {
+    const response: BlockChyp.MediaMetadata = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -3076,17 +3076,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.UploadStatusRequest();
-  request.uploadId = '<UPLOAD ID>';
+const request = new BlockChyp.UploadStatusRequest();
+request.uploadId = '<UPLOAD ID>';
 
-  const httpResponse = await client.uploadStatus(request)
-  const response: BlockChyp.UploadStatus = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.uploadStatus(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.UploadStatus = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -3113,17 +3113,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.MediaRequest();
-  request.mediaId = '<MEDIA ASSET ID>';
+const request = new BlockChyp.MediaRequest();
+request.mediaId = '<MEDIA ASSET ID>';
 
-  const httpResponse = await client.mediaAsset(request)
-  const response: BlockChyp.MediaMetadata = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.mediaAsset(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.MediaMetadata = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -3149,17 +3149,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.MediaRequest();
-  request.mediaId = '<MEDIA ASSET ID>';
+const request = new BlockChyp.MediaRequest();
+request.mediaId = '<MEDIA ASSET ID>';
 
-  const httpResponse = await client.deleteMediaAsset(request)
-  const response: BlockChyp.Acknowledgement = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.deleteMediaAsset(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.Acknowledgement = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -3186,17 +3186,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.SlideShowRequest();
+const request = new BlockChyp.SlideShowRequest();
 
 
-  const httpResponse = await client.slideShows(request)
-  const response: BlockChyp.SlideShowResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.slideShows(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.SlideShowResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -3224,17 +3224,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.SlideShowRequest();
-  request.slideShowId = '<SLIDE SHOW ID>';
+const request = new BlockChyp.SlideShowRequest();
+request.slideShowId = '<SLIDE SHOW ID>';
 
-  const httpResponse = await client.slideShow(request)
-  const response: BlockChyp.SlideShow = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.slideShow(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.SlideShow = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -3266,23 +3266,23 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.SlideShow();
-  request.name = 'Test Slide Show';
-  request.delay = 5;
+const request = new BlockChyp.SlideShow();
+request.name = 'Test Slide Show';
+request.delay = 5;
 
-  const slides = new BlockChyp.Slide();
-  slides.mediaId = '<MEDIA ID>';
+const slides = new BlockChyp.Slide();
+slides.mediaId = '<MEDIA ID>';
 
-  request.slides = [slides];
+request.slides = [slides];
 
-  const httpResponse = await client.updateSlideShow(request)
-  const response: BlockChyp.SlideShow = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.updateSlideShow(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.SlideShow = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -3307,17 +3307,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.SlideShowRequest();
-  request.slideShowId = '<SLIDE SHOW ID>';
+const request = new BlockChyp.SlideShowRequest();
+request.slideShowId = '<SLIDE SHOW ID>';
 
-  const httpResponse = await client.deleteSlideShow(request)
-  const response: BlockChyp.Acknowledgement = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.deleteSlideShow(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.Acknowledgement = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -3351,17 +3351,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.BrandingAssetRequest();
+const request = new BlockChyp.BrandingAssetRequest();
 
 
-  const httpResponse = await client.terminalBranding(request)
-  const response: BlockChyp.BrandingAssetResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.terminalBranding(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.BrandingAssetResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -3449,26 +3449,26 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.BrandingAsset();
-  request.mediaId = '<MEDIA ID>';
-  request.padded = true;
-  request.ordinal = 10;
-  request.startDate = '01/06/2021';
-  request.startTime = '14:00';
-  request.endDate = '11/05/2024';
-  request.endTime = '16:00';
-  request.notes = 'Test Branding Asset';
-  request.preview = false;
-  request.enabled = true;
+const request = new BlockChyp.BrandingAsset();
+request.mediaId = '<MEDIA ID>';
+request.padded = true;
+request.ordinal = 10;
+request.startDate = '01/06/2021';
+request.startTime = '14:00';
+request.endDate = '11/05/2024';
+request.endTime = '16:00';
+request.notes = 'Test Branding Asset';
+request.preview = false;
+request.enabled = true;
 
-  const httpResponse = await client.updateBrandingAsset(request)
-  const response: BlockChyp.BrandingAsset = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.updateBrandingAsset(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.BrandingAsset = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -3496,17 +3496,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.BrandingAssetRequest();
-  request.assetId = '<BRANDING ASSET ID>';
+const request = new BlockChyp.BrandingAssetRequest();
+request.assetId = '<BRANDING ASSET ID>';
 
-  const httpResponse = await client.deleteBrandingAsset(request)
-  const response: BlockChyp.Acknowledgement = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.deleteBrandingAsset(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.Acknowledgement = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -3608,17 +3608,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.MerchantProfileRequest();
+const request = new BlockChyp.MerchantProfileRequest();
 
 
-  const httpResponse = await client.merchantProfile(request)
-  const response: BlockChyp.MerchantProfileResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.merchantProfile(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.MerchantProfileResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -3649,17 +3649,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.GetMerchantsRequest();
-  request.test = true;
+const request = new BlockChyp.GetMerchantsRequest();
+request.test = true;
 
-  const httpResponse = await client.getMerchants(request)
-  const response: BlockChyp.GetMerchantsResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.getMerchants(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.GetMerchantsResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -3747,27 +3747,27 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.MerchantProfile();
-  request.merchantId = '<MERCHANT ID>';
-  request.test = true;
-  request.dbaName = 'Test Merchant';
-  request.companyName = 'Test Merchant';
+const request = new BlockChyp.MerchantProfile();
+request.merchantId = '<MERCHANT ID>';
+request.test = true;
+request.dbaName = 'Test Merchant';
+request.companyName = 'Test Merchant';
 
-  const billingAddress = new BlockChyp.Address();
-  billingAddress.address1 = '1060 West Addison';
-  billingAddress.city = 'Chicago';
-  billingAddress.stateOrProvince = 'IL';
-  billingAddress.postalCode = '60613';
-  request.billingAddress = billingAddress;
+const billingAddress = new BlockChyp.Address();
+billingAddress.address1 = '1060 West Addison';
+billingAddress.city = 'Chicago';
+billingAddress.stateOrProvince = 'IL';
+billingAddress.postalCode = '60613';
+request.billingAddress = billingAddress;
 
-  const httpResponse = await client.updateMerchant(request)
-  const response: BlockChyp.MerchantProfileResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.updateMerchant(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.MerchantProfileResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -3792,17 +3792,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.MerchantProfileRequest();
-  request.merchantId = '<MERCHANT ID>';
+const request = new BlockChyp.MerchantProfileRequest();
+request.merchantId = '<MERCHANT ID>';
 
-  const httpResponse = await client.merchantUsers(request)
-  const response: BlockChyp.MerchantUsersResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.merchantUsers(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.MerchantUsersResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -3834,17 +3834,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.InviteMerchantUserRequest();
-  request.email = 'Email address for the invite';
+const request = new BlockChyp.InviteMerchantUserRequest();
+request.email = 'Email address for the invite';
 
-  const httpResponse = await client.inviteMerchantUser(request)
-  const response: BlockChyp.Acknowledgement = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.inviteMerchantUser(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.Acknowledgement = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -3872,18 +3872,18 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.AddTestMerchantRequest();
-  request.dbaName = 'DBA Name';
-  request.companyName = 'Corporate Entity Name';
+const request = new BlockChyp.AddTestMerchantRequest();
+request.dbaName = 'DBA Name';
+request.companyName = 'Corporate Entity Name';
 
-  const httpResponse = await client.addTestMerchant(request)
-  const response: BlockChyp.MerchantProfileResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.addTestMerchant(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.MerchantProfileResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -3908,17 +3908,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.MerchantProfileRequest();
-  request.merchantId = '<MERCHANT ID>';
+const request = new BlockChyp.MerchantProfileRequest();
+request.merchantId = '<MERCHANT ID>';
 
-  const httpResponse = await client.deleteTestMerchant(request)
-  const response: BlockChyp.Acknowledgement = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.deleteTestMerchant(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.Acknowledgement = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -3979,17 +3979,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.PricingPolicyRequest();
+const request = new BlockChyp.PricingPolicyRequest();
 
 
-  const httpResponse = await client.pricingPolicy(request)
-  const response: BlockChyp.PricingPolicyResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.pricingPolicy(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.PricingPolicyResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -4019,17 +4019,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.PartnerStatementListRequest();
+const request = new BlockChyp.PartnerStatementListRequest();
 
 
-  const httpResponse = await client.partnerStatements(request)
-  const response: BlockChyp.PartnerStatementListResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.partnerStatements(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.PartnerStatementListResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -4058,17 +4058,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.PartnerStatementDetailRequest();
+const request = new BlockChyp.PartnerStatementDetailRequest();
 
 
-  const httpResponse = await client.partnerStatementDetail(request)
-  const response: BlockChyp.PartnerStatementDetailResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.partnerStatementDetail(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.PartnerStatementDetailResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -4098,17 +4098,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.MerchantInvoiceListRequest();
+const request = new BlockChyp.MerchantInvoiceListRequest();
 
 
-  const httpResponse = await client.merchantInvoices(request)
-  const response: BlockChyp.MerchantInvoiceListResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.merchantInvoices(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.MerchantInvoiceListResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -4139,17 +4139,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.MerchantInvoiceDetailRequest();
+const request = new BlockChyp.MerchantInvoiceDetailRequest();
 
 
-  const httpResponse = await client.merchantInvoiceDetail(request)
-  const response: BlockChyp.MerchantInvoiceDetailResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.merchantInvoiceDetail(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.MerchantInvoiceDetailResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -4176,17 +4176,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.PartnerCommissionBreakdownRequest();
+const request = new BlockChyp.PartnerCommissionBreakdownRequest();
 
 
-  const httpResponse = await client.partnerCommissionBreakdown(request)
-  const response: BlockChyp.PartnerCommissionBreakdownResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.partnerCommissionBreakdown(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.PartnerCommissionBreakdownResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -4219,17 +4219,17 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.MerchantCredentialGenerationRequest();
+const request = new BlockChyp.MerchantCredentialGenerationRequest();
 
 
-  const httpResponse = await client.merchantCredentialGeneration(request)
-  const response: BlockChyp.MerchantCredentialGenerationResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.merchantCredentialGeneration(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.MerchantCredentialGenerationResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
 
 ```
 
@@ -4265,13 +4265,17 @@ To run the integration test suite via `make`, type the following command:
 ## Running Integration Tests With Jasmine
 
 If you'd like to bypass make and run the integration test suite directly,
-use the following command:
+first compile the Typescript with the following command:
 
-`BC_TEST_DELAY=5 jasmine itest/*Spec.ts`
+`npm run build`
 
-If you'd like to run individual tests, try the following command:
+Then use the following command:
 
-`jasmine itest/TerminalChargeITestSpec.ts`
+`BC_TEST_DELAY=5 jasmine itest/*Spec.js`
+
+If you'd like to run individual tests, try the following command after compiling:
+
+`jasmine itest/TerminalChargeITestSpec.js`
 
 ## Contributions
 

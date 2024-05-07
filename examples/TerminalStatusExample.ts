@@ -6,14 +6,14 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.TerminalStatusRequest();
-  request.terminalName = 'Test Terminal';
+const request = new BlockChyp.TerminalStatusRequest();
+request.terminalName = 'Test Terminal';
 
-  const httpResponse = await client.terminalStatus(request)
-  const response: BlockChyp.TerminalStatusResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.terminalStatus(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.TerminalStatusResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });

@@ -1,5 +1,5 @@
 import createHmac from 'create-hmac'
-const randomBytes = require('randombytes/browser')
+const randomBytes = require('randombytes')
 import moment from 'moment'
 const base32 = require('base32')
 import shajs from 'sha.js'

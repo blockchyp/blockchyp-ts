@@ -8,14 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient, MessageRequest, Acknowledgement } from '../index';
-import { RefundRequest } from '../index';
-import { AuthorizationResponse } from '../index';
-import { AuthorizationRequest } from '../index';
+import * as BlockChyp from '../index';
 
 describe('PartialRefund', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -24,7 +21,7 @@ describe('PartialRefund', function () {
   });
 
   it('Can execute a partial refund', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -36,7 +33,7 @@ describe('PartialRefund', function () {
     }
 
     if (testDelayInt > 0) {
-      const messageRequest = new MessageRequest();
+      const messageRequest = new BlockChyp.MessageRequest();
       messageRequest.test = true;
       messageRequest.terminalName = Config.getTerminalName();
       messageRequest.message = 'Running PartialRefund in ' + testDelay + ' seconds...';
@@ -55,14 +52,14 @@ describe('PartialRefund', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const setupRequest = new AuthorizationRequest();
+        const setupRequest = new BlockChyp.AuthorizationRequest();
           setupRequest.pan = '4111111111111111';
         setupRequest.expMonth = '12';
         setupRequest.expYear = '2025';
         setupRequest.amount = '25.55';
         setupRequest.test = true;
         setupRequest.transactionRef = uuidv4();
-        let setupResponse: AuthorizationResponse = new AuthorizationResponse();
+        let setupResponse: BlockChyp.AuthorizationResponse = new BlockChyp.AuthorizationResponse();
         const setupHttpResponse = await client.charge(setupRequest);
         if (setupHttpResponse.status !== 200) {
           console.log('Error:', setupHttpResponse.statusText);
@@ -72,13 +69,13 @@ describe('PartialRefund', function () {
         setupResponse = setupHttpResponse.data
 
         // setup request object
-        const request = new RefundRequest();
+        const request = new BlockChyp.RefundRequest();
         request.transactionId = setupResponse.transactionId;
         request.amount = '5.00';
         request.test = true;
 
         const httpResponse = await client.refund(request)
-        const response: AuthorizationResponse = httpResponse.data;
+        const response: BlockChyp.AuthorizationResponse = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
         expect(response.approved).toBe(true);

@@ -1,4 +1,4 @@
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -6,20 +6,20 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.SlideShow();
-  request.name = 'Test Slide Show';
-  request.delay = 5;
+const request = new BlockChyp.SlideShow();
+request.name = 'Test Slide Show';
+request.delay = 5;
 
-  const slides = new Slide();
-  slides.mediaId = '<MEDIA ID>';
+const slides = new BlockChyp.Slide();
+slides.mediaId = '<MEDIA ID>';
 
-  request.slides = [slides];
+request.slides = [slides];
 
-  const httpResponse = await client.updateSlideShow(request)
-  const response: BlockChyp.SlideShow = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.updateSlideShow(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.SlideShow = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });

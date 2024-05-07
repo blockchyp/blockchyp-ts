@@ -8,13 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient } from '../index';
-import { PricingPolicyRequest } from '../index';
-import { PricingPolicyResponse } from '../index';
+import * as BlockChyp from '../index';
 
 describe('PricingPolicy', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -23,7 +21,7 @@ describe('PricingPolicy', function () {
   });
 
   it('can retrieve pricing policy', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds("partner"));
+    client = BlockChyp.newClient(Config.getCreds("partner"));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -39,12 +37,12 @@ describe('PricingPolicy', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const request = new PricingPolicyRequest();
+        const request = new BlockChyp.PricingPolicyRequest();
         request.test = true;
         request.merchantId = '<MERCHANT ID>';
 
         const httpResponse = await client.pricingPolicy(request)
-        const response: PricingPolicyResponse = httpResponse.data;
+        const response: BlockChyp.PricingPolicyResponse = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
 

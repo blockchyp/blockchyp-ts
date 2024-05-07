@@ -81,4 +81,4 @@ stage:
 # Publish packages
 .PHONY: publish
 publish:
-	$(NPM) publish
+	$(NPM) publish --access=restricted

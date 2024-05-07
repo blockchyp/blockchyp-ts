@@ -8,13 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient, MessageRequest, Acknowledgement } from '../index';
-import { EnrollRequest } from '../index';
-import { EnrollResponse } from '../index';
+import * as BlockChyp from '../index';
 
 describe('TerminalEnroll', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -23,7 +21,7 @@ describe('TerminalEnroll', function () {
   });
 
   it('Can enroll the user in the token vault via the terminal', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -35,7 +33,7 @@ describe('TerminalEnroll', function () {
     }
 
     if (testDelayInt > 0) {
-      const messageRequest = new MessageRequest();
+      const messageRequest = new BlockChyp.MessageRequest();
       messageRequest.test = true;
       messageRequest.terminalName = Config.getTerminalName();
       messageRequest.message = 'Running TerminalEnroll in ' + testDelay + ' seconds...';
@@ -54,12 +52,12 @@ describe('TerminalEnroll', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const request = new EnrollRequest();
+        const request = new BlockChyp.EnrollRequest();
         request.terminalName = Config.getTerminalName();
         request.test = true;
 
         const httpResponse = await client.enroll(request)
-        const response: EnrollResponse = httpResponse.data;
+        const response: BlockChyp.EnrollResponse = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
         expect(response.approved).toBe(true);

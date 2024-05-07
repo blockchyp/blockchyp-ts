@@ -8,13 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient } from '../index';
-import { TerminalProfileRequest } from '../index';
-import { TerminalProfileResponse } from '../index';
+import * as BlockChyp from '../index';
 
 describe('ListTerminals', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -23,7 +21,7 @@ describe('ListTerminals', function () {
   });
 
   it('lists all terminals associated with an account.', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -39,11 +37,11 @@ describe('ListTerminals', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const request = new TerminalProfileRequest();
+        const request = new BlockChyp.TerminalProfileRequest();
 
 
         const httpResponse = await client.terminals(request)
-        const response: TerminalProfileResponse = httpResponse.data;
+        const response: BlockChyp.TerminalProfileResponse = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
 

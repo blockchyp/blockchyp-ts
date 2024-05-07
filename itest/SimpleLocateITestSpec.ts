@@ -8,13 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient } from '../index';
-import { LocateRequest } from '../index';
-import { LocateResponse } from '../index';
+import * as BlockChyp from '../index';
 
 describe('SimpleLocate', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -23,7 +21,7 @@ describe('SimpleLocate', function () {
   });
 
   it('Can test location lookup for a terminal', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -39,12 +37,12 @@ describe('SimpleLocate', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const request = new LocateRequest();
+        const request = new BlockChyp.LocateRequest();
         request.test = true;
         request.terminalName = Config.getTerminalName();
 
         const httpResponse = await client.locate(request)
-        const response: LocateResponse = httpResponse.data;
+        const response: BlockChyp.LocateResponse = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
 

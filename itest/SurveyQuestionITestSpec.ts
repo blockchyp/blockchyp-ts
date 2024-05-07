@@ -8,14 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient } from '../index';
-import { SurveyQuestionRequest } from '../index';
-import { SurveyQuestion } from '../index';
-import { SurveyQuestionResponse } from '../index';
+import * as BlockChyp from '../index';
 
 describe('SurveyQuestion', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -24,7 +21,7 @@ describe('SurveyQuestion', function () {
   });
 
   it('returns a single survey question.', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -40,9 +37,9 @@ describe('SurveyQuestion', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const setupRequest = new SurveyQuestionRequest();
+        const setupRequest = new BlockChyp.SurveyQuestionRequest();
 
-        let setupResponse: SurveyQuestionResponse = new SurveyQuestionResponse();
+        let setupResponse: BlockChyp.SurveyQuestionResponse = new BlockChyp.SurveyQuestionResponse();
         const setupHttpResponse = await client.surveyQuestions(setupRequest);
         if (setupHttpResponse.status !== 200) {
           console.log('Error:', setupHttpResponse.statusText);
@@ -52,11 +49,11 @@ describe('SurveyQuestion', function () {
         setupResponse = setupHttpResponse.data
 
         // setup request object
-        const request = new SurveyQuestionRequest();
+        const request = new BlockChyp.SurveyQuestionRequest();
         request.questionId = setupResponse?.results && setupResponse.results[0]?.id;
 
         const httpResponse = await client.surveyQuestion(request)
-        const response: SurveyQuestion = httpResponse.data;
+        const response: BlockChyp.SurveyQuestion = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
 

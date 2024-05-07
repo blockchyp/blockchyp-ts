@@ -8,15 +8,11 @@
 import * as fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient } from '../index';
-import { SlideShow } from '../index';
-import { Slide } from '../index';
-import { UploadMetadata } from '../index';
-import { MediaMetadata } from '../index';
+import * as BlockChyp from '../index';
 
 describe('UpdateSlideShow', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -25,7 +21,7 @@ describe('UpdateSlideShow', function () {
   });
 
   it('updates or creates a slide show.', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -41,11 +37,11 @@ describe('UpdateSlideShow', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const setupRequest = new UploadMetadata();
+        const setupRequest = new BlockChyp.UploadMetadata();
           setupRequest.fileName = 'aviato.png';
         setupRequest.fileSize = 18843;
         setupRequest.uploadId = uuidv4();
-        let setupResponse: MediaMetadata = new MediaMetadata();
+        let setupResponse: BlockChyp.MediaMetadata = new BlockChyp.MediaMetadata();
         const content = fs.readFileSync('support/aviato.png');
         const setupHttpResponse = await client.uploadMedia(setupRequest, content);
                 if (setupHttpResponse.status !== 200) {
@@ -56,17 +52,17 @@ describe('UpdateSlideShow', function () {
         setupResponse = setupHttpResponse.data
 
         // setup request object
-        const request = new SlideShow();
+        const request = new BlockChyp.SlideShow();
         request.name = 'Test Slide Show';
         request.delay = 5;
 
-        const slides = new Slide();
+        const slides = new BlockChyp.Slide();
         slides.mediaId = setupResponse.id;
 
         request.slides = [slides];
 
         const httpResponse = await client.updateSlideShow(request)
-        const response: SlideShow = httpResponse.data;
+        const response: BlockChyp.SlideShow = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
         expect(response.name)?.toEqual('Test Slide Show');

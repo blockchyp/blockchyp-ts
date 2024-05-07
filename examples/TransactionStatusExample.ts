@@ -1,4 +1,4 @@
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -6,14 +6,14 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.TransactionStatusRequest();
-  request.transactionId = '<TRANSACTION ID>';
+const request = new BlockChyp.TransactionStatusRequest();
+request.transactionId = '<TRANSACTION ID>';
 
-  const httpResponse = await client.transactionStatus(request)
-  const response: BlockChyp.AuthorizationResponse = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.transactionStatus(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.AuthorizationResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });

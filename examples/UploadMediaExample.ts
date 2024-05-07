@@ -1,4 +1,4 @@
-import BlockChyp from '@blockchyp/blockchyp-ts';
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
 import fs from 'fs';
 const client = BlockChyp.newClient({
   apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
@@ -6,18 +6,18 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-try {
-  const request = new BlockChyp.UploadMetadata();
-  request.fileName = 'aviato.png';
-  request.fileSize = 18843;
-  request.uploadId = '<RANDOM ID>';
+const request = new BlockChyp.UploadMetadata();
+request.fileName = 'aviato.png';
+request.fileSize = 18843;
+request.uploadId = '<RANDOM ID>';
 
-  const content = fs.readFileSync('aviato.png');
+const content = fs.readFileSync('aviato.png');
 
-  const httpResponse = await client.uploadMedia(request, content)
-  const response: BlockChyp.MediaMetadata = httpResponse.data;
-  console.log('Response: ' + JSON.stringify(response));
-
-} catch (error) {
-  console.log(error);
-}
+client.uploadMedia(request, content)
+.then(function(httpResponse) {
+    const response: BlockChyp.MediaMetadata = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });

@@ -8,14 +8,11 @@
 import * as fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient } from '../index';
-import { BrandingAsset } from '../index';
-import { UploadMetadata } from '../index';
-import { MediaMetadata } from '../index';
+import * as BlockChyp from '../index';
 
 describe('UpdateBrandingAsset', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -24,7 +21,7 @@ describe('UpdateBrandingAsset', function () {
   });
 
   it('updates a terminal branding asset.', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -40,11 +37,11 @@ describe('UpdateBrandingAsset', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const setupRequest = new UploadMetadata();
+        const setupRequest = new BlockChyp.UploadMetadata();
           setupRequest.fileName = 'aviato.png';
         setupRequest.fileSize = 18843;
         setupRequest.uploadId = uuidv4();
-        let setupResponse: MediaMetadata = new MediaMetadata();
+        let setupResponse: BlockChyp.MediaMetadata = new BlockChyp.MediaMetadata();
         const content = fs.readFileSync('support/aviato.png');
         const setupHttpResponse = await client.uploadMedia(setupRequest, content);
                 if (setupHttpResponse.status !== 200) {
@@ -55,7 +52,7 @@ describe('UpdateBrandingAsset', function () {
         setupResponse = setupHttpResponse.data
 
         // setup request object
-        const request = new BrandingAsset();
+        const request = new BlockChyp.BrandingAsset();
         request.mediaId = setupResponse.id;
         request.padded = true;
         request.ordinal = 10;
@@ -68,7 +65,7 @@ describe('UpdateBrandingAsset', function () {
         request.enabled = true;
 
         const httpResponse = await client.updateBrandingAsset(request)
-        const response: BrandingAsset = httpResponse.data;
+        const response: BlockChyp.BrandingAsset = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
 

@@ -8,14 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient } from '../index';
-import { TermsAndConditionsLogRequest } from '../index';
-import { TermsAndConditionsLogEntry } from '../index';
-import { TermsAndConditionsLogResponse } from '../index';
+import * as BlockChyp from '../index';
 
 describe('TCEntry', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -24,7 +21,7 @@ describe('TCEntry', function () {
   });
 
   it('returns a detailed terms and conditions entry.', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -40,9 +37,9 @@ describe('TCEntry', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const setupRequest = new TermsAndConditionsLogRequest();
+        const setupRequest = new BlockChyp.TermsAndConditionsLogRequest();
 
-        let setupResponse: TermsAndConditionsLogResponse = new TermsAndConditionsLogResponse();
+        let setupResponse: BlockChyp.TermsAndConditionsLogResponse = new BlockChyp.TermsAndConditionsLogResponse();
         const setupHttpResponse = await client.tcLog(setupRequest);
         if (setupHttpResponse.status !== 200) {
           console.log('Error:', setupHttpResponse.statusText);
@@ -52,11 +49,11 @@ describe('TCEntry', function () {
         setupResponse = setupHttpResponse.data
 
         // setup request object
-        const request = new TermsAndConditionsLogRequest();
+        const request = new BlockChyp.TermsAndConditionsLogRequest();
         request.logEntryId = setupResponse?.results && setupResponse.results[0]?.id;
 
         const httpResponse = await client.tcEntry(request)
-        const response: TermsAndConditionsLogEntry = httpResponse.data;
+        const response: BlockChyp.TermsAndConditionsLogEntry = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
         expect(response.id?.trim().length).toBeGreaterThan(0);

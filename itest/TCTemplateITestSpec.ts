@@ -8,13 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient } from '../index';
-import { TermsAndConditionsTemplateRequest } from '../index';
-import { TermsAndConditionsTemplate } from '../index';
+import * as BlockChyp from '../index';
 
 describe('TCTemplate', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -23,7 +21,7 @@ describe('TCTemplate', function () {
   });
 
   it('returns a single terms and conditions template.', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -39,11 +37,11 @@ describe('TCTemplate', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const setupRequest = new TermsAndConditionsTemplate();
+        const setupRequest = new BlockChyp.TermsAndConditionsTemplate();
           setupRequest.alias = uuidv4();
         setupRequest.name = 'HIPPA Disclosure';
         setupRequest.content = 'Lorem ipsum dolor sit amet.';
-        let setupResponse: TermsAndConditionsTemplate = new TermsAndConditionsTemplate();
+        let setupResponse: BlockChyp.TermsAndConditionsTemplate = new BlockChyp.TermsAndConditionsTemplate();
         const setupHttpResponse = await client.tcUpdateTemplate(setupRequest);
         if (setupHttpResponse.status !== 200) {
           console.log('Error:', setupHttpResponse.statusText);
@@ -53,11 +51,11 @@ describe('TCTemplate', function () {
         setupResponse = setupHttpResponse.data
 
         // setup request object
-        const request = new TermsAndConditionsTemplateRequest();
+        const request = new BlockChyp.TermsAndConditionsTemplateRequest();
         request.templateId = setupResponse.id;
 
         const httpResponse = await client.tcTemplate(request)
-        const response: TermsAndConditionsTemplate = httpResponse.data;
+        const response: BlockChyp.TermsAndConditionsTemplate = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
         expect(response.name)?.toEqual('HIPPA Disclosure');

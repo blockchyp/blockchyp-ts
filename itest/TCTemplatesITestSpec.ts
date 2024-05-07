@@ -8,13 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient } from '../index';
-import { TermsAndConditionsTemplateRequest } from '../index';
-import { TermsAndConditionsTemplateResponse } from '../index';
+import * as BlockChyp from '../index';
 
 describe('TCTemplates', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -23,7 +21,7 @@ describe('TCTemplates', function () {
   });
 
   it('lists all terms and conditions template associated with a merchant account.', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -39,11 +37,11 @@ describe('TCTemplates', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const request = new TermsAndConditionsTemplateRequest();
+        const request = new BlockChyp.TermsAndConditionsTemplateRequest();
 
 
         const httpResponse = await client.tcTemplates(request)
-        const response: TermsAndConditionsTemplateResponse = httpResponse.data;
+        const response: BlockChyp.TermsAndConditionsTemplateResponse = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
 

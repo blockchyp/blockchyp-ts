@@ -8,13 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient } from '../index';
-import { MerchantProfileRequest } from '../index';
-import { MerchantProfileResponse } from '../index';
+import * as BlockChyp from '../index';
 
 describe('MerchantProfile', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -23,7 +21,7 @@ describe('MerchantProfile', function () {
   });
 
   it('can retrieve merchant profile', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -39,11 +37,11 @@ describe('MerchantProfile', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const request = new MerchantProfileRequest();
+        const request = new BlockChyp.MerchantProfileRequest();
         request.test = true;
 
         const httpResponse = await client.merchantProfile(request)
-        const response: MerchantProfileResponse = httpResponse.data;
+        const response: BlockChyp.MerchantProfileResponse = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
 

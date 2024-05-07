@@ -8,14 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient } from '../index';
-import { SlideShowRequest } from '../index';
-import { SlideShowResponse } from '../index';
-import { SlideShow } from '../index';
+import * as BlockChyp from '../index';
 
 describe('SlideShows', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -24,7 +21,7 @@ describe('SlideShows', function () {
   });
 
   it('returns a collection of slide shows.', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -40,10 +37,10 @@ describe('SlideShows', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const setupRequest = new SlideShow();
+        const setupRequest = new BlockChyp.SlideShow();
           setupRequest.name = 'Test Slide Show';
         setupRequest.delay = 5;
-        let setupResponse: SlideShow = new SlideShow();
+        let setupResponse: BlockChyp.SlideShow = new BlockChyp.SlideShow();
         const setupHttpResponse = await client.updateSlideShow(setupRequest);
         if (setupHttpResponse.status !== 200) {
           console.log('Error:', setupHttpResponse.statusText);
@@ -53,11 +50,11 @@ describe('SlideShows', function () {
         setupResponse = setupHttpResponse.data
 
         // setup request object
-        const request = new SlideShowRequest();
+        const request = new BlockChyp.SlideShowRequest();
 
 
         const httpResponse = await client.slideShows(request)
-        const response: SlideShowResponse = httpResponse.data;
+        const response: BlockChyp.SlideShowResponse = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
 

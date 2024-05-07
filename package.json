@@ -2,11 +2,11 @@
   "name": "@blockchyp/blockchyp-ts",
   "version": "1.0.0",
   "description": "BlockChyp Typescript Client",
-  "main": "dist/index.js",
+  "main": "index.js",
   "scripts": {
     "lint": "eslint . --ext .ts",
     "clean": "tsc --build --clean",
-    "test": "jasmine itest/*Spec.js",
+    "test": "npm run build && jasmine",
     "build": "tsc",
     "prod": "npm run lint && npm run build",
     "prepare": "npm run prod"
@@ -57,7 +57,6 @@
     "uuid": "^3.3.3"
   },
   "dependencies": {
-    "@blockchyp/blockchyp-ts": "github:blockchyp/blockchyp-ts#feature/CHYP-3472",
     "aes-js": "^3.1.1",
     "axios": "^0.21.1",
     "base32": "^0.0.7",

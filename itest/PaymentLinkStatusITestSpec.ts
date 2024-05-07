@@ -8,18 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient } from '../index';
-import { PaymentLinkStatusRequest } from '../index';
-import { PaymentLinkStatusResponse } from '../index';
-import { PaymentLinkRequest } from '../index';
-import { PaymentLinkResponse } from '../index';
-import { TransactionDisplayTransaction } from '../index';
-import { TransactionDisplayItem } from '../index';
-import { Customer } from '../index';
+import * as BlockChyp from '../index';
 
 describe('PaymentLinkStatus', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -28,7 +21,7 @@ describe('PaymentLinkStatus', function () {
   });
 
   it('can return the status of a payment link', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -44,17 +37,17 @@ describe('PaymentLinkStatus', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const setupRequest = new PaymentLinkRequest();
+        const setupRequest = new BlockChyp.PaymentLinkRequest();
           setupRequest.amount = '199.99';
         setupRequest.description = 'Widget';
         setupRequest.subject = 'Widget invoice';
 
-        const transaction = new TransactionDisplayTransaction();
+        const transaction = new BlockChyp.TransactionDisplayTransaction();
         transaction.subtotal = '195.00';
         transaction.tax = '4.99';
         transaction.total = '199.99';
 
-        const items = new TransactionDisplayItem();
+        const items = new BlockChyp.TransactionDisplayItem();
         items.description = 'Widget';
         items.price = '195.00';
         items.quantity = 1;
@@ -63,7 +56,7 @@ describe('PaymentLinkStatus', function () {
         setupRequest.transaction = transaction;
         setupRequest.autoSend = true;
 
-        const customer = new Customer();
+        const customer = new BlockChyp.Customer();
         customer.customerRef = 'Customer reference string';
         customer.firstName = 'FirstName';
         customer.lastName = 'LastName';
@@ -71,7 +64,7 @@ describe('PaymentLinkStatus', function () {
         customer.emailAddress = 'notifications@blockchypteam.m8r.co';
         customer.smsNumber = '(123) 123-1231';
         setupRequest.customer = customer;
-        let setupResponse: PaymentLinkResponse = new PaymentLinkResponse();
+        let setupResponse: BlockChyp.PaymentLinkResponse = new BlockChyp.PaymentLinkResponse();
         const setupHttpResponse = await client.sendPaymentLink(setupRequest);
         if (setupHttpResponse.status !== 200) {
           console.log('Error:', setupHttpResponse.statusText);
@@ -81,11 +74,11 @@ describe('PaymentLinkStatus', function () {
         setupResponse = setupHttpResponse.data
 
         // setup request object
-        const request = new PaymentLinkStatusRequest();
+        const request = new BlockChyp.PaymentLinkStatusRequest();
         request.linkCode = setupResponse.linkCode;
 
         const httpResponse = await client.paymentLinkStatus(request)
-        const response: PaymentLinkStatusResponse = httpResponse.data;
+        const response: BlockChyp.PaymentLinkStatusResponse = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
 

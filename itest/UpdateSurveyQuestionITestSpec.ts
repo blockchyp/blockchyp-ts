@@ -8,12 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient } from '../index';
-import { SurveyQuestion } from '../index';
+import * as BlockChyp from '../index';
 
 describe('UpdateSurveyQuestion', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -22,7 +21,7 @@ describe('UpdateSurveyQuestion', function () {
   });
 
   it('update or create a survey question.', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -38,13 +37,13 @@ describe('UpdateSurveyQuestion', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const request = new SurveyQuestion();
+        const request = new BlockChyp.SurveyQuestion();
         request.ordinal = 1;
         request.questionText = 'Would you shop here again?';
         request.questionType = 'yes_no';
 
         const httpResponse = await client.updateSurveyQuestion(request)
-        const response: SurveyQuestion = httpResponse.data;
+        const response: BlockChyp.SurveyQuestion = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
         expect(response.questionText)?.toEqual('Would you shop here again?');

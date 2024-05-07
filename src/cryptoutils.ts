@@ -1,8 +1,8 @@
-const createHmac = require('create-hmac')
-const randomBytes = require('randombytes')
-const moment = require('moment')
+import createHmac from 'create-hmac'
+import randomBytes from 'randombytes'
+import moment from 'moment'
 const base32 = require('base32')
-const shajs = require('sha.js')
+import shajs from 'sha.js'
 import * as EC from 'elliptic'
 import * as aesjs from 'aes-js'
 import { BlockChypCredentials } from './client'
@@ -68,7 +68,7 @@ export class BlockChypCrypto {
   }
 
   generateNonce () {
-    return base32.encode(randomBytes(32), "Crockford").toUpperCase()
+    return base32.encode(randomBytes(32)).toUpperCase()
   }
 
   generateIsoTimestamp () {

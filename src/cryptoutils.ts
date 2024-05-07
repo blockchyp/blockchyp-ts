@@ -1,5 +1,5 @@
 import createHmac from 'create-hmac'
-import randomBytes from 'randombytes'
+const randomBytes = require('randombytes/browser')
 import moment from 'moment'
 const base32 = require('base32')
 import shajs from 'sha.js'
@@ -75,6 +75,13 @@ export class BlockChypCrypto {
     return moment().utc().format('YYYY-MM-DDTHH:mm:ss') + 'Z'
   }
 }
+
+function getRandomBytes(length: number) {
+  const buffer = new Uint8Array(length);
+  crypto.getRandomValues(buffer);
+  return buffer;
+}
+
 
 const CryptoUtils = new BlockChypCrypto()
 export default CryptoUtils

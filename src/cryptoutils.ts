@@ -1,5 +1,5 @@
 import createHmac from 'create-hmac'
-const randomBytes = require('randombytes')
+
 import moment from 'moment'
 const base32 = require('base32')
 import shajs from 'sha.js'
@@ -30,7 +30,7 @@ export class BlockChypCrypto {
     const key = Buffer.from(hexKey, 'hex').slice(0, 32)
     const keyArr = [...key]
 
-    const iv = randomBytes(16)
+    const iv = getRandomBytes(16)
     const ivArr = [...iv]
 
     const aesCbc = new aesjs.ModeOfOperation.cbc(keyArr, ivArr)
@@ -68,7 +68,7 @@ export class BlockChypCrypto {
   }
 
   generateNonce () {
-    return base32.encode(randomBytes(32)).toUpperCase()
+    return base32.encode(getRandomBytes(32)).toUpperCase()
   }
 
   generateIsoTimestamp () {
@@ -77,9 +77,16 @@ export class BlockChypCrypto {
 }
 
 function getRandomBytes(length: number) {
-  const buffer = new Uint8Array(length);
-  crypto.getRandomValues(buffer);
-  return buffer;
+  if (typeof window !== 'undefined' && window.crypto) {
+    // Browser environment with Web Crypto API
+    const crypto = window.crypto
+    const array = new Uint8Array(length);
+    return crypto.getRandomValues(array);
+  } else {
+    // Node.js environment with crypto module
+    const crypto = require('crypto'); // Import only in Node.js environment
+    return crypto.randomBytes(length);
+  }
 }
 
 

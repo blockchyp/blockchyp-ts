@@ -3,14 +3,14 @@
   "version": "1.0.0",
   "description": "BlockChyp Typescript Client",
   "main": "index.js",
-  "browser": "bundle.js",
+  "browser": "src/global_bundle.js",
   "types": "index.d.ts",
   "scripts": {
     "lint": "eslint . --ext .ts",
-    "clean": "tsc --build --clean && rm -f bundle.js",
+    "clean": "tsc --build --clean && rm -f src/global_bundle.js",
     "test": "npm run build && jasmine",
     "build": "npm run lint && tsc",
-    "prod": "npm run build && browserify index.ts -p [ tsify --noImplicitAny ] > bundle.js",
+    "prod": "npm run build && browserify src/global.ts -p [ tsify --noImplicitAny ] > src/global_bundle.js",
     "prepare": "npm run prod"
   },
   "files": [

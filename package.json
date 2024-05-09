@@ -18,7 +18,8 @@
     "src/",
     "spec/",
     "itest/",
-    ".eslintrc.json"
+    ".eslintrc.json",
+    "index.d.ts"
   ],
   "repository": {
     "type": "git",

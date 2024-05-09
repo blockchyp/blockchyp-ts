@@ -2,6 +2,7 @@
 
 # js files
 index.js
+bundle.js
 src/*.js
 itest/**/*.js
 spec/**/*.js

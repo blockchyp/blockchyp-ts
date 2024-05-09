@@ -42187,12 +42187,13 @@ module.exports={
   "version": "1.0.0",
   "description": "BlockChyp Typescript Client",
   "main": "index.js",
+  "browser": "bundle.js",
   "scripts": {
     "lint": "eslint . --ext .ts",
     "clean": "tsc --build --clean",
     "test": "npm run build && jasmine",
     "build": "npm run lint && tsc",
-    "prod": "npm run build && browserify src/global.js -o src/blockchyp-js-all.js && uglifyjs src/blockchyp-js-all.js -o src/blockchyp-js-all.min.js",
+    "prod": "npm run build && browserify index.ts -p [ tsify --noImplicitAny ] > bundle.js",
     "prepare": "npm run prod"
   },
   "files": [
@@ -43294,11 +43295,6 @@ class BlockChypCrypto {
     }
 }
 exports.BlockChypCrypto = BlockChypCrypto;
-function getRandomBytes(length) {
-    const buffer = new Uint8Array(length);
-    crypto.getRandomValues(buffer);
-    return buffer;
-}
 const CryptoUtils = new BlockChypCrypto();
 exports.default = CryptoUtils;
 

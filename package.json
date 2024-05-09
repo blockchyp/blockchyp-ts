@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "BlockChyp Typescript Client",
   "main": "index.js",
-  "browser": {
-    "src/client.js" : "src/global_bundle.js"
-  },
+  "browser": "src/global_bundle.js",
   "types": "index.d.ts",
   "scripts": {
     "lint": "eslint . --ext .ts",

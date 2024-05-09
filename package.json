@@ -2,15 +2,15 @@
   "name": "@blockchyp/blockchyp-ts",
   "version": "1.0.0",
   "description": "BlockChyp Typescript Client",
-  "main": "index.js",
-  "browser": "src/global_bundle.js",
-  "types": "index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "lint": "eslint . --ext .ts",
     "clean": "tsc --build --clean && rm -f src/global_bundle.js",
     "test": "npm run build && jasmine",
-    "build": "npm run lint && tsc",
-    "prod": "npm run build && browserify src/global.ts -p [ tsify --noImplicitAny ] > src/global_bundle.js",
+    "build": "npm run lint && tsup",
+    "prod": "npm run build",
     "prepare": "npm run prod"
   },
   "files": [
@@ -21,6 +21,13 @@
     ".eslintrc.json",
     "index.d.ts"
   ],
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/blockchyp/blockchyp-ts.git"
@@ -74,6 +81,7 @@
     "randombytes": "^2.1.0",
     "sha.js": "^2.4.11",
     "tsify": "^5.0.4",
+    "tsup": "^8.0.2",
     "uuidv4": "^6.2.13"
   }
 }

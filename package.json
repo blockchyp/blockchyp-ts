@@ -2,9 +2,10 @@
   "name": "@blockchyp/blockchyp-ts",
   "version": "1.0.0",
   "description": "BlockChyp Typescript Client",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "type": "module",
   "scripts": {
     "lint": "eslint . --ext .ts",
     "clean": "tsc --build --clean && rm -rf dist",

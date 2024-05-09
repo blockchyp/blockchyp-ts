@@ -6,7 +6,7 @@
   "browser": "bundle.js",
   "scripts": {
     "lint": "eslint . --ext .ts",
-    "clean": "tsc --build --clean",
+    "clean": "tsc --build --clean && rm -f bundle.js",
     "test": "npm run build && jasmine",
     "build": "npm run lint && tsc",
     "prod": "npm run build && browserify index.ts -p [ tsify --noImplicitAny ] > bundle.js",

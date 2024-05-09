@@ -5,6 +5,7 @@
     "rootDir": "./",
     "baseUrl": "./",
     "moduleResolution": "node",
+    "declaration": true,
     "sourceMap":true,
     // "outDir": "./dist",
     "downlevelIteration": true,

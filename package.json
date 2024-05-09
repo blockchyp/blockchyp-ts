@@ -4,6 +4,7 @@
   "description": "BlockChyp Typescript Client",
   "main": "index.js",
   "browser": "bundle.js",
+  "types": "index.d.ts",
   "scripts": {
     "lint": "eslint . --ext .ts",
     "clean": "tsc --build --clean && rm -f bundle.js",

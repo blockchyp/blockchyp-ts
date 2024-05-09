@@ -6,6 +6,12 @@ src/*.js
 itest/**/*.js
 spec/**/*.js
 
+# js map files
+index.js.map
+src/*.js.map
+itest/**/*.js.map
+spec/**/*.js.map
+
 # Logs
 logs
 *.log

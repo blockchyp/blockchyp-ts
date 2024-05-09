@@ -22,3 +22,4 @@ __exportStar(require("./src/client"), exports);
 var client_1 = require("./src/client");
 Object.defineProperty(exports, "BlockChypClient", { enumerable: true, get: function () { return __importDefault(client_1).default; } });
 __exportStar(require("./src/models"), exports);
+//# sourceMappingURL=index.js.map

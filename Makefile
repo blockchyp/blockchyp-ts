@@ -82,5 +82,5 @@ stage:
 # Publish packages
 .PHONY: publish
 publish:
-    $(NPM) run clean
+	$(NPM) run clean
 	$(NPM) publish --access=public

@@ -4,6 +4,8 @@
     "module": "commonjs",
     "rootDir": "./",
     "baseUrl": "./",
+    "moduleResolution": "node",
+    "sourceMap":true,
     // "outDir": "./dist",
     "downlevelIteration": true,
     "esModuleInterop": true,

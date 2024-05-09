@@ -76,12 +76,6 @@ export class BlockChypCrypto {
   }
 }
 
-function getRandomBytes(length: number) {
-  const buffer = new Uint8Array(length);
-  crypto.getRandomValues(buffer);
-  return buffer;
-}
-
 
 const CryptoUtils = new BlockChypCrypto()
 export default CryptoUtils

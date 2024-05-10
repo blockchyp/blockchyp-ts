@@ -2,8 +2,8 @@
   "name": "@blockchyp/blockchyp-ts",
   "version": "1.0.0",
   "description": "BlockChyp Typescript Client",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "lib-esm/index.js",
+  "types": "lib-esm/index.d.ts",
   "scripts": {
     "lint": "eslint . --ext .ts",
     "clean": "tsc --build --clean && rm -rf lib && rm -rf lib-esm && rm -rf _bundles",

@@ -18,7 +18,10 @@
     "spec/",
     "itest/",
     ".eslintrc.json",
-    "index.d.ts"
+    "index.d.ts",
+    "lib/",
+    "_bundles/",
+    "lib-ems/"
   ],
   "repository": {
     "type": "git",

@@ -1,5 +1,6 @@
 **/.DS_Store
 
+lib
 # js files
 index.js
 bundle.js

@@ -21,7 +21,7 @@
     "index.d.ts",
     "lib/",
     "_bundles/",
-    "lib-ems/"
+    "lib-esm/"
   ],
   "repository": {
     "type": "git",

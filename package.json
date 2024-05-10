@@ -6,7 +6,7 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "lint": "eslint . --ext .ts",
-    "clean": "tsc --build --clean && rm -f src/global_bundle.js",
+    "clean": "tsc --build --clean && rm -rf lib && rm -rf lib-esm && rm -rf _bundles",
     "test": "npm run build && jasmine",
     "build": "npm run lint && tsc",
     "prod": "npm run build && tsc -m es6 --outDir lib-esm && webpack",

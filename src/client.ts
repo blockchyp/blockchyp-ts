@@ -9,6 +9,7 @@ import axios, {AxiosRequestConfig, AxiosResponse}  from 'axios'
 import CryptoUtils from './cryptoutils'
 import * as Models from './models'
 import * as nodeHttps from 'https'
+import path from 'path'
 
 /* eslint-disable no-unused-vars */
 export const CardType = Object.freeze({
@@ -69,7 +70,7 @@ export const HealthcareType = Object.freeze({
 })
 /* eslint-enable no-unused-vars */
 
-const VERSION: string = require('../package.json').version;
+const VERSION: string = require(path.resolve(__dirname, '..', 'package.json')).version;
 const USER_AGENT: string = `BlockChyp-TypeScript/${VERSION}`;
 // Some browsers do not allow setting the user-agent header, so we set
 // an alternative if running from a browser.

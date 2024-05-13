@@ -1,6 +1,6 @@
 import createHmac from 'create-hmac'
 const randomBytes = require('randombytes')
-import moment from 'moment'
+import * as moment from 'moment'
 const base32 = require('base32')
 import shajs from 'sha.js'
 import * as EC from 'elliptic'
@@ -72,7 +72,7 @@ export class BlockChypCrypto {
   }
 
   generateIsoTimestamp () {
-    return moment().utc().format('YYYY-MM-DDTHH:mm:ss') + 'Z'
+    return moment().utc().format('YYYY-MM-DDTHH:mm:ss.SSS') + 'Z'
   }
 }
 

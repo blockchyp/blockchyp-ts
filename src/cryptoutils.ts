@@ -1,4 +1,4 @@
-import createHmac from 'create-hmac'
+import * as createHmac from 'create-hmac'
 const randomBytes = require('randombytes')
 import * as moment from 'moment'
 const base32 = require('base32')

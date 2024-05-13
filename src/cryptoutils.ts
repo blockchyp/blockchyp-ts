@@ -5,6 +5,7 @@ const base32 = require('base32')
 import shajs from 'sha.js'
 import * as EC from 'elliptic'
 import * as aesjs from 'aes-js'
+import { Buffer } from 'buffer/';
 import { BlockChypCredentials } from './client'
 
 export class BlockChypCrypto {
@@ -12,7 +13,8 @@ export class BlockChypCrypto {
     const nonce = this.generateNonce()
     const ts = this.generateIsoTimestamp()
     const toSign = creds.apiKey + creds.bearerToken + ts + nonce
-    const key = Buffer.from(creds.signingKey, 'hex')
+    const bufferKey: Buffer = Buffer.from(creds.signingKey, 'hex')
+    const key = bufferKey.toString('utf8')
     const hmac = createHmac('sha256', key)
     hmac.update(toSign)
     const sig = hmac.digest('hex')

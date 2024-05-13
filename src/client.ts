@@ -774,6 +774,7 @@ export class BlockChypClient {
   async routeTerminalRequest(method: any, request: any, terminalPath: string, cloudPath: string): Promise<any> {
     if (this.isTerminalRouted(request)) {
       const route = await this._resolveTerminalRoute(request.terminalName);
+      console.log('Route: ', route);
       if (route && !route.cloudRelayEnabled) {
         return this._terminalRequest(method, route, terminalPath, request);
       }
@@ -927,6 +928,7 @@ export class BlockChypClient {
 
   async _terminalRequest(method: any, route: TerminalRoute, path: string, request: any): Promise<any> {
     const url: string = await this._assembleTerminalUrl(route, path);
+    console.log('Terminal URL: ', url);
 
     const config: AxiosRequestConfig = {
       method: method,
@@ -958,7 +960,9 @@ export class BlockChypClient {
         request: request,
       };
     }
-
+    
+    console.log('Config: ', config);
+    console.log(axios(config));
     return axios(config);
   }
 

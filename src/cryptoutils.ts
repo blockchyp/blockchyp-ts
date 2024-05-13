@@ -14,8 +14,12 @@ export class BlockChypCrypto {
     const ts = this.generateIsoTimestamp()
     const toSign = creds.apiKey + creds.bearerToken + ts + nonce
     const bufferKey: Buffer = Buffer.from(creds.signingKey, 'hex')
+    console.log('bufferKey: ', bufferKey)
+    console.log('typeof bufferKey: ', typeof bufferKey)
     const key = bufferKey.toString('utf8')
+    console.log('key: ', key)
     const hmac = createHmac('sha256', key)
+    console.log('hmac: ', hmac)
     hmac.update(toSign)
     const sig = hmac.digest('hex')
 

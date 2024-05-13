@@ -9,7 +9,7 @@ import axios, {AxiosRequestConfig, AxiosResponse}  from 'axios'
 import CryptoUtils from './cryptoutils'
 import * as Models from './models'
 import * as nodeHttps from 'https'
-import * as findPackageJson from 'find-package-json';
+// import * as findPackageJson from 'find-package-json';
 
 /* eslint-disable no-unused-vars */
 export const CardType = Object.freeze({

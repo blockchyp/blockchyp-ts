@@ -23,8 +23,7 @@ export class BlockChypCrypto {
       'Timestamp': ts,
       'Authorization': 'Dual ' + creds.bearerToken + ':' + creds.apiKey + ':' + sig
     }
-
-    console.log('Generated headers: ', results);
+    
     return results
   }
 

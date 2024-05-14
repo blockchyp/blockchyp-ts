@@ -4,7 +4,6 @@
   "description": "BlockChyp Typescript Client",
   "main": "lib-esm/index.js",
   "types": "lib-esm/index.d.ts",
-  // "browser": "_bundles/my-lib.min.js",
   "scripts": {
     "lint": "eslint . --ext .ts",
     "clean": "tsc --build --clean && rm -rf lib && rm -rf lib-esm && rm -rf _bundles",

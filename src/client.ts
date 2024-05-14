@@ -71,8 +71,8 @@ export const HealthcareType = Object.freeze({
 /* eslint-enable no-unused-vars */
 // const packageJsonPath = findPackageJson(__dirname).next().filename;
 // const VERSION: string = require(packageJsonPath).version;
+// TODO: Fix this to use the version from package.json
 const VERSION: string = "v1.0.0";
-console.log(VERSION)
 const USER_AGENT: string = `BlockChyp-TypeScript/${VERSION}`;
 // Some browsers do not allow setting the user-agent header, so we set
 // an alternative if running from a browser.
@@ -774,7 +774,6 @@ export class BlockChypClient {
   async routeTerminalRequest(method: any, request: any, terminalPath: string, cloudPath: string): Promise<any> {
     if (this.isTerminalRouted(request)) {
       const route = await this._resolveTerminalRoute(request.terminalName);
-      console.log('Route: ', route);
       if (route && !route.cloudRelayEnabled) {
         return this._terminalRequest(method, route, terminalPath, request);
       }
@@ -891,7 +890,6 @@ export class BlockChypClient {
         'Content-Type': 'application/json',
       },
     };
-    console.log('Config: ', config);
 
     if (method !== 'get') {
       config.data = request;
@@ -899,11 +897,9 @@ export class BlockChypClient {
 
     if (this.credentials && this.credentials.apiKey) {
       config.headers = Object.assign(config.headers, CryptoUtils.generateGatewayHeaders(this.credentials));
-      console.log('Generated Credentials: ', config.headers);
     }
-    const response = axios(config);
-    console.log('Axios Response: ', response);
-    return response;
+    
+    return axios(config);
   }
 
   _getTimeout(request: any, defaultTimeout: number): number {
@@ -931,7 +927,6 @@ export class BlockChypClient {
 
   async _terminalRequest(method: any, route: TerminalRoute, path: string, request: any): Promise<any> {
     const url: string = await this._assembleTerminalUrl(route, path);
-    console.log('Terminal URL: ', url);
 
     const config: AxiosRequestConfig = {
       method: method,
@@ -963,9 +958,7 @@ export class BlockChypClient {
         request: request,
       };
     }
-    
-    console.log('Config: ', config);
-    console.log(axios(config));
+
     return axios(config);
   }
 

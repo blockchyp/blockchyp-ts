@@ -901,8 +901,9 @@ export class BlockChypClient {
       config.headers = Object.assign(config.headers, CryptoUtils.generateGatewayHeaders(this.credentials));
       console.log('Generated Credentials: ', config.headers);
     }
-    
-    return axios(config);
+    const response = axios(config);
+    console.log('Axios Response: ', response);
+    return response;
   }
 
   _getTimeout(request: any, defaultTimeout: number): number {

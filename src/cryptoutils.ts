@@ -5,7 +5,7 @@ const base32 = require('base32')
 import shajs from 'sha.js'
 import * as EC from 'elliptic'
 import * as aesjs from 'aes-js'
-import { Buffer } from 'buffer-from';
+import { Buffer } from 'buffer';
 import { BlockChypCredentials } from './client'
 
 export class BlockChypCrypto {

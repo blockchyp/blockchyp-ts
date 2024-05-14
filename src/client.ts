@@ -112,9 +112,9 @@ export class BlockChypClient {
     dashboardHostOrCreds?: string | BlockChypCredentials,
     creds?: BlockChypCredentials
   ) {
-    this.gatewayHost = 'https://api.blockchyp.com';
-    this.testGatewayHost = 'https://test.blockchyp.com';
-    this.dashboardHost = 'https://dashboard.blockchyp.com';
+    this.gatewayHost = 'https://api.dev.blockchyp.com';
+    this.testGatewayHost = 'https://test.dev.blockchyp.com';
+    this.dashboardHost = 'https://dashboard.dev.blockchyp.com';
 
     if (typeof gatewayHostOrCreds === 'string') {
       this.gatewayHost = gatewayHostOrCreds;

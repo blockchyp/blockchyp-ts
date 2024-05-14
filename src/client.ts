@@ -891,6 +891,7 @@ export class BlockChypClient {
         'Content-Type': 'application/json',
       },
     };
+    console.log('Config: ', config);
 
     if (method !== 'get') {
       config.data = request;
@@ -898,8 +899,9 @@ export class BlockChypClient {
 
     if (this.credentials && this.credentials.apiKey) {
       config.headers = Object.assign(config.headers, CryptoUtils.generateGatewayHeaders(this.credentials));
+      console.log('Generated Credentials: ', config.headers);
     }
-
+    
     return axios(config);
   }
 

@@ -9,6 +9,7 @@
     "forceConsistentCasingInFileNames": true,
     "sourceMap": true,
     "declaration": true,
+    "esModuleInterop": true,
   },
   "include": [
     "index.ts",

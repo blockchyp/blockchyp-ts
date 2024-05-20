@@ -8,7 +8,7 @@ VERSION := $(or $(TAG:v%=%),$(LASTTAG:v%=%))-$(or $(BUILD_NUMBER), 1)$(if $(TAG)
 # Executables
 DOCKER = docker
 NPM = npm
-JASMIN = node_modules/jasmine/bin/jasmine.js
+JASMIN = node_modules/jasmine/bin/jasmine.js --config=jasmine.json
 SED = sed
 SED_SUBST = $(SED)
 UNAME_S := $(shell uname -s)
@@ -82,5 +82,5 @@ stage:
 # Publish packages
 .PHONY: publish
 publish:
-    $(NPM) run clean
+	$(NPM) run clean
 	$(NPM) publish --access=public

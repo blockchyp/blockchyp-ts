@@ -1,10 +1,11 @@
 import createHmac from 'create-hmac'
-const randomBytes = require('randombytes')
-import moment from 'moment'
+import randomBytes from 'randombytes'
+import  moment from 'moment'
 const base32 = require('base32')
 import shajs from 'sha.js'
 import * as EC from 'elliptic'
 import * as aesjs from 'aes-js'
+import { Buffer } from 'buffer';
 import { BlockChypCredentials } from './client'
 
 export class BlockChypCrypto {
@@ -72,16 +73,9 @@ export class BlockChypCrypto {
   }
 
   generateIsoTimestamp () {
-    return moment().utc().format('YYYY-MM-DDTHH:mm:ss') + 'Z'
+    return moment().utc().format('YYYY-MM-DDTHH:mm:ss.SSS') + 'Z'
   }
 }
-
-function getRandomBytes(length: number) {
-  const buffer = new Uint8Array(length);
-  crypto.getRandomValues(buffer);
-  return buffer;
-}
-
 
 const CryptoUtils = new BlockChypCrypto()
 export default CryptoUtils

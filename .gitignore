@@ -1,10 +1,27 @@
 **/.DS_Store
 
+lib
+lib-esm
+_bundles
 # js files
 index.js
+bundle.js
 src/*.js
 itest/**/*.js
 spec/**/*.js
+
+# js map files
+index.js.map
+src/*.js.map
+itest/**/*.js.map
+spec/**/*.js.map
+
+# ts declaration files
+index.d.ts
+bundle.d.ts
+src/*.d.ts
+itest/**/*.d.ts
+spec/**/*.d.ts
 
 # Logs
 logs

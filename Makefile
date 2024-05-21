@@ -8,7 +8,7 @@ VERSION := $(or $(TAG:v%=%),$(LASTTAG:v%=%))-$(or $(BUILD_NUMBER), 1)$(if $(TAG)
 # Executables
 DOCKER = docker
 NPM = npm
-JASMIN = node_modules/jasmine/bin/jasmine.js
+JASMIN = node_modules/jasmine/bin/jasmine.js --config=jasmine.json
 SED = sed
 SED_SUBST = $(SED)
 UNAME_S := $(shell uname -s)
@@ -39,6 +39,7 @@ all: clean build test
 # Cleans build artifacts
 .PHONY: clean
 clean:
+	$(NPM) run clean
 	$(RM) -rf node_modules
 
 # Compiles the package
@@ -58,7 +59,7 @@ test:
 .PHONY: integration
 integration: build
 	$(if $(LOCALBUILD), \
-		$(JASMIN) $(if $(TEST),itest/*$(TEST)*Spec.js,itest/*Spec.js), \
+		$(JASMIN) $(if $(TEST),itest/*$(TEST)*Spec.ts,itest/*Spec.ts), \
 		$(foreach path,$(CACHEPATHS),mkdir -p $(CACHE)/$(path) ; ) \
 		sed 's/localhost/$(HOSTIP)/' $(CONFIGFILE) >$(CACHE)/$(CONFIGFILE) ; \
 		$(DOCKER) run \
@@ -71,13 +72,13 @@ integration: build
 		-w $(PWD) \
 		--init \
 		--rm -it $(IMAGE) \
-		bash -c "$(JASMIN) $(if $(TEST),itest/*$(TEST)*Spec.js,itest/*Spec.js)")
+		bash -c "$(JASMIN) $(if $(TEST),itest/*$(TEST)*Spec.ts,itest/*Spec.ts)")
 
 # Performs any tasks necessary before a release build
 .PHONY: stage
 stage:
 	$(SED_SUBST) 's/"version": ".*",/"version": "$(VERSION)",/' package.json
-
+	$(SED_SUBST) 's/const VERSION: string = "v[0-9].[0-9].[0-9]";/const VERSION: string = "$(VERSION)";/' src/client.ts
 # Publish packages
 .PHONY: publish
 publish:

@@ -68,8 +68,7 @@ export const HealthcareType = Object.freeze({
   DENTAL: 'dental',
 })
 /* eslint-enable no-unused-vars */
-
-const VERSION: string = require('../package.json').version;
+const VERSION: string = "v2.18.5";
 const USER_AGENT: string = `BlockChyp-TypeScript/${VERSION}`;
 // Some browsers do not allow setting the user-agent header, so we set
 // an alternative if running from a browser.

@@ -52,7 +52,6 @@ build:
 .PHONY: test
 test:
 	$(NPM) prune
-	$(NPM) install
 	$(NPM) test
 
 # Runs integration tests

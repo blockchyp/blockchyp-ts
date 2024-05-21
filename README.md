@@ -4264,18 +4264,13 @@ To run the integration test suite via `make`, type the following command:
 
 ## Running Integration Tests With Jasmine
 
-If you'd like to bypass make and run the integration test suite directly,
-first compile the Typescript with the following command:
+If you'd like to bypass make and run the integration test suite directly use the following command:
 
-`npm run build`
+`BC_TEST_DELAY=5 jasmine --config=jasmine.json itest/*Spec.js`
 
-Then use the following command:
+If you'd like to run individual tests, try the following command:
 
-`BC_TEST_DELAY=5 jasmine itest/*Spec.js`
-
-If you'd like to run individual tests, try the following command after compiling:
-
-`jasmine itest/TerminalChargeITestSpec.js`
+`jasmine --config=jasmine.json itest/TerminalChargeITestSpec.js`
 
 ## Contributions
 

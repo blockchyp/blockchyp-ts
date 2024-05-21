@@ -8,7 +8,7 @@
   "scripts": {
     "lint": "eslint . --ext .ts",
     "clean": "tsc --build --clean && rm -rf lib && rm -rf _bundles",
-    "test": "jasmine --config=jasmine.json",
+    "test": "npm run build && jasmine lib/spec/*.js --stop-on-failure=false",
     "build": "npm run lint && tsc",
     "prod": "npm run build && webpack",
     "prepare": "npm run prod"

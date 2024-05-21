@@ -17,7 +17,6 @@
     "index.ts",
     "src/",
     "spec/",
-    "itest/",
     ".eslintrc.json",
     "index.d.ts",
     "lib/",

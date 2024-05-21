@@ -41,8 +41,9 @@ describe('SimpleCapture', function () {
           setupRequest.pan = '4111111111111111';
         setupRequest.expMonth = '12';
         setupRequest.expYear = '2025';
-        setupRequest.amount = '25.55';
+        setupRequest.amount = '42.45';
         setupRequest.test = true;
+        setupRequest.bypassDupeFilter = true;
         let setupResponse: BlockChyp.AuthorizationResponse = new BlockChyp.AuthorizationResponse();
         const setupHttpResponse = await client.preauth(setupRequest);
         if (setupHttpResponse.status !== 200) {

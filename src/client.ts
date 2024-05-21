@@ -68,7 +68,8 @@ export const HealthcareType = Object.freeze({
   DENTAL: 'dental',
 })
 /* eslint-enable no-unused-vars */
-const VERSION: string = "v2.18.5";
+// TODO: Fix this to use the version from package.json
+const VERSION: string = "v1.0.0";
 const USER_AGENT: string = `BlockChyp-TypeScript/${VERSION}`;
 // Some browsers do not allow setting the user-agent header, so we set
 // an alternative if running from a browser.
@@ -473,13 +474,6 @@ export class BlockChypClient {
   }
 
   /**
-   * Generates and returns api credentials for a given merchant.
-   */
-  merchantCredentialGeneration(request: Models.MerchantCredentialGenerationRequest): Promise<AxiosResponse<Models.MerchantCredentialGenerationResponse>> {
-    return this._gatewayRequest('post', '/api/creds/generateMerchant', request);
-  }
-
-  /**
    * Returns profile information for a merchant.
    */
   merchantProfile(request: Models.MerchantProfileRequest): Promise<AxiosResponse<Models.MerchantProfileResponse>> {
@@ -519,6 +513,13 @@ export class BlockChypClient {
    */
   deleteToken(request: Models.DeleteTokenRequest): Promise<AxiosResponse<Models.DeleteTokenResponse>> {
     return this._gatewayRequest('delete', '/api/token/' + request.token, request);
+  }
+
+  /**
+   * Generates and returns api credentials for a given merchant.
+   */
+  merchantCredentialGeneration(request: Models.MerchantCredentialGenerationRequest): Promise<AxiosResponse<Models.MerchantCredentialGenerationResponse>> {
+    return this._dashboardRequest('post', '/api/generate-merchant-creds', request);
   }
 
   /**

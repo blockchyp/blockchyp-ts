@@ -75,6 +75,7 @@ describe('ResendPaymentLink', function () {
 
         // setup request object
         const request = new BlockChyp.ResendPaymentLinkRequest();
+        request.test = true;
         request.linkCode = setupResponse.linkCode;
 
         const httpResponse = await client.resendPaymentLink(request)

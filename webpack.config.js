@@ -8,8 +8,8 @@ var PATHS = {
 
 var config = {
   entry: {
-    'my-lib': './index.ts',
-    'my-lib.min': './index.ts'
+    'blockchyp': './index.ts',
+    'blockchyp.min': './index.ts'
   },
   output: {
     path: PATHS.bundles,
@@ -30,6 +30,7 @@ var config = {
       "https": false,
       "stream": require.resolve('stream-browserify'),
       "crypto": require.resolve('crypto-browserify'),
+      "vm": require.resolve("vm-browserify"),
     }
   },
   devtool: 'source-map',
@@ -46,9 +47,6 @@ var config = {
       test: /\.tsx?$/,
       use: 'ts-loader',
       exclude: /node_modules/,
-      // options: {
-      //   declaration: false,
-      // }
     }]
   }
 }

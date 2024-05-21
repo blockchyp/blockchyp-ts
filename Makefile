@@ -78,7 +78,7 @@ integration: build
 .PHONY: stage
 stage:
 	$(SED_SUBST) 's/"version": ".*",/"version": "$(VERSION)",/' package.json
-
+	$(SED_SUBST) 's/const VERSION: string = "v[0-9].[0-9].[0-9]";/const VERSION: string = "$(VERSION)";/' src/client.ts
 # Publish packages
 .PHONY: publish
 publish:

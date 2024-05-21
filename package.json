@@ -1,16 +1,16 @@
 {
   "name": "@blockchyp/blockchyp-ts",
-  "version": "1.0.0",
+  "version": "v2.18.5",
   "description": "BlockChyp Typescript Client",
-  "main": "lib-esm/index.js",
-  "types": "lib-esm/index.d.ts",
-  "browser": "_bundles/my-lib.min.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "browser": "_bundles/blockchyp.min.js",
   "scripts": {
     "lint": "eslint . --ext .ts",
-    "clean": "tsc --build --clean && rm -rf lib && rm -rf lib-esm && rm -rf _bundles",
+    "clean": "tsc --build --clean && rm -rf lib && rm -rf _bundles",
     "test": "jasmine --config=jasmine.json",
     "build": "npm run lint && tsc",
-    "prod": "npm run build && tsc -m es6 --outDir lib-esm && webpack",
+    "prod": "npm run build && webpack",
     "prepare": "npm run prod"
   },
   "files": [
@@ -20,8 +20,7 @@
     ".eslintrc.json",
     "index.d.ts",
     "lib/",
-    "_bundles/",
-    "lib-esm/"
+    "_bundles/"
   ],
   "repository": {
     "type": "git",

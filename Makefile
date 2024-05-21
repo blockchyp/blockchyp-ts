@@ -59,7 +59,7 @@ test:
 .PHONY: integration
 integration: build
 	$(if $(LOCALBUILD), \
-		$(JASMIN) $(if $(TEST),itest/*$(TEST)*Spec.js,itest/*Spec.js), \
+		$(JASMIN) $(if $(TEST),itest/*$(TEST)*Spec.ts,itest/*Spec.ts), \
 		$(foreach path,$(CACHEPATHS),mkdir -p $(CACHE)/$(path) ; ) \
 		sed 's/localhost/$(HOSTIP)/' $(CONFIGFILE) >$(CACHE)/$(CONFIGFILE) ; \
 		$(DOCKER) run \
@@ -72,7 +72,7 @@ integration: build
 		-w $(PWD) \
 		--init \
 		--rm -it $(IMAGE) \
-		bash -c "$(JASMIN) $(if $(TEST),itest/*$(TEST)*Spec.js,itest/*Spec.js)")
+		bash -c "$(JASMIN) $(if $(TEST),itest/*$(TEST)*Spec.ts,itest/*Spec.ts)")
 
 # Performs any tasks necessary before a release build
 .PHONY: stage

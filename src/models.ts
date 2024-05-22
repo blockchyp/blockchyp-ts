@@ -2229,6 +2229,11 @@ export class AuthorizationRequest {
     enroll?: boolean;
 
   /**
+   * Duplicate detection should be bypassed.
+   */
+    bypassDupeFilter?: boolean;
+
+  /**
    * A narrative description of the transaction.
    */
     description?: string;
@@ -2399,6 +2404,7 @@ export class AuthorizationRequest {
         transactionId: string | undefined = undefined,
         onlineAuthCode: string | undefined = undefined,
         enroll: boolean = false,
+        bypassDupeFilter: boolean = false,
         description: string | undefined = undefined,
         promptForTip: boolean = false,
         cashBackEnabled: boolean = false,
@@ -2466,6 +2472,7 @@ export class AuthorizationRequest {
         this.transactionId = transactionId;
         this.onlineAuthCode = onlineAuthCode;
         this.enroll = enroll;
+        this.bypassDupeFilter = bypassDupeFilter;
         this.description = description;
         this.promptForTip = promptForTip;
         this.cashBackEnabled = cashBackEnabled;

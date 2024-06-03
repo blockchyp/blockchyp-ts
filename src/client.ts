@@ -8,7 +8,7 @@
 import axios, {AxiosRequestConfig, AxiosResponse}  from 'axios'
 import CryptoUtils from './cryptoutils'
 import * as Models from './models'
-import * as https from 'https'
+import * as nodeHttps from 'https'
 
 /* eslint-disable no-unused-vars */
 export const CardType = Object.freeze({
@@ -911,7 +911,7 @@ export class BlockChypClient {
   }
 
   _gatewayRequest(method: any, path: string, request?: any, relay?: boolean): Promise<any> {
-    const httpsAgent = new https.Agent({
+    const httpsAgent = new nodeHttps.Agent({
       ca: terminalRootCA
     });
 
@@ -974,7 +974,7 @@ export class BlockChypClient {
     };
     if (typeof window === 'undefined') {
       if (this.https) {
-        config.httpsAgent = new https.Agent({
+        config.httpsAgent = new nodeHttps.Agent({
           rejectUnauthorized: false
         });
       }

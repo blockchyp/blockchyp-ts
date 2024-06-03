@@ -8,16 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient } from '../index';
-import { CustomerSearchRequest } from '../index';
-import { CustomerSearchResponse } from '../index';
-import { UpdateCustomerRequest } from '../index';
-import { CustomerResponse } from '../index';
-import { Customer } from '../index';
+import * as BlockChyp from '../index';
 
 describe('SearchCustomer', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -26,7 +21,7 @@ describe('SearchCustomer', function () {
   });
 
   it('can query for customers', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -42,16 +37,16 @@ describe('SearchCustomer', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const setupRequest = new UpdateCustomerRequest();
+        const setupRequest = new BlockChyp.UpdateCustomerRequest();
 
-        const customer = new Customer();
+        const customer = new BlockChyp.Customer();
         customer.firstName = 'Test';
         customer.lastName = 'Customer';
         customer.companyName = 'Test Company';
         customer.emailAddress = 'support@blockchyp.com';
         customer.smsNumber = '(123) 123-1234';
         setupRequest.customer = customer;
-        let setupResponse: CustomerResponse = new CustomerResponse();
+        let setupResponse: BlockChyp.CustomerResponse = new BlockChyp.CustomerResponse();
         const setupHttpResponse = await client.updateCustomer(setupRequest);
         if (setupHttpResponse.status !== 200) {
           console.log('Error:', setupHttpResponse.statusText);
@@ -61,11 +56,11 @@ describe('SearchCustomer', function () {
         setupResponse = setupHttpResponse.data
 
         // setup request object
-        const request = new CustomerSearchRequest();
+        const request = new BlockChyp.CustomerSearchRequest();
         request.query = '123123';
 
         const httpResponse = await client.customerSearch(request)
-        const response: CustomerSearchResponse = httpResponse.data;
+        const response: BlockChyp.CustomerSearchResponse = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
 

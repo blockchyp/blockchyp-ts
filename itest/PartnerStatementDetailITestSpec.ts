@@ -8,13 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient } from '../index';
-import { PartnerStatementDetailRequest } from '../index';
-import { PartnerStatementDetailResponse } from '../index';
+import * as BlockChyp from '../index';
 
 describe('PartnerStatementDetail', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -22,8 +20,8 @@ describe('PartnerStatementDetail', function () {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000;
   });
 
-  it('can list partner statements', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds("partner"));
+  it('can retrieve a single partner statement', function (done) {
+    client = BlockChyp.newClient(Config.getCreds("partner"));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -39,11 +37,11 @@ describe('PartnerStatementDetail', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const request = new PartnerStatementDetailRequest();
+        const request = new BlockChyp.PartnerStatementDetailRequest();
         request.test = true;
 
         const httpResponse = await client.partnerStatementDetail(request)
-        const response: PartnerStatementDetailResponse = httpResponse.data;
+        const response: BlockChyp.PartnerStatementDetailResponse = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
 

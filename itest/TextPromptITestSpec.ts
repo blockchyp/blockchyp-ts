@@ -8,14 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient, MessageRequest, Acknowledgement } from '../index';
-import { TextPromptRequest } from '../index';
-import { TextPromptResponse } from '../index';
-import { PromptType } from '../index';
+import * as BlockChyp from '../index';
 
 describe('TextPrompt', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -24,7 +21,7 @@ describe('TextPrompt', function () {
   });
 
   it('Can prompt the consumer for text input', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -36,7 +33,7 @@ describe('TextPrompt', function () {
     }
 
     if (testDelayInt > 0) {
-      const messageRequest = new MessageRequest();
+      const messageRequest = new BlockChyp.MessageRequest();
       messageRequest.test = true;
       messageRequest.terminalName = Config.getTerminalName();
       messageRequest.message = 'Running TextPrompt in ' + testDelay + ' seconds...';
@@ -55,13 +52,13 @@ describe('TextPrompt', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const request = new TextPromptRequest();
+        const request = new BlockChyp.TextPromptRequest();
         request.test = true;
         request.terminalName = Config.getTerminalName();
-        request.promptType = PromptType.EMAIL;
+        request.promptType = BlockChyp.PromptType.EMAIL;
 
         const httpResponse = await client.textPrompt(request)
-        const response: TextPromptResponse = httpResponse.data;
+        const response: BlockChyp.TextPromptResponse = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
         expect(response.response?.trim().length).toBeGreaterThan(0);

@@ -8,13 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient, MessageRequest, Acknowledgement } from '../index';
-import { BalanceRequest } from '../index';
-import { BalanceResponse } from '../index';
+import * as BlockChyp from '../index';
 
 describe('TerminalGiftCardBalance', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -23,7 +21,7 @@ describe('TerminalGiftCardBalance', function () {
   });
 
   it('Can check the balance of an gift card card', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -35,7 +33,7 @@ describe('TerminalGiftCardBalance', function () {
     }
 
     if (testDelayInt > 0) {
-      const messageRequest = new MessageRequest();
+      const messageRequest = new BlockChyp.MessageRequest();
       messageRequest.test = true;
       messageRequest.terminalName = Config.getTerminalName();
       messageRequest.message = 'Running TerminalGiftCardBalance in ' + testDelay + ' seconds...';
@@ -54,12 +52,12 @@ describe('TerminalGiftCardBalance', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const request = new BalanceRequest();
+        const request = new BlockChyp.BalanceRequest();
         request.test = true;
         request.terminalName = Config.getTerminalName();
 
         const httpResponse = await client.balance(request)
-        const response: BalanceResponse = httpResponse.data;
+        const response: BlockChyp.BalanceResponse = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
         expect(response.remainingBalance?.trim().length).toBeGreaterThan(0);

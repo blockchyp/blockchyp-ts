@@ -8,13 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient, MessageRequest, Acknowledgement } from '../index';
-import { PingRequest } from '../index';
-import { PingResponse } from '../index';
+import * as BlockChyp from '../index';
 
 describe('SimplePing', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -23,7 +21,7 @@ describe('SimplePing', function () {
   });
 
   it('Can test communication with a terminal', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -35,7 +33,7 @@ describe('SimplePing', function () {
     }
 
     if (testDelayInt > 0) {
-      const messageRequest = new MessageRequest();
+      const messageRequest = new BlockChyp.MessageRequest();
       messageRequest.test = true;
       messageRequest.terminalName = Config.getTerminalName();
       messageRequest.message = 'Running SimplePing in ' + testDelay + ' seconds...';
@@ -54,12 +52,12 @@ describe('SimplePing', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const request = new PingRequest();
+        const request = new BlockChyp.PingRequest();
         request.test = true;
         request.terminalName = Config.getTerminalName();
 
         const httpResponse = await client.ping(request)
-        const response: PingResponse = httpResponse.data;
+        const response: BlockChyp.PingResponse = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
 

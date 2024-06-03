@@ -8,15 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient, MessageRequest, Acknowledgement } from '../index';
-import { TransactionDisplayRequest } from '../index';
-import { TransactionDisplayTransaction } from '../index';
-import { TransactionDisplayItem } from '../index';
-import { TransactionDisplayDiscount } from '../index';
+import * as BlockChyp from '../index';
 
 describe('UpdateTransactionDisplay', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -25,7 +21,7 @@ describe('UpdateTransactionDisplay', function () {
   });
 
   it('Can update transaction line item display', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -37,7 +33,7 @@ describe('UpdateTransactionDisplay', function () {
     }
 
     if (testDelayInt > 0) {
-      const messageRequest = new MessageRequest();
+      const messageRequest = new BlockChyp.MessageRequest();
       messageRequest.test = true;
       messageRequest.terminalName = Config.getTerminalName();
       messageRequest.message = 'Running UpdateTransactionDisplay in ' + testDelay + ' seconds...';
@@ -56,22 +52,22 @@ describe('UpdateTransactionDisplay', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const request = new TransactionDisplayRequest();
+        const request = new BlockChyp.TransactionDisplayRequest();
         request.test = true;
         request.terminalName = Config.getTerminalName();
 
-        const transaction = new TransactionDisplayTransaction();
+        const transaction = new BlockChyp.TransactionDisplayTransaction();
         transaction.subtotal = '35.00';
         transaction.tax = '5.00';
         transaction.total = '70.00';
 
-        const items = new TransactionDisplayItem();
+        const items = new BlockChyp.TransactionDisplayItem();
         items.description = 'Leki Trekking Poles';
         items.price = '35.00';
         items.quantity = 2;
         items.extended = '70.00';
 
-        const discounts = new TransactionDisplayDiscount();
+        const discounts = new BlockChyp.TransactionDisplayDiscount();
         discounts.description = 'memberDiscount';
         discounts.amount = '10.00';
 
@@ -81,7 +77,7 @@ describe('UpdateTransactionDisplay', function () {
         request.transaction = transaction;
 
         const httpResponse = await client.updateTransactionDisplay(request)
-        const response: Acknowledgement = httpResponse.data;
+        const response: BlockChyp.Acknowledgement = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
 

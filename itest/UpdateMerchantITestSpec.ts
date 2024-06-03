@@ -8,14 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient } from '../index';
-import { MerchantProfile } from '../index';
-import { MerchantProfileResponse } from '../index';
-import { Address } from '../index';
+import * as BlockChyp from '../index';
 
 describe('UpdateMerchant', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -24,7 +21,7 @@ describe('UpdateMerchant', function () {
   });
 
   it('updates or creates a merchant account.', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds("partner"));
+    client = BlockChyp.newClient(Config.getCreds("partner"));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -40,12 +37,12 @@ describe('UpdateMerchant', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const request = new MerchantProfile();
+        const request = new BlockChyp.MerchantProfile();
         request.test = true;
         request.dbaName = 'Test Merchant';
         request.companyName = 'Test Merchant';
 
-        const billingAddress = new Address();
+        const billingAddress = new BlockChyp.Address();
         billingAddress.address1 = '1060 West Addison';
         billingAddress.city = 'Chicago';
         billingAddress.stateOrProvince = 'IL';
@@ -53,7 +50,7 @@ describe('UpdateMerchant', function () {
         request.billingAddress = billingAddress;
 
         const httpResponse = await client.updateMerchant(request)
-        const response: MerchantProfileResponse = httpResponse.data;
+        const response: BlockChyp.MerchantProfileResponse = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
 

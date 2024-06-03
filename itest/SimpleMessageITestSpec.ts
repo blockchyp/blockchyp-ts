@@ -8,11 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient, MessageRequest, Acknowledgement } from '../index';
+import * as BlockChyp from '../index';
 
 describe('SimpleMessage', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -21,7 +21,7 @@ describe('SimpleMessage', function () {
   });
 
   it('Can display a message on the terminal', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -33,7 +33,7 @@ describe('SimpleMessage', function () {
     }
 
     if (testDelayInt > 0) {
-      const messageRequest = new MessageRequest();
+      const messageRequest = new BlockChyp.MessageRequest();
       messageRequest.test = true;
       messageRequest.terminalName = Config.getTerminalName();
       messageRequest.message = 'Running SimpleMessage in ' + testDelay + ' seconds...';
@@ -52,13 +52,13 @@ describe('SimpleMessage', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const request = new MessageRequest();
+        const request = new BlockChyp.MessageRequest();
         request.test = true;
         request.terminalName = Config.getTerminalName();
         request.message = 'Thank You For Your Business';
 
         const httpResponse = await client.message(request)
-        const response: Acknowledgement = httpResponse.data;
+        const response: BlockChyp.Acknowledgement = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
 

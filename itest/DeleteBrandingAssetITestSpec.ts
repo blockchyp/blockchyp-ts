@@ -8,14 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient } from '../index';
-import { BrandingAssetRequest } from '../index';
-import { Acknowledgement } from '../index';
-import { BrandingAsset } from '../index';
+import * as BlockChyp from '../index';
 
 describe('DeleteBrandingAsset', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -24,7 +21,7 @@ describe('DeleteBrandingAsset', function () {
   });
 
   it('deletes a terminal branding asset.', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -40,10 +37,10 @@ describe('DeleteBrandingAsset', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const setupRequest = new BrandingAsset();
+        const setupRequest = new BlockChyp.BrandingAsset();
           setupRequest.notes = 'Empty Asset';
         setupRequest.enabled = false;
-        let setupResponse: BrandingAsset = new BrandingAsset();
+        let setupResponse: BlockChyp.BrandingAsset = new BlockChyp.BrandingAsset();
         const setupHttpResponse = await client.updateBrandingAsset(setupRequest);
         if (setupHttpResponse.status !== 200) {
           console.log('Error:', setupHttpResponse.statusText);
@@ -53,11 +50,11 @@ describe('DeleteBrandingAsset', function () {
         setupResponse = setupHttpResponse.data
 
         // setup request object
-        const request = new BrandingAssetRequest();
+        const request = new BlockChyp.BrandingAssetRequest();
         request.assetId = setupResponse.id;
 
         const httpResponse = await client.deleteBrandingAsset(request)
-        const response: Acknowledgement = httpResponse.data;
+        const response: BlockChyp.Acknowledgement = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
 

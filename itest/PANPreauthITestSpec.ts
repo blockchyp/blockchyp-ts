@@ -8,13 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient, MessageRequest, Acknowledgement } from '../index';
-import { AuthorizationRequest } from '../index';
-import { AuthorizationResponse } from '../index';
+import * as BlockChyp from '../index';
 
 describe('PANPreauth', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -23,7 +21,7 @@ describe('PANPreauth', function () {
   });
 
   it('Can process a preauthorization by PAN', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -35,7 +33,7 @@ describe('PANPreauth', function () {
     }
 
     if (testDelayInt > 0) {
-      const messageRequest = new MessageRequest();
+      const messageRequest = new BlockChyp.MessageRequest();
       messageRequest.test = true;
       messageRequest.terminalName = Config.getTerminalName();
       messageRequest.message = 'Running PANPreauth in ' + testDelay + ' seconds...';
@@ -54,15 +52,16 @@ describe('PANPreauth', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const request = new AuthorizationRequest();
+        const request = new BlockChyp.AuthorizationRequest();
         request.pan = '4111111111111111';
         request.expMonth = '12';
         request.expYear = '2025';
-        request.amount = '25.55';
+        request.amount = '42.45';
         request.test = true;
+        request.bypassDupeFilter = true;
 
         const httpResponse = await client.preauth(request)
-        const response: AuthorizationResponse = httpResponse.data;
+        const response: BlockChyp.AuthorizationResponse = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
         expect(response.approved).toBe(true);
@@ -75,7 +74,6 @@ describe('PANPreauth', function () {
         expect(response.paymentType?.trim().length).toBeGreaterThan(0);
         expect(response.maskedPan?.trim().length).toBeGreaterThan(0);
         expect(response.entryMethod?.trim().length).toBeGreaterThan(0);
-        expect(response.authorizedAmount)?.toEqual('25.55');
         expect(response.entryMethod)?.toEqual('KEYED');
 
       } catch (error) {

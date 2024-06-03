@@ -8,13 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient, MessageRequest, Acknowledgement } from '../index';
-import { GiftActivateRequest } from '../index';
-import { GiftActivateResponse } from '../index';
+import * as BlockChyp from '../index';
 
 describe('SimpleGiftActivate', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -23,7 +21,7 @@ describe('SimpleGiftActivate', function () {
   });
 
   it('Can activate a blockchain gift card', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -35,7 +33,7 @@ describe('SimpleGiftActivate', function () {
     }
 
     if (testDelayInt > 0) {
-      const messageRequest = new MessageRequest();
+      const messageRequest = new BlockChyp.MessageRequest();
       messageRequest.test = true;
       messageRequest.terminalName = Config.getTerminalName();
       messageRequest.message = 'Running SimpleGiftActivate in ' + testDelay + ' seconds...';
@@ -54,13 +52,13 @@ describe('SimpleGiftActivate', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const request = new GiftActivateRequest();
+        const request = new BlockChyp.GiftActivateRequest();
         request.test = true;
         request.terminalName = Config.getTerminalName();
         request.amount = '50.00';
 
         const httpResponse = await client.giftActivate(request)
-        const response: GiftActivateResponse = httpResponse.data;
+        const response: BlockChyp.GiftActivateResponse = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
         expect(response.approved).toBe(true);

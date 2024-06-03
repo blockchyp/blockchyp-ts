@@ -8,7 +8,7 @@
 import axios, {AxiosRequestConfig, AxiosResponse}  from 'axios'
 import CryptoUtils from './cryptoutils'
 import * as Models from './models'
-import * as nodeHttps from 'https'
+import * as https from 'https'
 
 /* eslint-disable no-unused-vars */
 export const CardType = Object.freeze({
@@ -68,8 +68,8 @@ export const HealthcareType = Object.freeze({
   DENTAL: 'dental',
 })
 /* eslint-enable no-unused-vars */
-
-const VERSION: string = require('../../package.json').version;
+// TODO: Fix this to use the version from package.json
+const VERSION: string = "v1.0.0";
 const USER_AGENT: string = `BlockChyp-TypeScript/${VERSION}`;
 // Some browsers do not allow setting the user-agent header, so we set
 // an alternative if running from a browser.
@@ -90,6 +90,39 @@ interface RouteCacheEntry {
   ttl: number;
   route: TerminalRoute;
 }
+
+
+const terminalRootCA = `
+-----BEGIN CERTIFICATE-----
+MIIFAjCCAuqgAwIBAgIBATANBgkqhkiG9w0BAQsFADAgMR4wHAYDVQQDDBVCbG9j
+a0NoeXAgSW50ZXJuYWwgQ0EwIBcNMTgwMTAxMDAwMDA4WhgPNDc1NTExMjkwMDAw
+MDhaMCAxHjAcBgNVBAMMFUJsb2NrQ2h5cCBJbnRlcm5hbCBDQTCCAiIwDQYJKoZI
+hvcNAQEBBQADggIPADCCAgoCggIBANyWuVhDiqeCrHMxbTv5PN5UOZdR8n4PPwUV
+z0dALnLS7Lkl9nnuBxUK5XFGsZHBQ3GqSsWgA0HBUAAkKY/hzDIY+mrKOTMFMhoF
+SKmcNwmdt+NXuUtYwL5STsr1U/XnxcizsSEHcGP5LhIH16AY0XYMVzNTBXrylH7O
+Hf/pPJaVbuywAkiyrEV+lTo1mVTOCucGoNRPogluuyfbBCUH9bWBajbjHWdyiX58
+IV786JWkw5ogLXgDekrrzdVxQH1t2kN2PvXNHGOBlB0NL/QwKHxfbvgIu6EkyEXv
+vSuFclgaM3x38zcEaIS8id/wZYkwZXAqquR5Hi5fqPILC1xmRF+zC1GH1uJ+gsQu
+wqwaiwmD9Rcbm2ZOSVntQy5bCF7IzPlMHzMlt33dF9mZo9bJwFO1APdpeWy+Ooga
+n1k/yS2EPnkAv+DiRpNf2it6n86+X7Z4C6QGgP5+rfc53uxeaF8gPLgXViaHHTZD
+NflxaNjgKD0xAwB3Yhca8RQSjRPwKYk1FrbhTSAIidnwmA4jrV7juZ2RSWA99VzR
+O68OmE/7NygxGgo995pPc+s6DO6IOnZvT2tSs0b2UmEKT51/cf93lv+phX/69hTC
+ctMEYoIGNRAvcISA0lfTWHAbiRzMyagtuiRMttS7C+IshsgBrjHSHMsEYj8RhRnR
+0FvmChUNAgMBAAGjRTBDMB0GA1UdDgQWBBSBl1rnpf7Omve8fXPl9EltnlcqGTAS
+BgNVHRMBAf8ECDAGAQH/AgEBMA4GA1UdDwEB/wQEAwIBBjANBgkqhkiG9w0BAQsF
+AAOCAgEAkt9ywLJvM0TjEUjlC32niE8mNIPX5azHJ0++PlZ2Fc7ZKy4nntt2YErl
+l4qEOB8ED2VaLQuxx0O9H2oh1QsMuxT3rQ4SDNmQVH9vUYJWgIkYjY1zKubEyktv
+oZyi8xK5e0/ME//vU0ru6y0dmcFtDvpwm/JZPjoVKHK58JpCKH8xhVxQo7NxAIf8
+Ow+fr58plDQP1CbfjO1gJpFg7lQ282rz9n0Ju2mXm3guclcx74mDJGlzGLGCJCnu
+Qxta8Dv/Cg8+kNM36boORMChaoAgIerXL17EhyUh3ZsSaxEchqvCWtLv1+ekhGpF
+A08xS33r1GgQV/cyunuz3czQ0Y/7UjKluo6sbS0RmVtAWJA/DhwXgQlHlFyROmhG
+pcKXeLc7+LrBZxITVuQk8Mg9aceAnzBqjeTjQNPQJkOwqIFgDUXNNqvA5mhn/j25
+u8CcDY/0p5C4tFQc1npgQwJZAwRGEvFmXVDgEZ8FFkzhn74oxI99Xs1HGc9zO/uP
+GV0cahaj9xspMPMBe5Q2mNhVca6+RIZPSIcVbsgYy+2QDBep7NpraQgG7V0f2XTu
+uLBaPXbY9PZLFklSSZOLXAuuOk0G57lfyVFRNAZ2R3uQdkDpx90Ti6PDWj9M6x1p
+jD1XNpXvgH2k91jjsK67khN+4bWoFBsfrMYt6vgjtXyv0kf12y0=
+-----END CERTIFICATE-----
+`;
 
 export class BlockChypClient {
   private gatewayHost: string;
@@ -474,13 +507,6 @@ export class BlockChypClient {
   }
 
   /**
-   * Generates and returns api credentials for a given merchant.
-   */
-  merchantCredentialGeneration(request: Models.MerchantCredentialGenerationRequest): Promise<AxiosResponse<Models.MerchantCredentialGenerationResponse>> {
-    return this._gatewayRequest('post', '/api/creds/generateMerchant', request);
-  }
-
-  /**
    * Returns profile information for a merchant.
    */
   merchantProfile(request: Models.MerchantProfileRequest): Promise<AxiosResponse<Models.MerchantProfileResponse>> {
@@ -520,6 +546,13 @@ export class BlockChypClient {
    */
   deleteToken(request: Models.DeleteTokenRequest): Promise<AxiosResponse<Models.DeleteTokenResponse>> {
     return this._gatewayRequest('delete', '/api/token/' + request.token, request);
+  }
+
+  /**
+   * Generates and returns api credentials for a given merchant.
+   */
+  merchantCredentialGeneration(request: Models.MerchantCredentialGenerationRequest): Promise<AxiosResponse<Models.MerchantCredentialGenerationResponse>> {
+    return this._dashboardRequest('post', '/api/generate-merchant-creds', request);
   }
 
   /**
@@ -878,6 +911,10 @@ export class BlockChypClient {
   }
 
   _gatewayRequest(method: any, path: string, request?: any, relay?: boolean): Promise<any> {
+    const httpsAgent = new https.Agent({
+      ca: terminalRootCA
+    });
+
     const config: AxiosRequestConfig = {
       method: method,
       url: this._assembleGatewayUrl(path, request),
@@ -886,6 +923,7 @@ export class BlockChypClient {
         [AGENT_HEADER]: USER_AGENT,
         'Content-Type': 'application/json',
       },
+      httpsAgent
     };
 
     if (method !== 'get') {
@@ -936,7 +974,7 @@ export class BlockChypClient {
     };
     if (typeof window === 'undefined') {
       if (this.https) {
-        config.httpsAgent = new nodeHttps.Agent({
+        config.httpsAgent = new https.Agent({
           rejectUnauthorized: false
         });
       }

@@ -8,13 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient } from '../index';
-import { MerchantCredentialGenerationRequest } from '../index';
-import { MerchantCredentialGenerationResponse } from '../index';
+import * as BlockChyp from '../index';
 
 describe('MerchantCredentialGeneration', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -23,7 +21,7 @@ describe('MerchantCredentialGeneration', function () {
   });
 
   it('can generate merchant api credentials', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds("partner"));
+    client = BlockChyp.newClient(Config.getCreds("partner"));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -39,12 +37,25 @@ describe('MerchantCredentialGeneration', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const request = new MerchantCredentialGenerationRequest();
+        const setupRequest = new BlockChyp.AddTestMerchantRequest();
+          setupRequest.dbaName = 'Test Merchant';
+        setupRequest.companyName = 'Test Merchant';
+        let setupResponse: BlockChyp.MerchantProfileResponse = new BlockChyp.MerchantProfileResponse();
+        const setupHttpResponse = await client.addTestMerchant(setupRequest);
+        if (setupHttpResponse.status !== 200) {
+          console.log('Error:', setupHttpResponse.statusText);
+          fail(setupHttpResponse.statusText);
+          done();
+        }
+        setupResponse = setupHttpResponse.data
+
+        // setup request object
+        const request = new BlockChyp.MerchantCredentialGenerationRequest();
         request.test = true;
-        request.merchantId = '<MERCHANT ID>';
+        request.merchantId = setupResponse.merchantId;
 
         const httpResponse = await client.merchantCredentialGeneration(request)
-        const response: MerchantCredentialGenerationResponse = httpResponse.data;
+        const response: BlockChyp.MerchantCredentialGenerationResponse = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
 

@@ -8,13 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient } from '../index';
-import { BrandingAssetRequest } from '../index';
-import { BrandingAssetResponse } from '../index';
+import * as BlockChyp from '../index';
 
 describe('TerminalBranding', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -23,7 +21,7 @@ describe('TerminalBranding', function () {
   });
 
   it('returns the terminal branding stack.', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -39,11 +37,11 @@ describe('TerminalBranding', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const request = new BrandingAssetRequest();
+        const request = new BlockChyp.BrandingAssetRequest();
 
 
         const httpResponse = await client.terminalBranding(request)
-        const response: BrandingAssetResponse = httpResponse.data;
+        const response: BlockChyp.BrandingAssetResponse = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
 

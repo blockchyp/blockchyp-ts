@@ -8,15 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient } from '../index';
-import { VoidRequest } from '../index';
-import { VoidResponse } from '../index';
-import { AuthorizationRequest } from '../index';
-import { AuthorizationResponse } from '../index';
+import * as BlockChyp from '../index';
 
 describe('SimpleVoid', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -25,7 +21,7 @@ describe('SimpleVoid', function () {
   });
 
   it('Can void a tranaction in the current batch', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -41,14 +37,14 @@ describe('SimpleVoid', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const setupRequest = new AuthorizationRequest();
+        const setupRequest = new BlockChyp.AuthorizationRequest();
           setupRequest.pan = '4111111111111111';
         setupRequest.expMonth = '12';
         setupRequest.expYear = '2025';
         setupRequest.amount = '25.55';
         setupRequest.test = true;
         setupRequest.transactionRef = uuidv4();
-        let setupResponse: AuthorizationResponse = new AuthorizationResponse();
+        let setupResponse: BlockChyp.AuthorizationResponse = new BlockChyp.AuthorizationResponse();
         const setupHttpResponse = await client.charge(setupRequest);
         if (setupHttpResponse.status !== 200) {
           console.log('Error:', setupHttpResponse.statusText);
@@ -58,12 +54,12 @@ describe('SimpleVoid', function () {
         setupResponse = setupHttpResponse.data
 
         // setup request object
-        const request = new VoidRequest();
+        const request = new BlockChyp.VoidRequest();
         request.transactionId = setupResponse.transactionId;
         request.test = true;
 
         const httpResponse = await client.void(request)
-        const response: VoidResponse = httpResponse.data;
+        const response: BlockChyp.VoidResponse = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
         expect(response.approved).toBe(true);

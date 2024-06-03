@@ -8,16 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient } from '../index';
-import { PaymentLinkRequest } from '../index';
-import { PaymentLinkResponse } from '../index';
-import { TransactionDisplayTransaction } from '../index';
-import { TransactionDisplayItem } from '../index';
-import { Customer } from '../index';
+import * as BlockChyp from '../index';
 
 describe('SendPaymentLink', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -26,7 +21,7 @@ describe('SendPaymentLink', function () {
   });
 
   it('can generate a payment link', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -42,17 +37,17 @@ describe('SendPaymentLink', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const request = new PaymentLinkRequest();
+        const request = new BlockChyp.PaymentLinkRequest();
         request.amount = '199.99';
         request.description = 'Widget';
         request.subject = 'Widget invoice';
 
-        const transaction = new TransactionDisplayTransaction();
+        const transaction = new BlockChyp.TransactionDisplayTransaction();
         transaction.subtotal = '195.00';
         transaction.tax = '4.99';
         transaction.total = '199.99';
 
-        const items = new TransactionDisplayItem();
+        const items = new BlockChyp.TransactionDisplayItem();
         items.description = 'Widget';
         items.price = '195.00';
         items.quantity = 1;
@@ -61,7 +56,7 @@ describe('SendPaymentLink', function () {
         request.transaction = transaction;
         request.autoSend = true;
 
-        const customer = new Customer();
+        const customer = new BlockChyp.Customer();
         customer.customerRef = 'Customer reference string';
         customer.firstName = 'FirstName';
         customer.lastName = 'LastName';
@@ -71,7 +66,7 @@ describe('SendPaymentLink', function () {
         request.customer = customer;
 
         const httpResponse = await client.sendPaymentLink(request)
-        const response: PaymentLinkResponse = httpResponse.data;
+        const response: BlockChyp.PaymentLinkResponse = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
         expect(response.url?.trim().length).toBeGreaterThan(0);

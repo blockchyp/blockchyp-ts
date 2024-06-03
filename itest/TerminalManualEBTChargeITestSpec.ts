@@ -8,14 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient, MessageRequest, Acknowledgement } from '../index';
-import { AuthorizationRequest } from '../index';
-import { AuthorizationResponse } from '../index';
-import { CardType } from '../index';
+import * as BlockChyp from '../index';
 
 describe('TerminalManualEBTCharge', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -24,7 +21,7 @@ describe('TerminalManualEBTCharge', function () {
   });
 
   it('Can process an ebt direct charge with a terminal', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -36,7 +33,7 @@ describe('TerminalManualEBTCharge', function () {
     }
 
     if (testDelayInt > 0) {
-      const messageRequest = new MessageRequest();
+      const messageRequest = new BlockChyp.MessageRequest();
       messageRequest.test = true;
       messageRequest.terminalName = Config.getTerminalName();
       messageRequest.message = 'Running TerminalManualEBTCharge in ' + testDelay + ' seconds...';
@@ -55,15 +52,15 @@ describe('TerminalManualEBTCharge', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const request = new AuthorizationRequest();
+        const request = new BlockChyp.AuthorizationRequest();
         request.terminalName = Config.getTerminalName();
         request.amount = '27.00';
         request.test = true;
-        request.cardType = CardType.EBT;
+        request.cardType = BlockChyp.CardType.EBT;
         request.manualEntry = true;
 
         const httpResponse = await client.charge(request)
-        const response: AuthorizationResponse = httpResponse.data;
+        const response: BlockChyp.AuthorizationResponse = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
         expect(response.approved).toBe(true);

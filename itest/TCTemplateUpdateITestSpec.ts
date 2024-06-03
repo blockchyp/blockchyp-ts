@@ -8,12 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient } from '../index';
-import { TermsAndConditionsTemplate } from '../index';
+import * as BlockChyp from '../index';
 
 describe('TCTemplateUpdate', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -22,7 +21,7 @@ describe('TCTemplateUpdate', function () {
   });
 
   it('updates a terms and conditions template.', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -38,13 +37,13 @@ describe('TCTemplateUpdate', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const request = new TermsAndConditionsTemplate();
+        const request = new BlockChyp.TermsAndConditionsTemplate();
         request.alias = uuidv4();
         request.name = 'HIPPA Disclosure';
         request.content = 'Lorem ipsum dolor sit amet.';
 
         const httpResponse = await client.tcUpdateTemplate(request)
-        const response: TermsAndConditionsTemplate = httpResponse.data;
+        const response: BlockChyp.TermsAndConditionsTemplate = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
         expect(response.alias?.trim().length).toBeGreaterThan(0);

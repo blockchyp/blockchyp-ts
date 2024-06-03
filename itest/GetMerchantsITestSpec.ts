@@ -8,13 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient } from '../index';
-import { GetMerchantsRequest } from '../index';
-import { GetMerchantsResponse } from '../index';
+import * as BlockChyp from '../index';
 
 describe('GetMerchants', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -23,7 +21,7 @@ describe('GetMerchants', function () {
   });
 
   it('returns a pageable list of merchants.', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds("partner"));
+    client = BlockChyp.newClient(Config.getCreds("partner"));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -39,11 +37,11 @@ describe('GetMerchants', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const request = new GetMerchantsRequest();
+        const request = new BlockChyp.GetMerchantsRequest();
         request.test = true;
 
         const httpResponse = await client.getMerchants(request)
-        const response: GetMerchantsResponse = httpResponse.data;
+        const response: BlockChyp.GetMerchantsResponse = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
 

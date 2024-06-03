@@ -8,15 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient, MessageRequest, Acknowledgement } from '../index';
-import { DeleteQueuedTransactionRequest } from '../index';
-import { DeleteQueuedTransactionResponse } from '../index';
-import { AuthorizationRequest } from '../index';
-import { AuthorizationResponse } from '../index';
+import * as BlockChyp from '../index';
 
 describe('DeleteQueuedTransaction', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -25,7 +21,7 @@ describe('DeleteQueuedTransaction', function () {
   });
 
   it('deletes a queued transaction the terminal.', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -37,7 +33,7 @@ describe('DeleteQueuedTransaction', function () {
     }
 
     if (testDelayInt > 0) {
-      const messageRequest = new MessageRequest();
+      const messageRequest = new BlockChyp.MessageRequest();
       messageRequest.test = true;
       messageRequest.terminalName = Config.getTerminalName();
       messageRequest.message = 'Running DeleteQueuedTransaction in ' + testDelay + ' seconds...';
@@ -56,14 +52,14 @@ describe('DeleteQueuedTransaction', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const setupRequest = new AuthorizationRequest();
+        const setupRequest = new BlockChyp.AuthorizationRequest();
           setupRequest.terminalName = Config.getTerminalName();
         setupRequest.transactionRef = uuidv4();
         setupRequest.description = '1060 West Addison';
         setupRequest.amount = '25.15';
         setupRequest.test = true;
         setupRequest.queue = true;
-        let setupResponse: AuthorizationResponse = new AuthorizationResponse();
+        let setupResponse: BlockChyp.AuthorizationResponse = new BlockChyp.AuthorizationResponse();
         const setupHttpResponse = await client.charge(setupRequest);
         if (setupHttpResponse.status !== 200) {
           console.log('Error:', setupHttpResponse.statusText);
@@ -73,12 +69,12 @@ describe('DeleteQueuedTransaction', function () {
         setupResponse = setupHttpResponse.data
 
         // setup request object
-        const request = new DeleteQueuedTransactionRequest();
+        const request = new BlockChyp.DeleteQueuedTransactionRequest();
         request.terminalName = Config.getTerminalName();
         request.transactionRef = '*';
 
         const httpResponse = await client.deleteQueuedTransaction(request)
-        const response: DeleteQueuedTransactionResponse = httpResponse.data;
+        const response: BlockChyp.DeleteQueuedTransactionResponse = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
 

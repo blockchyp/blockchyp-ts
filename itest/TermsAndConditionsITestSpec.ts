@@ -8,14 +8,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { Config } from './support/config';
-import { BlockChypCredentials, BlockChypClient, MessageRequest, Acknowledgement } from '../index';
-import { TermsAndConditionsRequest } from '../index';
-import { TermsAndConditionsResponse } from '../index';
-import { SignatureFormat } from '../index';
+import * as BlockChyp from '../index';
 
 describe('TermsAndConditions', function () {
   let originalTimeout: number;
-  let client: typeof BlockChypClient;
+  let client: typeof BlockChyp.BlockChypClient;
   Config.load();
 
   beforeEach(function () {
@@ -24,7 +21,7 @@ describe('TermsAndConditions', function () {
   });
 
   it('Can capture terms and conditions acceptance', function (done) {
-    client = BlockChypClient.newClient(Config.getCreds(""));
+    client = BlockChyp.newClient(Config.getCreds(""));
     client.setGatewayHost(Config.getGatewayHost());
     client.setTestGatewayHost(Config.getTestGatewayHost());
     client.setDashboardHost(Config.getDashboardHost());
@@ -36,7 +33,7 @@ describe('TermsAndConditions', function () {
     }
 
     if (testDelayInt > 0) {
-      const messageRequest = new MessageRequest();
+      const messageRequest = new BlockChyp.MessageRequest();
       messageRequest.test = true;
       messageRequest.terminalName = Config.getTerminalName();
       messageRequest.message = 'Running TermsAndConditions in ' + testDelay + ' seconds...';
@@ -55,17 +52,17 @@ describe('TermsAndConditions', function () {
     setTimeout(async function () {
       try {
         // setup request object
-        const request = new TermsAndConditionsRequest();
+        const request = new BlockChyp.TermsAndConditionsRequest();
         request.test = true;
         request.terminalName = Config.getTerminalName();
         request.tcName = 'HIPPA Disclosure';
         request.tcContent = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ullamcorper id urna quis pulvinar. Pellentesque vestibulum justo ac nulla consectetur tristique. Suspendisse arcu arcu, viverra vel luctus non, dapibus vitae augue. Aenean ac volutpat purus. Curabitur in lacus nisi. Nam vel sagittis eros. Curabitur faucibus ut nisl in pulvinar. Nunc egestas, orci ut porttitor tempus, ante mauris pellentesque ex, nec feugiat purus arcu ac metus. Cras sodales ornare lobortis. Aenean lacinia ultricies purus quis pharetra. Cras vestibulum nulla et magna eleifend eleifend. Nunc nibh dolor, malesuada ut suscipit vitae, bibendum quis dolor. Phasellus ultricies ex vitae dolor malesuada, vel dignissim neque accumsan.';
-        request.sigFormat = SignatureFormat.PNG;
+        request.sigFormat = BlockChyp.SignatureFormat.PNG;
         request.sigWidth = 200;
         request.sigRequired = true;
 
         const httpResponse = await client.termsAndConditions(request)
-        const response: TermsAndConditionsResponse = httpResponse.data;
+        const response: BlockChyp.TermsAndConditionsResponse = httpResponse.data;
         // response assertions
         expect(response.success).toBe(true);
 

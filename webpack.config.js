@@ -27,7 +27,7 @@ var config = {
       "path": false,
       "zlib": false,
       "http": false,
-      "https": false,
+      "https": require.resolove('https-browserify'),
       "stream": require.resolve('stream-browserify'),
       "crypto": require.resolve('crypto-browserify'),
       "vm": require.resolve("vm-browserify"),

@@ -75,6 +75,7 @@ describe('CancelPaymentLink', function () {
 
         // setup request object
         const request = new BlockChyp.CancelPaymentLinkRequest();
+        request.test = true;
         request.linkCode = setupResponse.linkCode;
 
         const httpResponse = await client.cancelPaymentLink(request)

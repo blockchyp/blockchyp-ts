@@ -53,7 +53,7 @@ describe('UploadStatus', function () {
 
         // setup request object
         const request = new BlockChyp.UploadStatusRequest();
-        request.uploadId = setupResponse.id;
+        request.uploadId = setupRequest.uploadId;
 
         const httpResponse = await client.uploadStatus(request)
         const response: BlockChyp.UploadStatus = httpResponse.data;

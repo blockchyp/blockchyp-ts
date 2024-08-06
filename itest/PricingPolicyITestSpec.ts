@@ -37,9 +37,22 @@ describe('PricingPolicy', function () {
     setTimeout(async function () {
       try {
         // setup request object
+        const setupRequest = new BlockChyp.AddTestMerchantRequest();
+          setupRequest.dbaName = 'Test Merchant';
+        setupRequest.companyName = 'Test Merchant';
+        let setupResponse: BlockChyp.MerchantProfileResponse = new BlockChyp.MerchantProfileResponse();
+        const setupHttpResponse = await client.addTestMerchant(setupRequest);
+        if (setupHttpResponse.status !== 200) {
+          console.log('Error:', setupHttpResponse.statusText);
+          fail(setupHttpResponse.statusText);
+          done();
+        }
+        setupResponse = setupHttpResponse.data
+
+        // setup request object
         const request = new BlockChyp.PricingPolicyRequest();
         request.test = true;
-        request.merchantId = '<MERCHANT ID>';
+        request.merchantId = setupResponse.merchantId;
 
         const httpResponse = await client.pricingPolicy(request)
         const response: BlockChyp.PricingPolicyResponse = httpResponse.data;

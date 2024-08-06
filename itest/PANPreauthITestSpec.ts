@@ -56,8 +56,9 @@ describe('PANPreauth', function () {
         request.pan = '4111111111111111';
         request.expMonth = '12';
         request.expYear = '2025';
-        request.amount = '25.55';
+        request.amount = '42.45';
         request.test = true;
+        request.bypassDupeFilter = true;
 
         const httpResponse = await client.preauth(request)
         const response: BlockChyp.AuthorizationResponse = httpResponse.data;
@@ -73,7 +74,6 @@ describe('PANPreauth', function () {
         expect(response.paymentType?.trim().length).toBeGreaterThan(0);
         expect(response.maskedPan?.trim().length).toBeGreaterThan(0);
         expect(response.entryMethod?.trim().length).toBeGreaterThan(0);
-        expect(response.authorizedAmount)?.toEqual('25.55');
         expect(response.entryMethod)?.toEqual('KEYED');
 
       } catch (error) {

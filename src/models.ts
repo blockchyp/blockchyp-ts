@@ -2359,6 +2359,12 @@ export class AuthorizationRequest {
    */
     asyncReversals?: boolean;
 
+  /**
+   * A passthrough surcharge amount. This surcharge amount will be passed directly to the
+   * gateway and is not directly calculated.
+   */
+    passthroughSurcharge?: string;
+
     // Constructor with default values for optional fields
     constructor(
         timeout: number | null = null,
@@ -2428,6 +2434,7 @@ export class AuthorizationRequest {
         simulateChipRejection: boolean = false,
         simulateOutOfOrderReversal: boolean = false,
         asyncReversals: boolean = false,
+        passthroughSurcharge: string | undefined = undefined,
         ) {
         this.timeout = timeout;
         this.test = test;
@@ -2496,6 +2503,7 @@ export class AuthorizationRequest {
         this.simulateChipRejection = simulateChipRejection;
         this.simulateOutOfOrderReversal = simulateOutOfOrderReversal;
         this.asyncReversals = asyncReversals;
+        this.passthroughSurcharge = passthroughSurcharge;
         }
 }
 

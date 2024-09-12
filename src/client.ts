@@ -552,6 +552,13 @@ export class BlockChypClient {
   }
 
   /**
+   * Adds a live gateway merchant account.
+   */
+  addGatewayMerchant(request: Models.AddGatewayMerchantRequest): Promise<AxiosResponse<Models.MerchantProfileResponse>> {
+    return this._dashboardRequest('post', '/api/add-gateway-merchant', request);
+  }
+
+  /**
    * Adds a test merchant account.
    */
   addTestMerchant(request: Models.AddTestMerchantRequest): Promise<AxiosResponse<Models.MerchantProfileResponse>> {

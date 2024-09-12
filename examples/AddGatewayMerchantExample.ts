@@ -6,12 +6,16 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-const request = new BlockChyp.MerchantPlatform();
+const request = new BlockChyp.AddGatewayMerchantRequest();
 
+const profile = new BlockChyp.MerchantProfile();
+profile.dbaName = 'DBA Name';
+profile.companyName = 'Corporate Entity Name';
+request.profile = profile;
 
-client.updateMerchantPlatforms(request)
+client.addGatewayMerchant(request)
 .then(function(httpResponse) {
-    const response: BlockChyp.Acknowledgement = httpResponse.data;
+    const response: BlockChyp.MerchantProfileResponse = httpResponse.data;
     console.log('Response: ' + JSON.stringify(response));
   })
   .catch(function (error: any) {

@@ -8702,6 +8702,38 @@ export class AddTestMerchantRequest {
 }
 
   /**
+   * Models basic information needed to create a gateway merchant.
+   */
+export class AddGatewayMerchantRequest {
+
+  /**
+   * Whether or not to route transaction to the test gateway.
+   */
+    test: boolean | null = null;
+
+  /**
+   * The merchant profile to be boarded.
+   */
+    profile: MerchantProfile | null = null;
+
+  /**
+   * The request timeout in seconds.
+   */
+    timeout: number | null = null;
+
+    // Constructor with default values for optional fields
+    constructor(
+        test: boolean | null = null,
+        profile: MerchantProfile | null = null,
+        timeout: number | null = null,
+        ) {
+        this.test = test;
+        this.profile = profile;
+        this.timeout = timeout;
+        }
+}
+
+  /**
    * Models a request for information about the merchant profile.
    */
 export class MerchantProfileRequest {
@@ -9118,6 +9150,11 @@ export class MerchantProfile {
     merchantId: string | null = null;
 
   /**
+   * The primary bank mid.
+   */
+    bankMid: string | null = null;
+
+  /**
    * The merchant's company name.
    */
     companyName: string | null = null;
@@ -9371,6 +9408,7 @@ export class MerchantProfile {
         timeout: number | null = null,
         test: boolean | null = null,
         merchantId: string | null = null,
+        bankMid: string | null = null,
         companyName: string | null = null,
         dbaName: string | null = null,
         invoiceName: string | null = null,
@@ -9424,6 +9462,7 @@ export class MerchantProfile {
         this.timeout = timeout;
         this.test = test;
         this.merchantId = merchantId;
+        this.bankMid = bankMid;
         this.companyName = companyName;
         this.dbaName = dbaName;
         this.invoiceName = invoiceName;
@@ -9505,6 +9544,11 @@ export class MerchantProfileResponse {
    * The merchant id.
    */
     merchantId: string | null = null;
+
+  /**
+   * The primary bank mid.
+   */
+    bankMid: string | null = null;
 
   /**
    * The merchant's company name.
@@ -9762,6 +9806,7 @@ export class MerchantProfileResponse {
         responseDescription: string | null = null,
         test: boolean | null = null,
         merchantId: string | null = null,
+        bankMid: string | null = null,
         companyName: string | null = null,
         dbaName: string | null = null,
         invoiceName: string | null = null,
@@ -9817,6 +9862,7 @@ export class MerchantProfileResponse {
         this.responseDescription = responseDescription;
         this.test = test;
         this.merchantId = merchantId;
+        this.bankMid = bankMid;
         this.companyName = companyName;
         this.dbaName = dbaName;
         this.invoiceName = invoiceName;
@@ -11029,6 +11075,77 @@ export class MerchantPlatformsResponse {
         this.responseDescription = responseDescription;
         this.test = test;
         this.results = results;
+        }
+}
+
+  /**
+   * Used to up platform configuration for gateway merchants.
+   */
+export class UpdateMerchantPlatformRequest {
+
+  /**
+   * The request timeout in seconds.
+   */
+    timeout: number | null = null;
+
+  /**
+   * Whether or not to route transaction to the test gateway.
+   */
+    test: boolean | null = null;
+
+  /**
+   * The merchant platform configuration.
+   */
+    platform: MerchantPlatform | null = null;
+
+    // Constructor with default values for optional fields
+    constructor(
+        timeout: number | null = null,
+        test: boolean | null = null,
+        platform: MerchantPlatform | null = null,
+        ) {
+        this.timeout = timeout;
+        this.test = test;
+        this.platform = platform;
+        }
+}
+
+  /**
+   * Echoes back the state of the current platform configuration after a change.
+   */
+export class UpdateMerchantPlatformResponse {
+
+  /**
+   * Whether or not the request succeeded.
+   */
+    success: boolean | null = null;
+
+  /**
+   * The error, if an error occurred.
+   */
+    error: string | null = null;
+
+  /**
+   * A narrative description of the transaction result.
+   */
+    responseDescription: string | null = null;
+
+  /**
+   * The current platform configuration.
+   */
+    platform: MerchantPlatform | null = null;
+
+    // Constructor with default values for optional fields
+    constructor(
+        success: boolean | null = null,
+        error: string | null = null,
+        responseDescription: string | null = null,
+        platform: MerchantPlatform | null = null,
+        ) {
+        this.success = success;
+        this.error = error;
+        this.responseDescription = responseDescription;
+        this.platform = platform;
         }
 }
 
@@ -15173,6 +15290,11 @@ export class MerchantCredentialGenerationRequest {
    */
     notes: string | null = null;
 
+  /**
+   * Type of credentials to generate, either API or TOKENIZING. Defaults to API.
+   */
+    credentialType: string | null = null;
+
     // Constructor with default values for optional fields
     constructor(
         timeout: number | null = null,
@@ -15181,6 +15303,7 @@ export class MerchantCredentialGenerationRequest {
         deleteProtected: boolean | null = null,
         roles: string[] | null = null,
         notes: string | null = null,
+        credentialType: string | null = null,
         ) {
         this.timeout = timeout;
         this.test = test;
@@ -15188,6 +15311,7 @@ export class MerchantCredentialGenerationRequest {
         this.deleteProtected = deleteProtected;
         this.roles = roles;
         this.notes = notes;
+        this.credentialType = credentialType;
         }
 }
 
@@ -15226,6 +15350,11 @@ export class MerchantCredentialGenerationResponse {
    */
     signingKey: string | null = null;
 
+  /**
+   * The tokenizing key.
+   */
+    tokenizingKey: string | null = null;
+
     // Constructor with default values for optional fields
     constructor(
         success: boolean | null = null,
@@ -15234,6 +15363,7 @@ export class MerchantCredentialGenerationResponse {
         apiKey: string | null = null,
         bearerToken: string | null = null,
         signingKey: string | null = null,
+        tokenizingKey: string | null = null,
         ) {
         this.success = success;
         this.error = error;
@@ -15241,6 +15371,7 @@ export class MerchantCredentialGenerationResponse {
         this.apiKey = apiKey;
         this.bearerToken = bearerToken;
         this.signingKey = signingKey;
+        this.tokenizingKey = tokenizingKey;
         }
 }
 

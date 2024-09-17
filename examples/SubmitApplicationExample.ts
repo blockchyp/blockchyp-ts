@@ -6,12 +6,12 @@ const client = BlockChyp.newClient({
   signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
 });
 
-const request = new BlockChyp.MerchantCredentialGenerationRequest();
-request.merchantId = '<MERCHANT ID>';
+const request = new BlockChyp.SubmitApplicationRequest();
 
-client.merchantCredentialGeneration(request)
+
+client.submitApplication(request)
 .then(function(httpResponse) {
-    const response: BlockChyp.MerchantCredentialGenerationResponse = httpResponse.data;
+    const response: BlockChyp.Acknowledgement = httpResponse.data;
     console.log('Response: ' + JSON.stringify(response));
   })
   .catch(function (error: any) {

@@ -4263,11 +4263,59 @@ const client = BlockChyp.newClient({
 });
 
 const request = new BlockChyp.MerchantCredentialGenerationRequest();
-
+request.merchantId = '<MERCHANT ID>';
 
 client.merchantCredentialGeneration(request)
 .then(function(httpResponse) {
     const response: BlockChyp.MerchantCredentialGenerationResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
+
+```
+
+#### Submit Application
+
+
+
+* **API Credential Types:** Partner
+* **Required Role:** INVITE MERCHANT
+
+This is a partner level API that can be used to submit applications to add new merchant accounts. The application requires a significant amount of detailed information about the merchant and their business. Rather than providing an exhaustive list of required fields, we recommend submitting as much information as possible in your initial request. 
+
+If any required fields are missing or if there are any validation errors, the API will return specific error messages indicating which fields need to be addressed. Simply review these validation errors, fill in the missing information or correct any errors, and resubmit the application.
+
+Key areas of information include:
+- Business details (name, type, tax information)
+- Contact information
+- Address information (physical and mailing)
+- Owner details
+- Bank account information
+- Transaction volume estimates
+- Operational settings (timezone, batch close time, etc.)
+
+**Note:** Some fields may be conditionally required based on the values of other fields. The validation process will guide you through ensuring all necessary information is provided.
+
+
+
+
+```typescript
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
+
+const client = BlockChyp.newClient({
+  apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
+  bearerToken: 'ZLBW5NR4U5PKD5PNP3ZP3OZS5U',
+  signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
+});
+
+const request = new BlockChyp.SubmitApplicationRequest();
+
+
+client.submitApplication(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.Acknowledgement = httpResponse.data;
     console.log('Response: ' + JSON.stringify(response));
   })
   .catch(function (error: any) {

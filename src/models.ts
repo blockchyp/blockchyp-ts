@@ -15569,6 +15569,883 @@ export class AggregateBillingLineItemStats {
         }
 }
 
+  /**
+   * Models an individual with 25% or more ownership interest in a company.
+   */
+export class Owner {
+
+  /**
+   * The first name of the owner.
+   */
+    firstName: string | null = null;
+
+  /**
+   * The last name of the owner.
+   */
+    lastName: string | null = null;
+
+  /**
+   * The job title of the owner.
+   */
+    jobTitle: string | null = null;
+
+  /**
+   * The tax identification number (SSN) of the owner.
+   */
+    taxIdNumber: string | null = null;
+
+  /**
+   * The phone number of the owner.
+   */
+    phoneNumber: string | null = null;
+
+  /**
+   * The date of birth of the owner in mm/dd/yyyy format.
+   */
+    dob: string | null = null;
+
+  /**
+   * The percentage of ownership.
+   */
+    ownership: string | null = null;
+
+  /**
+   * The address of the owner.
+   */
+    address: Address | null = null;
+
+  /**
+   * The email address of the owner.
+   */
+    email: string | null = null;
+
+  /**
+   * A single line representation of the owner's address.
+   */
+    singleLineAddress: string | null = null;
+
+  /**
+   * The type of entity this owner represents.
+   */
+    entityType: string | null = null;
+
+  /**
+   * The driver's license number of the owner.
+   */
+    dlNumber: string | null = null;
+
+  /**
+   * The state that issued the owner's driver's license.
+   */
+    dlStateOrProvince: string | null = null;
+
+  /**
+   * The expiration date of the owner's driver's license.
+   */
+    dlExpiration: string | null = null;
+
+    // Constructor with default values for optional fields
+    constructor(
+        firstName: string | null = null,
+        lastName: string | null = null,
+        jobTitle: string | null = null,
+        taxIdNumber: string | null = null,
+        phoneNumber: string | null = null,
+        dob: string | null = null,
+        ownership: string | null = null,
+        address: Address | null = null,
+        email: string | null = null,
+        singleLineAddress: string | null = null,
+        entityType: string | null = null,
+        dlNumber: string | null = null,
+        dlStateOrProvince: string | null = null,
+        dlExpiration: string | null = null,
+        ) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.jobTitle = jobTitle;
+        this.taxIdNumber = taxIdNumber;
+        this.phoneNumber = phoneNumber;
+        this.dob = dob;
+        this.ownership = ownership;
+        this.address = address;
+        this.email = email;
+        this.singleLineAddress = singleLineAddress;
+        this.entityType = entityType;
+        this.dlNumber = dlNumber;
+        this.dlStateOrProvince = dlStateOrProvince;
+        this.dlExpiration = dlExpiration;
+        }
+}
+
+  /**
+   * Models a bank account associated with an application.
+   */
+export class ApplicationAccount {
+
+  /**
+   * The name of the bank account.
+   */
+    name: string | null = null;
+
+  /**
+   * The name of the bank.
+   */
+    bank: string | null = null;
+
+  /**
+   * The name of the account holder.
+   */
+    accountHolderName: string | null = null;
+
+  /**
+   * The routing number of the bank.
+   */
+    routingNumber: string | null = null;
+
+  /**
+   * The account number.
+   */
+    accountNumber: string | null = null;
+
+    // Constructor with default values for optional fields
+    constructor(
+        name: string | null = null,
+        bank: string | null = null,
+        accountHolderName: string | null = null,
+        routingNumber: string | null = null,
+        accountNumber: string | null = null,
+        ) {
+        this.name = name;
+        this.bank = bank;
+        this.accountHolderName = accountHolderName;
+        this.routingNumber = routingNumber;
+        this.accountNumber = accountNumber;
+        }
+}
+
+  /**
+   * Models a merchant application form to add a merchant account.
+   */
+export class MerchantApplication {
+
+  /**
+   * The invite code for the merchant.
+   */
+    inviteCode: string | null = null;
+
+  /**
+   * The business name your customers know you by (DBA Name).
+   */
+    dbaName: string | null = null;
+
+  /**
+   * The name of the legal entity you file your taxes under.
+   */
+    corporateName: string | null = null;
+
+  /**
+   * The business website.
+   */
+    webSite: string | null = null;
+
+  /**
+   * The business tax identification number (EIN).
+   */
+    taxIdNumber: string | null = null;
+
+  /**
+   * The type of business entity.
+   */
+    entityType: string | null = null;
+
+  /**
+   * The state where the business is incorporated.
+   */
+    stateOfIncorporation: string | null = null;
+
+  /**
+   * The primary type of business (e.g., Retail, Service, etc.).
+   */
+    merchantType: string | null = null;
+
+  /**
+   * A short description of the products and services sold.
+   */
+    businessDescription: string | null = null;
+
+  /**
+   * The number of years the business has been operating.
+   */
+    yearsInBusiness: string | null = null;
+
+  /**
+   * The business telephone number.
+   */
+    businessPhoneNumber: string | null = null;
+
+  /**
+   * The physical address of the business.
+   */
+    physicalAddress: Address | null = null;
+
+  /**
+   * The mailing address of the business.
+   */
+    mailingAddress: Address | null = null;
+
+  /**
+   * The first name of the primary contact.
+   */
+    contactFirstName: string | null = null;
+
+  /**
+   * The last name of the primary contact.
+   */
+    contactLastName: string | null = null;
+
+  /**
+   * The phone number of the primary contact.
+   */
+    contactPhoneNumber: string | null = null;
+
+  /**
+   * The email address of the primary contact.
+   */
+    contactEmail: string | null = null;
+
+  /**
+   * The job title of the primary contact.
+   */
+    contactTitle: string | null = null;
+
+  /**
+   * The tax identification number (SSN) of the primary contact.
+   */
+    contactTaxIdNumber: string | null = null;
+
+  /**
+   * The date of birth of the primary contact.
+   */
+    contactDOB: string | null = null;
+
+  /**
+   * The driver's license number of the primary contact.
+   */
+    contactDlNumber: string | null = null;
+
+  /**
+   * The state that issued the primary contact's driver's license.
+   */
+    contactDlStateOrProvince: string | null = null;
+
+  /**
+   * The expiration date of the primary contact's driver's license.
+   */
+    contactDlExpiration: string | null = null;
+
+  /**
+   * The home address of the primary contact.
+   */
+    contactHomeAddress: Address | null = null;
+
+  /**
+   * The role of the primary contact in the business.
+   */
+    contactRole: string | null = null;
+
+  /**
+   * List of individuals with 25% or more ownership in the company.
+   */
+    owners: Owner[] | null = null;
+
+  /**
+   * The bank account information for the business.
+   */
+    manualAccount: ApplicationAccount | null = null;
+
+  /**
+   * The average transaction amount.
+   */
+    averageTransaction: string | null = null;
+
+  /**
+   * The highest expected transaction amount.
+   */
+    highTransaction: string | null = null;
+
+  /**
+   * The average monthly transaction volume.
+   */
+    averageMonth: string | null = null;
+
+  /**
+   * The highest expected monthly transaction volume.
+   */
+    highMonth: string | null = null;
+
+  /**
+   * The refund policy of the business.
+   */
+    refundPolicy: string | null = null;
+
+  /**
+   * The number of days after purchase that refunds can be issued.
+   */
+    refundDays: string | null = null;
+
+  /**
+   * The time zone of the business.
+   */
+    timeZone: string | null = null;
+
+  /**
+   * The time when the daily batch should close.
+   */
+    batchCloseTime: string | null = null;
+
+  /**
+   * Indicates if the business has multiple locations.
+   */
+    multipleLocations: string | null = null;
+
+  /**
+   * The name of this specific business location.
+   */
+    locationName: string | null = null;
+
+  /**
+   * The store number for this location.
+   */
+    storeNumber: string | null = null;
+
+  /**
+   * Indicates if the business wants to accept EBT cards.
+   */
+    ebtRequested: string | null = null;
+
+  /**
+   * The FNS number issued by the USDA for EBT processing.
+   */
+    fnsNumber: string | null = null;
+
+  /**
+   * Indicates if the business plans to accept payments through a website.
+   */
+    ecommerce: string | null = null;
+
+  /**
+   * Indicates if suppliers ship products directly to customers.
+   */
+    dropShipping: boolean | null = null;
+
+  /**
+   * The percentage of transactions that will be chip or swipe.
+   */
+    cardPresentPercentage: string | null = null;
+
+  /**
+   * The percentage of transactions that will be phone orders.
+   */
+    phoneOrderPercentage: string | null = null;
+
+  /**
+   * The percentage of transactions that will be e-commerce.
+   */
+    ecomPercentage: string | null = null;
+
+  /**
+   * The number of days before shipment that customers are charged.
+   */
+    billBeforeShipmentDays: string | null = null;
+
+  /**
+   * Indicates if the business plans to process recurring payments.
+   */
+    subscriptionsSupported: string | null = null;
+
+  /**
+   * The frequency of recurring payments (if applicable).
+   */
+    subscriptionFrequency: string | null = null;
+
+  /**
+   * The full legal name of the person signing the application.
+   */
+    signerName: string | null = null;
+
+    // Constructor with default values for optional fields
+    constructor(
+        inviteCode: string | null = null,
+        dbaName: string | null = null,
+        corporateName: string | null = null,
+        webSite: string | null = null,
+        taxIdNumber: string | null = null,
+        entityType: string | null = null,
+        stateOfIncorporation: string | null = null,
+        merchantType: string | null = null,
+        businessDescription: string | null = null,
+        yearsInBusiness: string | null = null,
+        businessPhoneNumber: string | null = null,
+        physicalAddress: Address | null = null,
+        mailingAddress: Address | null = null,
+        contactFirstName: string | null = null,
+        contactLastName: string | null = null,
+        contactPhoneNumber: string | null = null,
+        contactEmail: string | null = null,
+        contactTitle: string | null = null,
+        contactTaxIdNumber: string | null = null,
+        contactDOB: string | null = null,
+        contactDlNumber: string | null = null,
+        contactDlStateOrProvince: string | null = null,
+        contactDlExpiration: string | null = null,
+        contactHomeAddress: Address | null = null,
+        contactRole: string | null = null,
+        owners: Owner[] | null = null,
+        manualAccount: ApplicationAccount | null = null,
+        averageTransaction: string | null = null,
+        highTransaction: string | null = null,
+        averageMonth: string | null = null,
+        highMonth: string | null = null,
+        refundPolicy: string | null = null,
+        refundDays: string | null = null,
+        timeZone: string | null = null,
+        batchCloseTime: string | null = null,
+        multipleLocations: string | null = null,
+        locationName: string | null = null,
+        storeNumber: string | null = null,
+        ebtRequested: string | null = null,
+        fnsNumber: string | null = null,
+        ecommerce: string | null = null,
+        dropShipping: boolean | null = null,
+        cardPresentPercentage: string | null = null,
+        phoneOrderPercentage: string | null = null,
+        ecomPercentage: string | null = null,
+        billBeforeShipmentDays: string | null = null,
+        subscriptionsSupported: string | null = null,
+        subscriptionFrequency: string | null = null,
+        signerName: string | null = null,
+        ) {
+        this.inviteCode = inviteCode;
+        this.dbaName = dbaName;
+        this.corporateName = corporateName;
+        this.webSite = webSite;
+        this.taxIdNumber = taxIdNumber;
+        this.entityType = entityType;
+        this.stateOfIncorporation = stateOfIncorporation;
+        this.merchantType = merchantType;
+        this.businessDescription = businessDescription;
+        this.yearsInBusiness = yearsInBusiness;
+        this.businessPhoneNumber = businessPhoneNumber;
+        this.physicalAddress = physicalAddress;
+        this.mailingAddress = mailingAddress;
+        this.contactFirstName = contactFirstName;
+        this.contactLastName = contactLastName;
+        this.contactPhoneNumber = contactPhoneNumber;
+        this.contactEmail = contactEmail;
+        this.contactTitle = contactTitle;
+        this.contactTaxIdNumber = contactTaxIdNumber;
+        this.contactDOB = contactDOB;
+        this.contactDlNumber = contactDlNumber;
+        this.contactDlStateOrProvince = contactDlStateOrProvince;
+        this.contactDlExpiration = contactDlExpiration;
+        this.contactHomeAddress = contactHomeAddress;
+        this.contactRole = contactRole;
+        this.owners = owners;
+        this.manualAccount = manualAccount;
+        this.averageTransaction = averageTransaction;
+        this.highTransaction = highTransaction;
+        this.averageMonth = averageMonth;
+        this.highMonth = highMonth;
+        this.refundPolicy = refundPolicy;
+        this.refundDays = refundDays;
+        this.timeZone = timeZone;
+        this.batchCloseTime = batchCloseTime;
+        this.multipleLocations = multipleLocations;
+        this.locationName = locationName;
+        this.storeNumber = storeNumber;
+        this.ebtRequested = ebtRequested;
+        this.fnsNumber = fnsNumber;
+        this.ecommerce = ecommerce;
+        this.dropShipping = dropShipping;
+        this.cardPresentPercentage = cardPresentPercentage;
+        this.phoneOrderPercentage = phoneOrderPercentage;
+        this.ecomPercentage = ecomPercentage;
+        this.billBeforeShipmentDays = billBeforeShipmentDays;
+        this.subscriptionsSupported = subscriptionsSupported;
+        this.subscriptionFrequency = subscriptionFrequency;
+        this.signerName = signerName;
+        }
+}
+
+  /**
+   * Models a merchant application submission request to add a new merchant account.
+   */
+export class SubmitApplicationRequest {
+
+  /**
+   * The request timeout in seconds.
+   */
+    timeout: number | null = null;
+
+  /**
+   * Whether or not to route transaction to the test gateway.
+   */
+    test: boolean | null = null;
+
+  /**
+   * The invite code for the merchant.
+   */
+    inviteCode: string | null = null;
+
+  /**
+   * The business name your customers know you by (DBA Name).
+   */
+    dbaName: string | null = null;
+
+  /**
+   * The name of the legal entity you file your taxes under.
+   */
+    corporateName: string | null = null;
+
+  /**
+   * The business website.
+   */
+    webSite: string | null = null;
+
+  /**
+   * The business tax identification number (EIN).
+   */
+    taxIdNumber: string | null = null;
+
+  /**
+   * The type of business entity.
+   */
+    entityType: string | null = null;
+
+  /**
+   * The state where the business is incorporated.
+   */
+    stateOfIncorporation: string | null = null;
+
+  /**
+   * The primary type of business (e.g., Retail, Service, etc.).
+   */
+    merchantType: string | null = null;
+
+  /**
+   * A short description of the products and services sold.
+   */
+    businessDescription: string | null = null;
+
+  /**
+   * The number of years the business has been operating.
+   */
+    yearsInBusiness: string | null = null;
+
+  /**
+   * The business telephone number.
+   */
+    businessPhoneNumber: string | null = null;
+
+  /**
+   * The physical address of the business.
+   */
+    physicalAddress: Address | null = null;
+
+  /**
+   * The mailing address of the business.
+   */
+    mailingAddress: Address | null = null;
+
+  /**
+   * The first name of the primary contact.
+   */
+    contactFirstName: string | null = null;
+
+  /**
+   * The last name of the primary contact.
+   */
+    contactLastName: string | null = null;
+
+  /**
+   * The phone number of the primary contact.
+   */
+    contactPhoneNumber: string | null = null;
+
+  /**
+   * The email address of the primary contact.
+   */
+    contactEmail: string | null = null;
+
+  /**
+   * The job title of the primary contact.
+   */
+    contactTitle: string | null = null;
+
+  /**
+   * The tax identification number (SSN) of the primary contact.
+   */
+    contactTaxIdNumber: string | null = null;
+
+  /**
+   * The date of birth of the primary contact.
+   */
+    contactDOB: string | null = null;
+
+  /**
+   * The driver's license number of the primary contact.
+   */
+    contactDlNumber: string | null = null;
+
+  /**
+   * The state that issued the primary contact's driver's license.
+   */
+    contactDlStateOrProvince: string | null = null;
+
+  /**
+   * The expiration date of the primary contact's driver's license.
+   */
+    contactDlExpiration: string | null = null;
+
+  /**
+   * The home address of the primary contact.
+   */
+    contactHomeAddress: Address | null = null;
+
+  /**
+   * The role of the primary contact in the business.
+   */
+    contactRole: string | null = null;
+
+  /**
+   * List of individuals with 25% or more ownership in the company.
+   */
+    owners: Owner[] | null = null;
+
+  /**
+   * The bank account information for the business.
+   */
+    manualAccount: ApplicationAccount | null = null;
+
+  /**
+   * The average transaction amount.
+   */
+    averageTransaction: string | null = null;
+
+  /**
+   * The highest expected transaction amount.
+   */
+    highTransaction: string | null = null;
+
+  /**
+   * The average monthly transaction volume.
+   */
+    averageMonth: string | null = null;
+
+  /**
+   * The highest expected monthly transaction volume.
+   */
+    highMonth: string | null = null;
+
+  /**
+   * The refund policy of the business.
+   */
+    refundPolicy: string | null = null;
+
+  /**
+   * The number of days after purchase that refunds can be issued.
+   */
+    refundDays: string | null = null;
+
+  /**
+   * The time zone of the business.
+   */
+    timeZone: string | null = null;
+
+  /**
+   * The time when the daily batch should close.
+   */
+    batchCloseTime: string | null = null;
+
+  /**
+   * Indicates if the business has multiple locations.
+   */
+    multipleLocations: string | null = null;
+
+  /**
+   * The name of this specific business location.
+   */
+    locationName: string | null = null;
+
+  /**
+   * The store number for this location.
+   */
+    storeNumber: string | null = null;
+
+  /**
+   * Indicates if the business wants to accept EBT cards.
+   */
+    ebtRequested: string | null = null;
+
+  /**
+   * The FNS number issued by the USDA for EBT processing.
+   */
+    fnsNumber: string | null = null;
+
+  /**
+   * Indicates if the business plans to accept payments through a website.
+   */
+    ecommerce: string | null = null;
+
+  /**
+   * Indicates if suppliers ship products directly to customers.
+   */
+    dropShipping: boolean | null = null;
+
+  /**
+   * The percentage of transactions that will be chip or swipe.
+   */
+    cardPresentPercentage: string | null = null;
+
+  /**
+   * The percentage of transactions that will be phone orders.
+   */
+    phoneOrderPercentage: string | null = null;
+
+  /**
+   * The percentage of transactions that will be e-commerce.
+   */
+    ecomPercentage: string | null = null;
+
+  /**
+   * The number of days before shipment that customers are charged.
+   */
+    billBeforeShipmentDays: string | null = null;
+
+  /**
+   * Indicates if the business plans to process recurring payments.
+   */
+    subscriptionsSupported: string | null = null;
+
+  /**
+   * The frequency of recurring payments (if applicable).
+   */
+    subscriptionFrequency: string | null = null;
+
+  /**
+   * The full legal name of the person signing the application.
+   */
+    signerName: string | null = null;
+
+    // Constructor with default values for optional fields
+    constructor(
+        timeout: number | null = null,
+        test: boolean | null = null,
+        inviteCode: string | null = null,
+        dbaName: string | null = null,
+        corporateName: string | null = null,
+        webSite: string | null = null,
+        taxIdNumber: string | null = null,
+        entityType: string | null = null,
+        stateOfIncorporation: string | null = null,
+        merchantType: string | null = null,
+        businessDescription: string | null = null,
+        yearsInBusiness: string | null = null,
+        businessPhoneNumber: string | null = null,
+        physicalAddress: Address | null = null,
+        mailingAddress: Address | null = null,
+        contactFirstName: string | null = null,
+        contactLastName: string | null = null,
+        contactPhoneNumber: string | null = null,
+        contactEmail: string | null = null,
+        contactTitle: string | null = null,
+        contactTaxIdNumber: string | null = null,
+        contactDOB: string | null = null,
+        contactDlNumber: string | null = null,
+        contactDlStateOrProvince: string | null = null,
+        contactDlExpiration: string | null = null,
+        contactHomeAddress: Address | null = null,
+        contactRole: string | null = null,
+        owners: Owner[] | null = null,
+        manualAccount: ApplicationAccount | null = null,
+        averageTransaction: string | null = null,
+        highTransaction: string | null = null,
+        averageMonth: string | null = null,
+        highMonth: string | null = null,
+        refundPolicy: string | null = null,
+        refundDays: string | null = null,
+        timeZone: string | null = null,
+        batchCloseTime: string | null = null,
+        multipleLocations: string | null = null,
+        locationName: string | null = null,
+        storeNumber: string | null = null,
+        ebtRequested: string | null = null,
+        fnsNumber: string | null = null,
+        ecommerce: string | null = null,
+        dropShipping: boolean | null = null,
+        cardPresentPercentage: string | null = null,
+        phoneOrderPercentage: string | null = null,
+        ecomPercentage: string | null = null,
+        billBeforeShipmentDays: string | null = null,
+        subscriptionsSupported: string | null = null,
+        subscriptionFrequency: string | null = null,
+        signerName: string | null = null,
+        ) {
+        this.timeout = timeout;
+        this.test = test;
+        this.inviteCode = inviteCode;
+        this.dbaName = dbaName;
+        this.corporateName = corporateName;
+        this.webSite = webSite;
+        this.taxIdNumber = taxIdNumber;
+        this.entityType = entityType;
+        this.stateOfIncorporation = stateOfIncorporation;
+        this.merchantType = merchantType;
+        this.businessDescription = businessDescription;
+        this.yearsInBusiness = yearsInBusiness;
+        this.businessPhoneNumber = businessPhoneNumber;
+        this.physicalAddress = physicalAddress;
+        this.mailingAddress = mailingAddress;
+        this.contactFirstName = contactFirstName;
+        this.contactLastName = contactLastName;
+        this.contactPhoneNumber = contactPhoneNumber;
+        this.contactEmail = contactEmail;
+        this.contactTitle = contactTitle;
+        this.contactTaxIdNumber = contactTaxIdNumber;
+        this.contactDOB = contactDOB;
+        this.contactDlNumber = contactDlNumber;
+        this.contactDlStateOrProvince = contactDlStateOrProvince;
+        this.contactDlExpiration = contactDlExpiration;
+        this.contactHomeAddress = contactHomeAddress;
+        this.contactRole = contactRole;
+        this.owners = owners;
+        this.manualAccount = manualAccount;
+        this.averageTransaction = averageTransaction;
+        this.highTransaction = highTransaction;
+        this.averageMonth = averageMonth;
+        this.highMonth = highMonth;
+        this.refundPolicy = refundPolicy;
+        this.refundDays = refundDays;
+        this.timeZone = timeZone;
+        this.batchCloseTime = batchCloseTime;
+        this.multipleLocations = multipleLocations;
+        this.locationName = locationName;
+        this.storeNumber = storeNumber;
+        this.ebtRequested = ebtRequested;
+        this.fnsNumber = fnsNumber;
+        this.ecommerce = ecommerce;
+        this.dropShipping = dropShipping;
+        this.cardPresentPercentage = cardPresentPercentage;
+        this.phoneOrderPercentage = phoneOrderPercentage;
+        this.ecomPercentage = ecomPercentage;
+        this.billBeforeShipmentDays = billBeforeShipmentDays;
+        this.subscriptionsSupported = subscriptionsSupported;
+        this.subscriptionFrequency = subscriptionFrequency;
+        this.signerName = signerName;
+        }
+}
+
 
 
 

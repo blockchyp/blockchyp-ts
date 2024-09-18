@@ -523,6 +523,13 @@ export class BlockChypClient {
   }
 
   /**
+   * Submits and application to add a new merchant account.
+   */
+  submitApplication(request: Models.SubmitApplicationRequest): Promise<AxiosResponse<Models.Acknowledgement>> {
+    return this._dashboardRequest('post', '/api/submit-application', request);
+  }
+
+  /**
    * Adds a test merchant account.
    */
   getMerchants(request: Models.GetMerchantsRequest): Promise<AxiosResponse<Models.GetMerchantsResponse>> {

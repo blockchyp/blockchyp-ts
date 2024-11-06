@@ -204,6 +204,13 @@ export class BlockChypClient {
   }
 
   /**
+   * Retrieves card metadata.
+   */
+  async cardMetadata(request: Models.CardMetadataRequest): Promise<AxiosResponse<Models.CardMetadataResponse>> {
+    return this.routeTerminalRequest('post', request, '/api/card-metadata', '/api/card-metadata');
+  }
+
+  /**
    * Activates or recharges a gift card.
    */
   async giftActivate(request: Models.GiftActivateRequest): Promise<AxiosResponse<Models.GiftActivateResponse>> {

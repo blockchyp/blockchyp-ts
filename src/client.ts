@@ -204,6 +204,13 @@ export class BlockChypClient {
   }
 
   /**
+   * Retrieves card metadata.
+   */
+  async cardMetadata(request: Models.CardMetadataRequest): Promise<AxiosResponse<Models.CardMetadataResponse>> {
+    return this.routeTerminalRequest('post', request, '/api/card-metadata', '/api/card-metadata');
+  }
+
+  /**
    * Activates or recharges a gift card.
    */
   async giftActivate(request: Models.GiftActivateRequest): Promise<AxiosResponse<Models.GiftActivateResponse>> {
@@ -520,6 +527,13 @@ export class BlockChypClient {
    */
   merchantCredentialGeneration(request: Models.MerchantCredentialGenerationRequest): Promise<AxiosResponse<Models.MerchantCredentialGenerationResponse>> {
     return this._dashboardRequest('post', '/api/generate-merchant-creds', request);
+  }
+
+  /**
+   * Submits and application to add a new merchant account.
+   */
+  submitApplication(request: Models.SubmitApplicationRequest): Promise<AxiosResponse<Models.Acknowledgement>> {
+    return this._dashboardRequest('post', '/api/submit-application', request);
   }
 
   /**

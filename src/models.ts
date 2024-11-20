@@ -1808,17 +1808,24 @@ export class TokenMetadataResponse {
    */
     token: CustomerToken | null = null;
 
+  /**
+   * Details about a payment card derived from its BIN/IIN.
+   */
+    cardMetadata?: CardMetadata;
+
     // Constructor with default values for optional fields
     constructor(
         success: boolean | null = null,
         error: string | null = null,
         responseDescription: string | null = null,
         token: CustomerToken | null = null,
+        cardMetadata: CardMetadata | undefined = undefined,
         ) {
         this.success = success;
         this.error = error;
         this.responseDescription = responseDescription;
         this.token = token;
+        this.cardMetadata = cardMetadata;
         }
 }
 
@@ -2308,7 +2315,7 @@ export class AuthorizationRequest {
   /**
    * Details for HSA/FSA transactions.
    */
-    healthcare?: Healthcare;
+    healthcareMetadata?: HealthcareMetadata;
 
   /**
    * That the transaction should be a cryptocurrency transaction. Value should be a
@@ -2364,6 +2371,26 @@ export class AuthorizationRequest {
    * gateway and is not directly calculated.
    */
     passthroughSurcharge?: string;
+
+  /**
+   * Marks a transaction as HSA/FSA.
+   */
+    healthcare?: boolean;
+
+  /**
+   * The total amount to process as healthcare.
+   */
+    healthcareTotal?: string;
+
+  /**
+   * The total amount to process as ebt.
+   */
+    ebtTotal?: string;
+
+  /**
+   * That this transaction will include a card metadata lookup.
+   */
+    cardMetadataLookup?: boolean;
 
     // Constructor with default values for optional fields
     constructor(
@@ -2425,7 +2452,7 @@ export class AuthorizationRequest {
         altPrices: {[key: string]: string} | undefined = undefined,
         customer: Customer | undefined = undefined,
         roundingMode: RoundingMode | undefined = undefined,
-        healthcare: Healthcare | undefined = undefined,
+        healthcareMetadata: HealthcareMetadata | undefined = undefined,
         cryptocurrency: string | undefined = undefined,
         cryptoNetwork: string | undefined = undefined,
         cryptoReceiveAddress: string | undefined = undefined,
@@ -2435,6 +2462,10 @@ export class AuthorizationRequest {
         simulateOutOfOrderReversal: boolean = false,
         asyncReversals: boolean = false,
         passthroughSurcharge: string | undefined = undefined,
+        healthcare: boolean = false,
+        healthcareTotal: string | undefined = undefined,
+        ebtTotal: string | undefined = undefined,
+        cardMetadataLookup: boolean = false,
         ) {
         this.timeout = timeout;
         this.test = test;
@@ -2494,7 +2525,7 @@ export class AuthorizationRequest {
         this.altPrices = altPrices;
         this.customer = customer;
         this.roundingMode = roundingMode;
-        this.healthcare = healthcare;
+        this.healthcareMetadata = healthcareMetadata;
         this.cryptocurrency = cryptocurrency;
         this.cryptoNetwork = cryptoNetwork;
         this.cryptoReceiveAddress = cryptoReceiveAddress;
@@ -2504,6 +2535,484 @@ export class AuthorizationRequest {
         this.simulateOutOfOrderReversal = simulateOutOfOrderReversal;
         this.asyncReversals = asyncReversals;
         this.passthroughSurcharge = passthroughSurcharge;
+        this.healthcare = healthcare;
+        this.healthcareTotal = healthcareTotal;
+        this.ebtTotal = ebtTotal;
+        this.cardMetadataLookup = cardMetadataLookup;
+        }
+}
+
+  /**
+   * Essential information about a payment card derived from its BIN/IIN.
+   */
+export class CardMetadata {
+
+  /**
+   * The brand or network of the card (e.g., Visa, Mastercard, Amex).
+   */
+    cardBrand: string | null = null;
+
+  /**
+   * The name of the financial institution that issued the card.
+   */
+    issuerName: string | null = null;
+
+  /**
+   * Whether the card supports Level 3 processing for detailed transaction data.
+   */
+    l3: boolean | null = null;
+
+  /**
+   * Whether the card supports Level 2 processing for additional transaction data.
+   */
+    l2: boolean | null = null;
+
+  /**
+   * The general category or type of the card product.
+   */
+    productType: string | null = null;
+
+  /**
+   * The specific name or designation of the card product.
+   */
+    productName: string | null = null;
+
+  /**
+   * Whether the card is an Electronic Benefit Transfer (EBT) card.
+   */
+    ebt: boolean | null = null;
+
+  /**
+   * Whether the card is a debit card.
+   */
+    debit: boolean | null = null;
+
+  /**
+   * Whether the card is a healthcare-specific payment card.
+   */
+    healthcare: boolean | null = null;
+
+  /**
+   * Whether the card is a prepaid card.
+   */
+    prepaid: boolean | null = null;
+
+  /**
+   * The geographical region associated with the card's issuer.
+   */
+    region: string | null = null;
+
+  /**
+   * The country associated with the card's issuer.
+   */
+    country: string | null = null;
+
+    // Constructor with default values for optional fields
+    constructor(
+        cardBrand: string | null = null,
+        issuerName: string | null = null,
+        l3: boolean | null = null,
+        l2: boolean | null = null,
+        productType: string | null = null,
+        productName: string | null = null,
+        ebt: boolean | null = null,
+        debit: boolean | null = null,
+        healthcare: boolean | null = null,
+        prepaid: boolean | null = null,
+        region: string | null = null,
+        country: string | null = null,
+        ) {
+        this.cardBrand = cardBrand;
+        this.issuerName = issuerName;
+        this.l3 = l3;
+        this.l2 = l2;
+        this.productType = productType;
+        this.productName = productName;
+        this.ebt = ebt;
+        this.debit = debit;
+        this.healthcare = healthcare;
+        this.prepaid = prepaid;
+        this.region = region;
+        this.country = country;
+        }
+}
+
+  /**
+   * Retrieves card metadata.
+   */
+export class CardMetadataRequest {
+
+  /**
+   * The request timeout in seconds.
+   */
+    timeout: number | null = null;
+
+  /**
+   * Whether or not to route transaction to the test gateway.
+   */
+    test: boolean | null = null;
+
+  /**
+   * A user-assigned reference that can be used to recall or reverse transactions.
+   */
+    transactionRef?: string;
+
+  /**
+   * That the transaction reference was autogenerated and should be ignored for the
+   * purposes of duplicate detection.
+   */
+    autogeneratedRef: boolean | null = null;
+
+  /**
+   * Defers the response to the transaction and returns immediately. Callers should
+   * retrive the transaction result using the Transaction Status API.
+   */
+    async: boolean | null = null;
+
+  /**
+   * Adds the transaction to the queue and returns immediately. Callers should retrive
+   * the transaction result using the Transaction Status API.
+   */
+    queue: boolean | null = null;
+
+  /**
+   * Whether or not the request should block until all cards have been removed from the card
+   * reader.
+   */
+    waitForRemovedCard?: boolean;
+
+  /**
+   * Override any in-progress transactions.
+   */
+    force?: boolean;
+
+  /**
+   * An identifier from an external point of sale system.
+   */
+    orderRef?: string;
+
+  /**
+   * The settlement account for merchants with split settlements.
+   */
+    destinationAccount?: string;
+
+  /**
+   * Can include a code used to trigger simulated conditions for the purposes of testing
+   * and certification. Valid for test merchant accounts only.
+   */
+    testCase?: string;
+
+  /**
+   * The payment token to be used for this transaction. This should be used for recurring
+   * transactions.
+   */
+    token?: string;
+
+  /**
+   * Track 1 magnetic stripe data.
+   */
+    track1?: string;
+
+  /**
+   * Track 2 magnetic stripe data.
+   */
+    track2?: string;
+
+  /**
+   * The primary account number. We recommend using the terminal or e-commerce
+   * tokenization libraries instead of passing account numbers in directly, as this
+   * would put your application in PCI scope.
+   */
+    pan?: string;
+
+  /**
+   * The ACH routing number for ACH transactions.
+   */
+    routingNumber?: string;
+
+  /**
+   * The cardholder name. Only required if the request includes a primary account number
+   * or track data.
+   */
+    cardholderName?: string;
+
+  /**
+   * The card expiration month for use with PAN based transactions.
+   */
+    expMonth?: string;
+
+  /**
+   * The card expiration year for use with PAN based transactions.
+   */
+    expYear?: string;
+
+  /**
+   * The card CVV for use with PAN based transactions.
+   */
+    cvv?: string;
+
+  /**
+   * The cardholder address for use with address verification.
+   */
+    address?: string;
+
+  /**
+   * The cardholder postal code for use with address verification.
+   */
+    postalCode?: string;
+
+  /**
+   * That the payment entry method is a manual keyed transaction. If this is true, no other
+   * payment method will be accepted.
+   */
+    manualEntry?: boolean;
+
+  /**
+   * The key serial number used for DUKPT encryption.
+   */
+    ksn?: string;
+
+  /**
+   * The encrypted pin block.
+   */
+    pinBlock?: string;
+
+  /**
+   * Designates categories of cards: credit, debit, EBT.
+   */
+    cardType?: CardType;
+
+  /**
+   * Designates brands of payment methods: Visa, Discover, etc.
+   */
+    paymentType?: string;
+
+  /**
+   * The name of the target payment terminal.
+   */
+    terminalName?: string;
+
+  /**
+   * Forces the terminal cloud connection to be reset while a transactions is in flight.
+   * This is a diagnostic settings that can be used only for test transactions.
+   */
+    resetConnection: boolean | null = null;
+
+  /**
+   * Marks a transaction as HSA/FSA.
+   */
+    healthcare?: boolean;
+
+    // Constructor with default values for optional fields
+    constructor(
+        timeout: number | null = null,
+        test: boolean | null = null,
+        transactionRef: string | undefined = undefined,
+        autogeneratedRef: boolean | null = null,
+        async: boolean | null = null,
+        queue: boolean | null = null,
+        waitForRemovedCard: boolean = false,
+        force: boolean = false,
+        orderRef: string | undefined = undefined,
+        destinationAccount: string | undefined = undefined,
+        testCase: string | undefined = undefined,
+        token: string | undefined = undefined,
+        track1: string | undefined = undefined,
+        track2: string | undefined = undefined,
+        pan: string | undefined = undefined,
+        routingNumber: string | undefined = undefined,
+        cardholderName: string | undefined = undefined,
+        expMonth: string | undefined = undefined,
+        expYear: string | undefined = undefined,
+        cvv: string | undefined = undefined,
+        address: string | undefined = undefined,
+        postalCode: string | undefined = undefined,
+        manualEntry: boolean = false,
+        ksn: string | undefined = undefined,
+        pinBlock: string | undefined = undefined,
+        cardType: CardType | undefined = undefined,
+        paymentType: string | undefined = undefined,
+        terminalName: string | undefined = undefined,
+        resetConnection: boolean | null = null,
+        healthcare: boolean = false,
+        ) {
+        this.timeout = timeout;
+        this.test = test;
+        this.transactionRef = transactionRef;
+        this.autogeneratedRef = autogeneratedRef;
+        this.async = async;
+        this.queue = queue;
+        this.waitForRemovedCard = waitForRemovedCard;
+        this.force = force;
+        this.orderRef = orderRef;
+        this.destinationAccount = destinationAccount;
+        this.testCase = testCase;
+        this.token = token;
+        this.track1 = track1;
+        this.track2 = track2;
+        this.pan = pan;
+        this.routingNumber = routingNumber;
+        this.cardholderName = cardholderName;
+        this.expMonth = expMonth;
+        this.expYear = expYear;
+        this.cvv = cvv;
+        this.address = address;
+        this.postalCode = postalCode;
+        this.manualEntry = manualEntry;
+        this.ksn = ksn;
+        this.pinBlock = pinBlock;
+        this.cardType = cardType;
+        this.paymentType = paymentType;
+        this.terminalName = terminalName;
+        this.resetConnection = resetConnection;
+        this.healthcare = healthcare;
+        }
+}
+
+  /**
+   * The response to a card metadata request.
+   */
+export class CardMetadataResponse {
+
+  /**
+   * Whether or not the request succeeded.
+   */
+    success: boolean | null = null;
+
+  /**
+   * The error, if an error occurred.
+   */
+    error: string | null = null;
+
+  /**
+   * A narrative description of the transaction result.
+   */
+    responseDescription: string | null = null;
+
+  /**
+   * The payment token, if the payment was enrolled in the vault.
+   */
+    token?: string;
+
+  /**
+   * The entry method for the transaction (CHIP, MSR, KEYED, etc).
+   */
+    entryMethod?: string;
+
+  /**
+   * The card brand (VISA, MC, AMEX, DEBIT, etc).
+   */
+    paymentType?: string;
+
+  /**
+   * Provides network level detail on how a transaction was routed, especially for debit
+   * transactions.
+   */
+    network?: string;
+
+  /**
+   * Identifies the card association based on bin number. Used primarily used to indicate
+   * the major logo on a card, even when debit transactions are routed on a different
+   * network.
+   */
+    logo?: string;
+
+  /**
+   * The masked primary account number.
+   */
+    maskedPan?: string;
+
+  /**
+   * The BlockChyp public key if the user presented a BlockChyp payment card.
+   */
+    publicKey?: string;
+
+  /**
+   * That the transaction did something that would put the system in PCI scope.
+   */
+    ScopeAlert?: boolean;
+
+  /**
+   * The cardholder name.
+   */
+    cardHolder?: string;
+
+  /**
+   * The card expiration month in MM format.
+   */
+    expMonth?: string;
+
+  /**
+   * The card expiration year in YY format.
+   */
+    expYear?: string;
+
+  /**
+   * Address verification results if address information was submitted.
+   */
+    avsResponse: AVSResponse | null = null;
+
+  /**
+   * Suggested receipt fields.
+   */
+    receiptSuggestions: ReceiptSuggestions | null = null;
+
+  /**
+   * Customer data, if any. Preserved for reverse compatibility.
+   */
+    customer?: Customer;
+
+  /**
+   * Customer data, if any.
+   */
+    customers: Customer[] | null = null;
+
+  /**
+   * Details about a payment card derived from its BIN/IIN.
+   */
+    cardMetadata?: CardMetadata;
+
+    // Constructor with default values for optional fields
+    constructor(
+        success: boolean | null = null,
+        error: string | null = null,
+        responseDescription: string | null = null,
+        token: string | undefined = undefined,
+        entryMethod: string | undefined = undefined,
+        paymentType: string | undefined = undefined,
+        network: string | undefined = undefined,
+        logo: string | undefined = undefined,
+        maskedPan: string | undefined = undefined,
+        publicKey: string | undefined = undefined,
+        ScopeAlert: boolean = false,
+        cardHolder: string | undefined = undefined,
+        expMonth: string | undefined = undefined,
+        expYear: string | undefined = undefined,
+        avsResponse: AVSResponse | null = null,
+        receiptSuggestions: ReceiptSuggestions | null = null,
+        customer: Customer | undefined = undefined,
+        customers: Customer[] | null = null,
+        cardMetadata: CardMetadata | undefined = undefined,
+        ) {
+        this.success = success;
+        this.error = error;
+        this.responseDescription = responseDescription;
+        this.token = token;
+        this.entryMethod = entryMethod;
+        this.paymentType = paymentType;
+        this.network = network;
+        this.logo = logo;
+        this.maskedPan = maskedPan;
+        this.publicKey = publicKey;
+        this.ScopeAlert = ScopeAlert;
+        this.cardHolder = cardHolder;
+        this.expMonth = expMonth;
+        this.expYear = expYear;
+        this.avsResponse = avsResponse;
+        this.receiptSuggestions = receiptSuggestions;
+        this.customer = customer;
+        this.customers = customers;
+        this.cardMetadata = cardMetadata;
         }
 }
 
@@ -3173,7 +3682,7 @@ export class RefundRequest {
   /**
    * Details for HSA/FSA transactions.
    */
-    healthcare?: Healthcare;
+    healthcareMetadata?: HealthcareMetadata;
 
   /**
    * Instructs the terminal to simulate a post auth chip rejection that would trigger an
@@ -3201,6 +3710,11 @@ export class RefundRequest {
    * Manually sets the MIT (Merchant Initiated Transaction) flag.
    */
     mit?: boolean;
+
+  /**
+   * That this transaction will include a card metadata lookup.
+   */
+    cardMetadataLookup?: boolean;
 
     // Constructor with default values for optional fields
     constructor(
@@ -3245,12 +3759,13 @@ export class RefundRequest {
         taxAmount: string | undefined = undefined,
         terminalName: string | undefined = undefined,
         resetConnection: boolean | null = null,
-        healthcare: Healthcare | undefined = undefined,
+        healthcareMetadata: HealthcareMetadata | undefined = undefined,
         simulateChipRejection: boolean = false,
         simulateOutOfOrderReversal: boolean = false,
         asyncReversals: boolean = false,
         cit: boolean = false,
         mit: boolean = false,
+        cardMetadataLookup: boolean = false,
         ) {
         this.timeout = timeout;
         this.test = test;
@@ -3293,12 +3808,13 @@ export class RefundRequest {
         this.taxAmount = taxAmount;
         this.terminalName = terminalName;
         this.resetConnection = resetConnection;
-        this.healthcare = healthcare;
+        this.healthcareMetadata = healthcareMetadata;
         this.simulateChipRejection = simulateChipRejection;
         this.simulateOutOfOrderReversal = simulateOutOfOrderReversal;
         this.asyncReversals = asyncReversals;
         this.cit = cit;
         this.mit = mit;
+        this.cardMetadataLookup = cardMetadataLookup;
         }
 }
 
@@ -4290,6 +4806,11 @@ export class EnrollRequest {
    */
     subscription?: boolean;
 
+  /**
+   * That this transaction will include a card metadata lookup.
+   */
+    cardMetadataLookup?: boolean;
+
     // Constructor with default values for optional fields
     constructor(
         timeout: number | null = null,
@@ -4325,6 +4846,7 @@ export class EnrollRequest {
         customer: Customer | undefined = undefined,
         recurring: boolean = false,
         subscription: boolean = false,
+        cardMetadataLookup: boolean = false,
         ) {
         this.timeout = timeout;
         this.test = test;
@@ -4359,6 +4881,7 @@ export class EnrollRequest {
         this.customer = customer;
         this.recurring = recurring;
         this.subscription = subscription;
+        this.cardMetadataLookup = cardMetadataLookup;
         }
 }
 
@@ -4529,6 +5052,11 @@ export class EnrollResponse {
    */
     sigFile?: string;
 
+  /**
+   * Details about a payment card derived from its BIN/IIN.
+   */
+    cardMetadata?: CardMetadata;
+
     // Constructor with default values for optional fields
     constructor(
         success: boolean | null = null,
@@ -4562,6 +5090,7 @@ export class EnrollResponse {
         customer: Customer | undefined = undefined,
         customers: Customer[] | null = null,
         sigFile: string | undefined = undefined,
+        cardMetadata: CardMetadata | undefined = undefined,
         ) {
         this.success = success;
         this.error = error;
@@ -4594,6 +5123,7 @@ export class EnrollResponse {
         this.customer = customer;
         this.customers = customers;
         this.sigFile = sigFile;
+        this.cardMetadata = cardMetadata;
         }
 }
 
@@ -5774,6 +6304,11 @@ export class AuthorizationResponse {
    */
     status: string | null = null;
 
+  /**
+   * Details about a payment card derived from its BIN/IIN.
+   */
+    cardMetadata?: CardMetadata;
+
     // Constructor with default values for optional fields
     constructor(
         success: boolean | null = null,
@@ -5831,6 +6366,7 @@ export class AuthorizationResponse {
         whiteListedCard: WhiteListedCard | undefined = undefined,
         storeAndForward: boolean | null = null,
         status: string | null = null,
+        cardMetadata: CardMetadata | undefined = undefined,
         ) {
         this.success = success;
         this.error = error;
@@ -5887,6 +6423,7 @@ export class AuthorizationResponse {
         this.whiteListedCard = whiteListedCard;
         this.storeAndForward = storeAndForward;
         this.status = status;
+        this.cardMetadata = cardMetadata;
         }
 }
 
@@ -10723,7 +11260,7 @@ export class UnlinkTokenRequest {
   /**
    * Fields for HSA/FSA transactions.
    */
-export class Healthcare {
+export class HealthcareMetadata {
 
   /**
    * A list of healthcare categories in the transaction.
@@ -15569,6 +16106,883 @@ export class AggregateBillingLineItemStats {
         }
 }
 
+  /**
+   * Models an individual with 25% or more ownership interest in a company.
+   */
+export class Owner {
+
+  /**
+   * The first name of the owner.
+   */
+    firstName: string | null = null;
+
+  /**
+   * The last name of the owner.
+   */
+    lastName: string | null = null;
+
+  /**
+   * The job title of the owner.
+   */
+    jobTitle: string | null = null;
+
+  /**
+   * The tax identification number (SSN) of the owner.
+   */
+    taxIdNumber: string | null = null;
+
+  /**
+   * The phone number of the owner.
+   */
+    phoneNumber: string | null = null;
+
+  /**
+   * The date of birth of the owner in mm/dd/yyyy format.
+   */
+    dob: string | null = null;
+
+  /**
+   * The percentage of ownership.
+   */
+    ownership: string | null = null;
+
+  /**
+   * The address of the owner.
+   */
+    address: Address | null = null;
+
+  /**
+   * The email address of the owner.
+   */
+    email: string | null = null;
+
+  /**
+   * A single line representation of the owner's address.
+   */
+    singleLineAddress: string | null = null;
+
+  /**
+   * The type of entity this owner represents.
+   */
+    entityType: string | null = null;
+
+  /**
+   * The driver's license number of the owner.
+   */
+    dlNumber: string | null = null;
+
+  /**
+   * The state that issued the owner's driver's license.
+   */
+    dlStateOrProvince: string | null = null;
+
+  /**
+   * The expiration date of the owner's driver's license.
+   */
+    dlExpiration: string | null = null;
+
+    // Constructor with default values for optional fields
+    constructor(
+        firstName: string | null = null,
+        lastName: string | null = null,
+        jobTitle: string | null = null,
+        taxIdNumber: string | null = null,
+        phoneNumber: string | null = null,
+        dob: string | null = null,
+        ownership: string | null = null,
+        address: Address | null = null,
+        email: string | null = null,
+        singleLineAddress: string | null = null,
+        entityType: string | null = null,
+        dlNumber: string | null = null,
+        dlStateOrProvince: string | null = null,
+        dlExpiration: string | null = null,
+        ) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.jobTitle = jobTitle;
+        this.taxIdNumber = taxIdNumber;
+        this.phoneNumber = phoneNumber;
+        this.dob = dob;
+        this.ownership = ownership;
+        this.address = address;
+        this.email = email;
+        this.singleLineAddress = singleLineAddress;
+        this.entityType = entityType;
+        this.dlNumber = dlNumber;
+        this.dlStateOrProvince = dlStateOrProvince;
+        this.dlExpiration = dlExpiration;
+        }
+}
+
+  /**
+   * Models a bank account associated with an application.
+   */
+export class ApplicationAccount {
+
+  /**
+   * The name of the bank account.
+   */
+    name: string | null = null;
+
+  /**
+   * The name of the bank.
+   */
+    bank: string | null = null;
+
+  /**
+   * The name of the account holder.
+   */
+    accountHolderName: string | null = null;
+
+  /**
+   * The routing number of the bank.
+   */
+    routingNumber: string | null = null;
+
+  /**
+   * The account number.
+   */
+    accountNumber: string | null = null;
+
+    // Constructor with default values for optional fields
+    constructor(
+        name: string | null = null,
+        bank: string | null = null,
+        accountHolderName: string | null = null,
+        routingNumber: string | null = null,
+        accountNumber: string | null = null,
+        ) {
+        this.name = name;
+        this.bank = bank;
+        this.accountHolderName = accountHolderName;
+        this.routingNumber = routingNumber;
+        this.accountNumber = accountNumber;
+        }
+}
+
+  /**
+   * Models a merchant application form to add a merchant account.
+   */
+export class MerchantApplication {
+
+  /**
+   * The invite code for the merchant.
+   */
+    inviteCode: string | null = null;
+
+  /**
+   * The business name your customers know you by (DBA Name).
+   */
+    dbaName: string | null = null;
+
+  /**
+   * The name of the legal entity you file your taxes under.
+   */
+    corporateName: string | null = null;
+
+  /**
+   * The business website.
+   */
+    webSite: string | null = null;
+
+  /**
+   * The business tax identification number (EIN).
+   */
+    taxIdNumber: string | null = null;
+
+  /**
+   * The type of business entity.
+   */
+    entityType: string | null = null;
+
+  /**
+   * The state where the business is incorporated.
+   */
+    stateOfIncorporation: string | null = null;
+
+  /**
+   * The primary type of business (e.g., Retail, Service, etc.).
+   */
+    merchantType: string | null = null;
+
+  /**
+   * A short description of the products and services sold.
+   */
+    businessDescription: string | null = null;
+
+  /**
+   * The number of years the business has been operating.
+   */
+    yearsInBusiness: string | null = null;
+
+  /**
+   * The business telephone number.
+   */
+    businessPhoneNumber: string | null = null;
+
+  /**
+   * The physical address of the business.
+   */
+    physicalAddress: Address | null = null;
+
+  /**
+   * The mailing address of the business.
+   */
+    mailingAddress: Address | null = null;
+
+  /**
+   * The first name of the primary contact.
+   */
+    contactFirstName: string | null = null;
+
+  /**
+   * The last name of the primary contact.
+   */
+    contactLastName: string | null = null;
+
+  /**
+   * The phone number of the primary contact.
+   */
+    contactPhoneNumber: string | null = null;
+
+  /**
+   * The email address of the primary contact.
+   */
+    contactEmail: string | null = null;
+
+  /**
+   * The job title of the primary contact.
+   */
+    contactTitle: string | null = null;
+
+  /**
+   * The tax identification number (SSN) of the primary contact.
+   */
+    contactTaxIdNumber: string | null = null;
+
+  /**
+   * The date of birth of the primary contact.
+   */
+    contactDOB: string | null = null;
+
+  /**
+   * The driver's license number of the primary contact.
+   */
+    contactDlNumber: string | null = null;
+
+  /**
+   * The state that issued the primary contact's driver's license.
+   */
+    contactDlStateOrProvince: string | null = null;
+
+  /**
+   * The expiration date of the primary contact's driver's license.
+   */
+    contactDlExpiration: string | null = null;
+
+  /**
+   * The home address of the primary contact.
+   */
+    contactHomeAddress: Address | null = null;
+
+  /**
+   * The role of the primary contact in the business.
+   */
+    contactRole: string | null = null;
+
+  /**
+   * List of individuals with 25% or more ownership in the company.
+   */
+    owners: Owner[] | null = null;
+
+  /**
+   * The bank account information for the business.
+   */
+    manualAccount: ApplicationAccount | null = null;
+
+  /**
+   * The average transaction amount.
+   */
+    averageTransaction: string | null = null;
+
+  /**
+   * The highest expected transaction amount.
+   */
+    highTransaction: string | null = null;
+
+  /**
+   * The average monthly transaction volume.
+   */
+    averageMonth: string | null = null;
+
+  /**
+   * The highest expected monthly transaction volume.
+   */
+    highMonth: string | null = null;
+
+  /**
+   * The refund policy of the business.
+   */
+    refundPolicy: string | null = null;
+
+  /**
+   * The number of days after purchase that refunds can be issued.
+   */
+    refundDays: string | null = null;
+
+  /**
+   * The time zone of the business.
+   */
+    timeZone: string | null = null;
+
+  /**
+   * The time when the daily batch should close.
+   */
+    batchCloseTime: string | null = null;
+
+  /**
+   * Indicates if the business has multiple locations.
+   */
+    multipleLocations: string | null = null;
+
+  /**
+   * The name of this specific business location.
+   */
+    locationName: string | null = null;
+
+  /**
+   * The store number for this location.
+   */
+    storeNumber: string | null = null;
+
+  /**
+   * Indicates if the business wants to accept EBT cards.
+   */
+    ebtRequested: string | null = null;
+
+  /**
+   * The FNS number issued by the USDA for EBT processing.
+   */
+    fnsNumber: string | null = null;
+
+  /**
+   * Indicates if the business plans to accept payments through a website.
+   */
+    ecommerce: string | null = null;
+
+  /**
+   * Indicates if suppliers ship products directly to customers.
+   */
+    dropShipping: boolean | null = null;
+
+  /**
+   * The percentage of transactions that will be chip or swipe.
+   */
+    cardPresentPercentage: string | null = null;
+
+  /**
+   * The percentage of transactions that will be phone orders.
+   */
+    phoneOrderPercentage: string | null = null;
+
+  /**
+   * The percentage of transactions that will be e-commerce.
+   */
+    ecomPercentage: string | null = null;
+
+  /**
+   * The number of days before shipment that customers are charged.
+   */
+    billBeforeShipmentDays: string | null = null;
+
+  /**
+   * Indicates if the business plans to process recurring payments.
+   */
+    subscriptionsSupported: string | null = null;
+
+  /**
+   * The frequency of recurring payments (if applicable).
+   */
+    subscriptionFrequency: string | null = null;
+
+  /**
+   * The full legal name of the person signing the application.
+   */
+    signerName: string | null = null;
+
+    // Constructor with default values for optional fields
+    constructor(
+        inviteCode: string | null = null,
+        dbaName: string | null = null,
+        corporateName: string | null = null,
+        webSite: string | null = null,
+        taxIdNumber: string | null = null,
+        entityType: string | null = null,
+        stateOfIncorporation: string | null = null,
+        merchantType: string | null = null,
+        businessDescription: string | null = null,
+        yearsInBusiness: string | null = null,
+        businessPhoneNumber: string | null = null,
+        physicalAddress: Address | null = null,
+        mailingAddress: Address | null = null,
+        contactFirstName: string | null = null,
+        contactLastName: string | null = null,
+        contactPhoneNumber: string | null = null,
+        contactEmail: string | null = null,
+        contactTitle: string | null = null,
+        contactTaxIdNumber: string | null = null,
+        contactDOB: string | null = null,
+        contactDlNumber: string | null = null,
+        contactDlStateOrProvince: string | null = null,
+        contactDlExpiration: string | null = null,
+        contactHomeAddress: Address | null = null,
+        contactRole: string | null = null,
+        owners: Owner[] | null = null,
+        manualAccount: ApplicationAccount | null = null,
+        averageTransaction: string | null = null,
+        highTransaction: string | null = null,
+        averageMonth: string | null = null,
+        highMonth: string | null = null,
+        refundPolicy: string | null = null,
+        refundDays: string | null = null,
+        timeZone: string | null = null,
+        batchCloseTime: string | null = null,
+        multipleLocations: string | null = null,
+        locationName: string | null = null,
+        storeNumber: string | null = null,
+        ebtRequested: string | null = null,
+        fnsNumber: string | null = null,
+        ecommerce: string | null = null,
+        dropShipping: boolean | null = null,
+        cardPresentPercentage: string | null = null,
+        phoneOrderPercentage: string | null = null,
+        ecomPercentage: string | null = null,
+        billBeforeShipmentDays: string | null = null,
+        subscriptionsSupported: string | null = null,
+        subscriptionFrequency: string | null = null,
+        signerName: string | null = null,
+        ) {
+        this.inviteCode = inviteCode;
+        this.dbaName = dbaName;
+        this.corporateName = corporateName;
+        this.webSite = webSite;
+        this.taxIdNumber = taxIdNumber;
+        this.entityType = entityType;
+        this.stateOfIncorporation = stateOfIncorporation;
+        this.merchantType = merchantType;
+        this.businessDescription = businessDescription;
+        this.yearsInBusiness = yearsInBusiness;
+        this.businessPhoneNumber = businessPhoneNumber;
+        this.physicalAddress = physicalAddress;
+        this.mailingAddress = mailingAddress;
+        this.contactFirstName = contactFirstName;
+        this.contactLastName = contactLastName;
+        this.contactPhoneNumber = contactPhoneNumber;
+        this.contactEmail = contactEmail;
+        this.contactTitle = contactTitle;
+        this.contactTaxIdNumber = contactTaxIdNumber;
+        this.contactDOB = contactDOB;
+        this.contactDlNumber = contactDlNumber;
+        this.contactDlStateOrProvince = contactDlStateOrProvince;
+        this.contactDlExpiration = contactDlExpiration;
+        this.contactHomeAddress = contactHomeAddress;
+        this.contactRole = contactRole;
+        this.owners = owners;
+        this.manualAccount = manualAccount;
+        this.averageTransaction = averageTransaction;
+        this.highTransaction = highTransaction;
+        this.averageMonth = averageMonth;
+        this.highMonth = highMonth;
+        this.refundPolicy = refundPolicy;
+        this.refundDays = refundDays;
+        this.timeZone = timeZone;
+        this.batchCloseTime = batchCloseTime;
+        this.multipleLocations = multipleLocations;
+        this.locationName = locationName;
+        this.storeNumber = storeNumber;
+        this.ebtRequested = ebtRequested;
+        this.fnsNumber = fnsNumber;
+        this.ecommerce = ecommerce;
+        this.dropShipping = dropShipping;
+        this.cardPresentPercentage = cardPresentPercentage;
+        this.phoneOrderPercentage = phoneOrderPercentage;
+        this.ecomPercentage = ecomPercentage;
+        this.billBeforeShipmentDays = billBeforeShipmentDays;
+        this.subscriptionsSupported = subscriptionsSupported;
+        this.subscriptionFrequency = subscriptionFrequency;
+        this.signerName = signerName;
+        }
+}
+
+  /**
+   * Models a merchant application submission request to add a new merchant account.
+   */
+export class SubmitApplicationRequest {
+
+  /**
+   * The request timeout in seconds.
+   */
+    timeout: number | null = null;
+
+  /**
+   * Whether or not to route transaction to the test gateway.
+   */
+    test: boolean | null = null;
+
+  /**
+   * The invite code for the merchant.
+   */
+    inviteCode: string | null = null;
+
+  /**
+   * The business name your customers know you by (DBA Name).
+   */
+    dbaName: string | null = null;
+
+  /**
+   * The name of the legal entity you file your taxes under.
+   */
+    corporateName: string | null = null;
+
+  /**
+   * The business website.
+   */
+    webSite: string | null = null;
+
+  /**
+   * The business tax identification number (EIN).
+   */
+    taxIdNumber: string | null = null;
+
+  /**
+   * The type of business entity.
+   */
+    entityType: string | null = null;
+
+  /**
+   * The state where the business is incorporated.
+   */
+    stateOfIncorporation: string | null = null;
+
+  /**
+   * The primary type of business (e.g., Retail, Service, etc.).
+   */
+    merchantType: string | null = null;
+
+  /**
+   * A short description of the products and services sold.
+   */
+    businessDescription: string | null = null;
+
+  /**
+   * The number of years the business has been operating.
+   */
+    yearsInBusiness: string | null = null;
+
+  /**
+   * The business telephone number.
+   */
+    businessPhoneNumber: string | null = null;
+
+  /**
+   * The physical address of the business.
+   */
+    physicalAddress: Address | null = null;
+
+  /**
+   * The mailing address of the business.
+   */
+    mailingAddress: Address | null = null;
+
+  /**
+   * The first name of the primary contact.
+   */
+    contactFirstName: string | null = null;
+
+  /**
+   * The last name of the primary contact.
+   */
+    contactLastName: string | null = null;
+
+  /**
+   * The phone number of the primary contact.
+   */
+    contactPhoneNumber: string | null = null;
+
+  /**
+   * The email address of the primary contact.
+   */
+    contactEmail: string | null = null;
+
+  /**
+   * The job title of the primary contact.
+   */
+    contactTitle: string | null = null;
+
+  /**
+   * The tax identification number (SSN) of the primary contact.
+   */
+    contactTaxIdNumber: string | null = null;
+
+  /**
+   * The date of birth of the primary contact.
+   */
+    contactDOB: string | null = null;
+
+  /**
+   * The driver's license number of the primary contact.
+   */
+    contactDlNumber: string | null = null;
+
+  /**
+   * The state that issued the primary contact's driver's license.
+   */
+    contactDlStateOrProvince: string | null = null;
+
+  /**
+   * The expiration date of the primary contact's driver's license.
+   */
+    contactDlExpiration: string | null = null;
+
+  /**
+   * The home address of the primary contact.
+   */
+    contactHomeAddress: Address | null = null;
+
+  /**
+   * The role of the primary contact in the business.
+   */
+    contactRole: string | null = null;
+
+  /**
+   * List of individuals with 25% or more ownership in the company.
+   */
+    owners: Owner[] | null = null;
+
+  /**
+   * The bank account information for the business.
+   */
+    manualAccount: ApplicationAccount | null = null;
+
+  /**
+   * The average transaction amount.
+   */
+    averageTransaction: string | null = null;
+
+  /**
+   * The highest expected transaction amount.
+   */
+    highTransaction: string | null = null;
+
+  /**
+   * The average monthly transaction volume.
+   */
+    averageMonth: string | null = null;
+
+  /**
+   * The highest expected monthly transaction volume.
+   */
+    highMonth: string | null = null;
+
+  /**
+   * The refund policy of the business.
+   */
+    refundPolicy: string | null = null;
+
+  /**
+   * The number of days after purchase that refunds can be issued.
+   */
+    refundDays: string | null = null;
+
+  /**
+   * The time zone of the business.
+   */
+    timeZone: string | null = null;
+
+  /**
+   * The time when the daily batch should close.
+   */
+    batchCloseTime: string | null = null;
+
+  /**
+   * Indicates if the business has multiple locations.
+   */
+    multipleLocations: string | null = null;
+
+  /**
+   * The name of this specific business location.
+   */
+    locationName: string | null = null;
+
+  /**
+   * The store number for this location.
+   */
+    storeNumber: string | null = null;
+
+  /**
+   * Indicates if the business wants to accept EBT cards.
+   */
+    ebtRequested: string | null = null;
+
+  /**
+   * The FNS number issued by the USDA for EBT processing.
+   */
+    fnsNumber: string | null = null;
+
+  /**
+   * Indicates if the business plans to accept payments through a website.
+   */
+    ecommerce: string | null = null;
+
+  /**
+   * Indicates if suppliers ship products directly to customers.
+   */
+    dropShipping: boolean | null = null;
+
+  /**
+   * The percentage of transactions that will be chip or swipe.
+   */
+    cardPresentPercentage: string | null = null;
+
+  /**
+   * The percentage of transactions that will be phone orders.
+   */
+    phoneOrderPercentage: string | null = null;
+
+  /**
+   * The percentage of transactions that will be e-commerce.
+   */
+    ecomPercentage: string | null = null;
+
+  /**
+   * The number of days before shipment that customers are charged.
+   */
+    billBeforeShipmentDays: string | null = null;
+
+  /**
+   * Indicates if the business plans to process recurring payments.
+   */
+    subscriptionsSupported: string | null = null;
+
+  /**
+   * The frequency of recurring payments (if applicable).
+   */
+    subscriptionFrequency: string | null = null;
+
+  /**
+   * The full legal name of the person signing the application.
+   */
+    signerName: string | null = null;
+
+    // Constructor with default values for optional fields
+    constructor(
+        timeout: number | null = null,
+        test: boolean | null = null,
+        inviteCode: string | null = null,
+        dbaName: string | null = null,
+        corporateName: string | null = null,
+        webSite: string | null = null,
+        taxIdNumber: string | null = null,
+        entityType: string | null = null,
+        stateOfIncorporation: string | null = null,
+        merchantType: string | null = null,
+        businessDescription: string | null = null,
+        yearsInBusiness: string | null = null,
+        businessPhoneNumber: string | null = null,
+        physicalAddress: Address | null = null,
+        mailingAddress: Address | null = null,
+        contactFirstName: string | null = null,
+        contactLastName: string | null = null,
+        contactPhoneNumber: string | null = null,
+        contactEmail: string | null = null,
+        contactTitle: string | null = null,
+        contactTaxIdNumber: string | null = null,
+        contactDOB: string | null = null,
+        contactDlNumber: string | null = null,
+        contactDlStateOrProvince: string | null = null,
+        contactDlExpiration: string | null = null,
+        contactHomeAddress: Address | null = null,
+        contactRole: string | null = null,
+        owners: Owner[] | null = null,
+        manualAccount: ApplicationAccount | null = null,
+        averageTransaction: string | null = null,
+        highTransaction: string | null = null,
+        averageMonth: string | null = null,
+        highMonth: string | null = null,
+        refundPolicy: string | null = null,
+        refundDays: string | null = null,
+        timeZone: string | null = null,
+        batchCloseTime: string | null = null,
+        multipleLocations: string | null = null,
+        locationName: string | null = null,
+        storeNumber: string | null = null,
+        ebtRequested: string | null = null,
+        fnsNumber: string | null = null,
+        ecommerce: string | null = null,
+        dropShipping: boolean | null = null,
+        cardPresentPercentage: string | null = null,
+        phoneOrderPercentage: string | null = null,
+        ecomPercentage: string | null = null,
+        billBeforeShipmentDays: string | null = null,
+        subscriptionsSupported: string | null = null,
+        subscriptionFrequency: string | null = null,
+        signerName: string | null = null,
+        ) {
+        this.timeout = timeout;
+        this.test = test;
+        this.inviteCode = inviteCode;
+        this.dbaName = dbaName;
+        this.corporateName = corporateName;
+        this.webSite = webSite;
+        this.taxIdNumber = taxIdNumber;
+        this.entityType = entityType;
+        this.stateOfIncorporation = stateOfIncorporation;
+        this.merchantType = merchantType;
+        this.businessDescription = businessDescription;
+        this.yearsInBusiness = yearsInBusiness;
+        this.businessPhoneNumber = businessPhoneNumber;
+        this.physicalAddress = physicalAddress;
+        this.mailingAddress = mailingAddress;
+        this.contactFirstName = contactFirstName;
+        this.contactLastName = contactLastName;
+        this.contactPhoneNumber = contactPhoneNumber;
+        this.contactEmail = contactEmail;
+        this.contactTitle = contactTitle;
+        this.contactTaxIdNumber = contactTaxIdNumber;
+        this.contactDOB = contactDOB;
+        this.contactDlNumber = contactDlNumber;
+        this.contactDlStateOrProvince = contactDlStateOrProvince;
+        this.contactDlExpiration = contactDlExpiration;
+        this.contactHomeAddress = contactHomeAddress;
+        this.contactRole = contactRole;
+        this.owners = owners;
+        this.manualAccount = manualAccount;
+        this.averageTransaction = averageTransaction;
+        this.highTransaction = highTransaction;
+        this.averageMonth = averageMonth;
+        this.highMonth = highMonth;
+        this.refundPolicy = refundPolicy;
+        this.refundDays = refundDays;
+        this.timeZone = timeZone;
+        this.batchCloseTime = batchCloseTime;
+        this.multipleLocations = multipleLocations;
+        this.locationName = locationName;
+        this.storeNumber = storeNumber;
+        this.ebtRequested = ebtRequested;
+        this.fnsNumber = fnsNumber;
+        this.ecommerce = ecommerce;
+        this.dropShipping = dropShipping;
+        this.cardPresentPercentage = cardPresentPercentage;
+        this.phoneOrderPercentage = phoneOrderPercentage;
+        this.ecomPercentage = ecomPercentage;
+        this.billBeforeShipmentDays = billBeforeShipmentDays;
+        this.subscriptionsSupported = subscriptionsSupported;
+        this.subscriptionFrequency = subscriptionFrequency;
+        this.signerName = signerName;
+        }
+}
+
 
 
 
@@ -15664,6 +17078,20 @@ export class TerminalAuthorizationRequest {
     request: AuthorizationRequest;
 
     constructor(APICredentials: APICredentials, request: AuthorizationRequest) {
+        this.APICredentials = APICredentials;
+        this.request = request;
+    }
+}
+
+
+  /**
+   * Retrieves card metadata.
+   */
+export class TerminalCardMetadataRequest {
+    APICredentials: APICredentials;
+    request: CardMetadataRequest;
+
+    constructor(APICredentials: APICredentials, request: CardMetadataRequest) {
         this.APICredentials = APICredentials;
         this.request = request;
     }

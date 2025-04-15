@@ -1,5 +1,5 @@
 /**
- * Copyright 2019-2024 BlockChyp, Inc. All rights reserved. Use of this code is governed
+ * Copyright 2019-2025 BlockChyp, Inc. All rights reserved. Use of this code is governed
  * by a license that can be found in the LICENSE file.
  *
  * This file was generated automatically by the BlockChyp SDK Generator. Changes to this
@@ -9940,6 +9940,11 @@ export class MerchantProfile {
    */
     bankAccounts: BankAccount[] | null = null;
 
+  /**
+   * That a merchant is allowed to send a surcharge amount directly to the gateway.
+   */
+    passthroughSurchargeEnabled: boolean | null = null;
+
     // Constructor with default values for optional fields
     constructor(
         timeout: number | null = null,
@@ -9995,6 +10000,7 @@ export class MerchantProfile {
         manualEntryPromptStreetNumber: boolean | null = null,
         gatewayOnly: boolean | null = null,
         bankAccounts: BankAccount[] | null = null,
+        passthroughSurchargeEnabled: boolean | null = null,
         ) {
         this.timeout = timeout;
         this.test = test;
@@ -10049,6 +10055,7 @@ export class MerchantProfile {
         this.manualEntryPromptStreetNumber = manualEntryPromptStreetNumber;
         this.gatewayOnly = gatewayOnly;
         this.bankAccounts = bankAccounts;
+        this.passthroughSurchargeEnabled = passthroughSurchargeEnabled;
         }
 }
 
@@ -10336,6 +10343,11 @@ export class MerchantProfileResponse {
    */
     bankAccounts: BankAccount[] | null = null;
 
+  /**
+   * That a merchant is allowed to send a surcharge amount directly to the gateway.
+   */
+    passthroughSurchargeEnabled: boolean | null = null;
+
     // Constructor with default values for optional fields
     constructor(
         success: boolean | null = null,
@@ -10393,6 +10405,7 @@ export class MerchantProfileResponse {
         manualEntryPromptStreetNumber: boolean | null = null,
         gatewayOnly: boolean | null = null,
         bankAccounts: BankAccount[] | null = null,
+        passthroughSurchargeEnabled: boolean | null = null,
         ) {
         this.success = success;
         this.error = error;
@@ -10449,6 +10462,7 @@ export class MerchantProfileResponse {
         this.manualEntryPromptStreetNumber = manualEntryPromptStreetNumber;
         this.gatewayOnly = gatewayOnly;
         this.bankAccounts = bankAccounts;
+        this.passthroughSurchargeEnabled = passthroughSurchargeEnabled;
         }
 }
 

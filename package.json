@@ -76,7 +76,7 @@
     "cached-path-relative": "^1.0.2",
     "create-hmac": "^1.1.7",
     "crypto-browserify": "^3.12.1",
-    "elliptic": "^6.5.5",
+    "elliptic": "^6.6.1",
     "moment": "^2.22.2",
     "npm": "^10.8.3",
     "randombytes": "^2.0.6",

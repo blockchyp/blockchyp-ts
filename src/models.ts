@@ -1860,6 +1860,26 @@ export class CustomerToken {
     paymentType: string | null = null;
 
   /**
+   * Bank account type (checking, saving).
+   */
+    accountType: string | null = null;
+
+  /**
+   * Bank account holder type (personal, business).
+   */
+    accountHolderType: string | null = null;
+
+  /**
+   * Bank name.
+   */
+    bankName: string | null = null;
+
+  /**
+   * Routing number.
+   */
+    routingNumber: string | null = null;
+
+  /**
    * Models customer records associated with a payment token.
    */
     customers: Customer[] | null = null;
@@ -1871,6 +1891,10 @@ export class CustomerToken {
         expiryMonth: string | null = null,
         expiryYear: string | null = null,
         paymentType: string | null = null,
+        accountType: string | null = null,
+        accountHolderType: string | null = null,
+        bankName: string | null = null,
+        routingNumber: string | null = null,
         customers: Customer[] | null = null,
         ) {
         this.token = token;
@@ -1878,6 +1902,10 @@ export class CustomerToken {
         this.expiryMonth = expiryMonth;
         this.expiryYear = expiryYear;
         this.paymentType = paymentType;
+        this.accountType = accountType;
+        this.accountHolderType = accountHolderType;
+        this.bankName = bankName;
+        this.routingNumber = routingNumber;
         this.customers = customers;
         }
 }
@@ -4811,6 +4839,21 @@ export class EnrollRequest {
    */
     cardMetadataLookup?: boolean;
 
+  /**
+   * The type of account (checking, savings, etc) for an ACH payment method.
+   */
+    accountType?: string;
+
+  /**
+   * The type of account holder (personal, business, etc) for an ACH payment method.
+   */
+    accountHolderType?: string;
+
+  /**
+   * The bank name for an ACH payment method.
+   */
+    bankName?: string;
+
     // Constructor with default values for optional fields
     constructor(
         timeout: number | null = null,
@@ -4847,6 +4890,9 @@ export class EnrollRequest {
         recurring: boolean = false,
         subscription: boolean = false,
         cardMetadataLookup: boolean = false,
+        accountType: string | undefined = undefined,
+        accountHolderType: string | undefined = undefined,
+        bankName: string | undefined = undefined,
         ) {
         this.timeout = timeout;
         this.test = test;
@@ -4882,6 +4928,9 @@ export class EnrollRequest {
         this.recurring = recurring;
         this.subscription = subscription;
         this.cardMetadataLookup = cardMetadataLookup;
+        this.accountType = accountType;
+        this.accountHolderType = accountHolderType;
+        this.bankName = bankName;
         }
 }
 
@@ -5057,6 +5106,21 @@ export class EnrollResponse {
    */
     cardMetadata?: CardMetadata;
 
+  /**
+   * The type of account (checking, savings, etc) for an ACH payment method.
+   */
+    accountType?: string;
+
+  /**
+   * The type of account holder (personal, business, etc) for an ACH payment method.
+   */
+    accountHolderType?: string;
+
+  /**
+   * The bank name for an ACH payment method.
+   */
+    bankName?: string;
+
     // Constructor with default values for optional fields
     constructor(
         success: boolean | null = null,
@@ -5091,6 +5155,9 @@ export class EnrollResponse {
         customers: Customer[] | null = null,
         sigFile: string | undefined = undefined,
         cardMetadata: CardMetadata | undefined = undefined,
+        accountType: string | undefined = undefined,
+        accountHolderType: string | undefined = undefined,
+        bankName: string | undefined = undefined,
         ) {
         this.success = success;
         this.error = error;
@@ -5124,6 +5191,9 @@ export class EnrollResponse {
         this.customers = customers;
         this.sigFile = sigFile;
         this.cardMetadata = cardMetadata;
+        this.accountType = accountType;
+        this.accountHolderType = accountHolderType;
+        this.bankName = bankName;
         }
 }
 

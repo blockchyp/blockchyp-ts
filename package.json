@@ -78,7 +78,7 @@
     "crypto-browserify": "^3.12.1",
     "elliptic": "^6.6.1",
     "moment": "^2.22.2",
-    "npm": "^10.8.3",
+    "npm": "^11.3.0",
     "randombytes": "^2.0.6",
     "sha.js": "^2.4.11",
     "stream-browserify": "^3.0.0",

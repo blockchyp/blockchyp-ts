@@ -1880,6 +1880,16 @@ export class CustomerToken {
     routingNumber: string | null = null;
 
   /**
+   * Token hash (generated with a static salt, Merchant ID, Registration Date and PAN.
+   */
+    tokenHash: string | null = null;
+
+  /**
+   * Card bin.
+   */
+    bin: string | null = null;
+
+  /**
    * Models customer records associated with a payment token.
    */
     customers: Customer[] | null = null;
@@ -1895,6 +1905,8 @@ export class CustomerToken {
         accountHolderType: string | null = null,
         bankName: string | null = null,
         routingNumber: string | null = null,
+        tokenHash: string | null = null,
+        bin: string | null = null,
         customers: Customer[] | null = null,
         ) {
         this.token = token;
@@ -1906,6 +1918,8 @@ export class CustomerToken {
         this.accountHolderType = accountHolderType;
         this.bankName = bankName;
         this.routingNumber = routingNumber;
+        this.tokenHash = tokenHash;
+        this.bin = bin;
         this.customers = customers;
         }
 }
@@ -5121,6 +5135,17 @@ export class EnrollResponse {
    */
     bankName?: string;
 
+  /**
+   * The token hash (generated with a static salt, Merchant ID, Registration Date and
+   * PAN).
+   */
+    tokenHash?: string;
+
+  /**
+   * The first 8 digits of the card aka the BIN.
+   */
+    bin?: string;
+
     // Constructor with default values for optional fields
     constructor(
         success: boolean | null = null,
@@ -5158,6 +5183,8 @@ export class EnrollResponse {
         accountType: string | undefined = undefined,
         accountHolderType: string | undefined = undefined,
         bankName: string | undefined = undefined,
+        tokenHash: string | undefined = undefined,
+        bin: string | undefined = undefined,
         ) {
         this.success = success;
         this.error = error;
@@ -5194,6 +5221,8 @@ export class EnrollResponse {
         this.accountType = accountType;
         this.accountHolderType = accountHolderType;
         this.bankName = bankName;
+        this.tokenHash = tokenHash;
+        this.bin = bin;
         }
 }
 

@@ -2995,6 +2995,11 @@ export class CardMetadataResponse {
     avsResponse: AVSResponse | null = null;
 
   /**
+   * The CVV verification result if CVV was submitted.
+   */
+    cvvResponse?: string;
+
+  /**
    * Suggested receipt fields.
    */
     receiptSuggestions: ReceiptSuggestions | null = null;
@@ -3031,6 +3036,7 @@ export class CardMetadataResponse {
         expMonth: string | undefined = undefined,
         expYear: string | undefined = undefined,
         avsResponse: AVSResponse | null = null,
+        cvvResponse: string | undefined = undefined,
         receiptSuggestions: ReceiptSuggestions | null = null,
         customer: Customer | undefined = undefined,
         customers: Customer[] | null = null,
@@ -3051,6 +3057,7 @@ export class CardMetadataResponse {
         this.expMonth = expMonth;
         this.expYear = expYear;
         this.avsResponse = avsResponse;
+        this.cvvResponse = cvvResponse;
         this.receiptSuggestions = receiptSuggestions;
         this.customer = customer;
         this.customers = customers;
@@ -3415,6 +3422,11 @@ export class BalanceResponse {
     avsResponse: AVSResponse | null = null;
 
   /**
+   * The CVV verification result if CVV was submitted.
+   */
+    cvvResponse?: string;
+
+  /**
    * Suggested receipt fields.
    */
     receiptSuggestions: ReceiptSuggestions | null = null;
@@ -3460,6 +3472,7 @@ export class BalanceResponse {
         expMonth: string | undefined = undefined,
         expYear: string | undefined = undefined,
         avsResponse: AVSResponse | null = null,
+        cvvResponse: string | undefined = undefined,
         receiptSuggestions: ReceiptSuggestions | null = null,
         customer: Customer | undefined = undefined,
         customers: Customer[] | null = null,
@@ -3489,6 +3502,7 @@ export class BalanceResponse {
         this.expMonth = expMonth;
         this.expYear = expYear;
         this.avsResponse = avsResponse;
+        this.cvvResponse = cvvResponse;
         this.receiptSuggestions = receiptSuggestions;
         this.customer = customer;
         this.customers = customers;
@@ -4229,6 +4243,11 @@ export class CaptureResponse {
     avsResponse: AVSResponse | null = null;
 
   /**
+   * The CVV verification result if CVV was submitted.
+   */
+    cvvResponse?: string;
+
+  /**
    * Suggested receipt fields.
    */
     receiptSuggestions: ReceiptSuggestions | null = null;
@@ -4283,6 +4302,7 @@ export class CaptureResponse {
         expMonth: string | undefined = undefined,
         expYear: string | undefined = undefined,
         avsResponse: AVSResponse | null = null,
+        cvvResponse: string | undefined = undefined,
         receiptSuggestions: ReceiptSuggestions | null = null,
         customer: Customer | undefined = undefined,
         customers: Customer[] | null = null,
@@ -4325,6 +4345,7 @@ export class CaptureResponse {
         this.expMonth = expMonth;
         this.expYear = expYear;
         this.avsResponse = avsResponse;
+        this.cvvResponse = cvvResponse;
         this.receiptSuggestions = receiptSuggestions;
         this.customer = customer;
         this.customers = customers;
@@ -4579,6 +4600,11 @@ export class VoidResponse {
     avsResponse: AVSResponse | null = null;
 
   /**
+   * The CVV verification result if CVV was submitted.
+   */
+    cvvResponse?: string;
+
+  /**
    * Suggested receipt fields.
    */
     receiptSuggestions: ReceiptSuggestions | null = null;
@@ -4627,6 +4653,7 @@ export class VoidResponse {
         expMonth: string | undefined = undefined,
         expYear: string | undefined = undefined,
         avsResponse: AVSResponse | null = null,
+        cvvResponse: string | undefined = undefined,
         receiptSuggestions: ReceiptSuggestions | null = null,
         customer: Customer | undefined = undefined,
         customers: Customer[] | null = null,
@@ -4659,6 +4686,7 @@ export class VoidResponse {
         this.expMonth = expMonth;
         this.expYear = expYear;
         this.avsResponse = avsResponse;
+        this.cvvResponse = cvvResponse;
         this.receiptSuggestions = receiptSuggestions;
         this.customer = customer;
         this.customers = customers;
@@ -5096,6 +5124,11 @@ export class EnrollResponse {
     avsResponse: AVSResponse | null = null;
 
   /**
+   * The CVV verification result if CVV was submitted.
+   */
+    cvvResponse?: string;
+
+  /**
    * Suggested receipt fields.
    */
     receiptSuggestions: ReceiptSuggestions | null = null;
@@ -5175,6 +5208,7 @@ export class EnrollResponse {
         expMonth: string | undefined = undefined,
         expYear: string | undefined = undefined,
         avsResponse: AVSResponse | null = null,
+        cvvResponse: string | undefined = undefined,
         receiptSuggestions: ReceiptSuggestions | null = null,
         customer: Customer | undefined = undefined,
         customers: Customer[] | null = null,
@@ -5213,6 +5247,7 @@ export class EnrollResponse {
         this.expMonth = expMonth;
         this.expYear = expYear;
         this.avsResponse = avsResponse;
+        this.cvvResponse = cvvResponse;
         this.receiptSuggestions = receiptSuggestions;
         this.customer = customer;
         this.customers = customers;
@@ -6368,6 +6403,11 @@ export class AuthorizationResponse {
     avsResponse: AVSResponse | null = null;
 
   /**
+   * The CVV verification result if CVV was submitted.
+   */
+    cvvResponse?: string;
+
+  /**
    * Suggested receipt fields.
    */
     receiptSuggestions: ReceiptSuggestions | null = null;
@@ -6458,6 +6498,7 @@ export class AuthorizationResponse {
         expMonth: string | undefined = undefined,
         expYear: string | undefined = undefined,
         avsResponse: AVSResponse | null = null,
+        cvvResponse: string | undefined = undefined,
         receiptSuggestions: ReceiptSuggestions | null = null,
         customer: Customer | undefined = undefined,
         customers: Customer[] | null = null,
@@ -6515,6 +6556,7 @@ export class AuthorizationResponse {
         this.expMonth = expMonth;
         this.expYear = expYear;
         this.avsResponse = avsResponse;
+        this.cvvResponse = cvvResponse;
         this.receiptSuggestions = receiptSuggestions;
         this.customer = customer;
         this.customers = customers;
@@ -7057,6 +7099,11 @@ export class TransactionStatus {
     avsResponse: AVSResponse | null = null;
 
   /**
+   * The CVV verification result if CVV was submitted.
+   */
+    cvvResponse?: string;
+
+  /**
    * Suggested receipt fields.
    */
     receiptSuggestions: ReceiptSuggestions | null = null;
@@ -7121,6 +7168,7 @@ export class TransactionStatus {
         expMonth: string | undefined = undefined,
         expYear: string | undefined = undefined,
         avsResponse: AVSResponse | null = null,
+        cvvResponse: string | undefined = undefined,
         receiptSuggestions: ReceiptSuggestions | null = null,
         customer: Customer | undefined = undefined,
         customers: Customer[] | null = null,
@@ -7165,6 +7213,7 @@ export class TransactionStatus {
         this.expMonth = expMonth;
         this.expYear = expYear;
         this.avsResponse = avsResponse;
+        this.cvvResponse = cvvResponse;
         this.receiptSuggestions = receiptSuggestions;
         this.customer = customer;
         this.customers = customers;
@@ -10044,6 +10093,32 @@ export class MerchantProfile {
    */
     passthroughSurchargeEnabled: boolean | null = null;
 
+  /**
+   * That CVV verification is enabled for manually entered transactions.
+   */
+    cvvVerificationEnabled: boolean | null = null;
+
+  /**
+   * That CVV mismatch (N) responses should be declined.
+   */
+    cvvVerificationNEnabled: boolean | null = null;
+
+  /**
+   * That CVV not processed (P) responses should be declined.
+   */
+    cvvVerificationPEnabled: boolean | null = null;
+
+  /**
+   * That CVV should be on card but is not indicated (S) responses should be declined.
+   */
+    cvvVerificationSEnabled: boolean | null = null;
+
+  /**
+   * That issuer not certified or has not provided encryption key (U) responses should be
+   * declined.
+   */
+    cvvVerificationUEnabled: boolean | null = null;
+
     // Constructor with default values for optional fields
     constructor(
         timeout: number | null = null,
@@ -10100,6 +10175,11 @@ export class MerchantProfile {
         gatewayOnly: boolean | null = null,
         bankAccounts: BankAccount[] | null = null,
         passthroughSurchargeEnabled: boolean | null = null,
+        cvvVerificationEnabled: boolean | null = null,
+        cvvVerificationNEnabled: boolean | null = null,
+        cvvVerificationPEnabled: boolean | null = null,
+        cvvVerificationSEnabled: boolean | null = null,
+        cvvVerificationUEnabled: boolean | null = null,
         ) {
         this.timeout = timeout;
         this.test = test;
@@ -10155,6 +10235,11 @@ export class MerchantProfile {
         this.gatewayOnly = gatewayOnly;
         this.bankAccounts = bankAccounts;
         this.passthroughSurchargeEnabled = passthroughSurchargeEnabled;
+        this.cvvVerificationEnabled = cvvVerificationEnabled;
+        this.cvvVerificationNEnabled = cvvVerificationNEnabled;
+        this.cvvVerificationPEnabled = cvvVerificationPEnabled;
+        this.cvvVerificationSEnabled = cvvVerificationSEnabled;
+        this.cvvVerificationUEnabled = cvvVerificationUEnabled;
         }
 }
 
@@ -10447,6 +10532,32 @@ export class MerchantProfileResponse {
    */
     passthroughSurchargeEnabled: boolean | null = null;
 
+  /**
+   * That CVV verification is enabled for manually entered transactions.
+   */
+    cvvVerificationEnabled: boolean | null = null;
+
+  /**
+   * That CVV mismatch (N) responses should be declined.
+   */
+    cvvVerificationNEnabled: boolean | null = null;
+
+  /**
+   * That CVV not processed (P) responses should be declined.
+   */
+    cvvVerificationPEnabled: boolean | null = null;
+
+  /**
+   * That CVV should be on card but is not indicated (S) responses should be declined.
+   */
+    cvvVerificationSEnabled: boolean | null = null;
+
+  /**
+   * That issuer not certified or has not provided encryption key (U) responses should be
+   * declined.
+   */
+    cvvVerificationUEnabled: boolean | null = null;
+
     // Constructor with default values for optional fields
     constructor(
         success: boolean | null = null,
@@ -10505,6 +10616,11 @@ export class MerchantProfileResponse {
         gatewayOnly: boolean | null = null,
         bankAccounts: BankAccount[] | null = null,
         passthroughSurchargeEnabled: boolean | null = null,
+        cvvVerificationEnabled: boolean | null = null,
+        cvvVerificationNEnabled: boolean | null = null,
+        cvvVerificationPEnabled: boolean | null = null,
+        cvvVerificationSEnabled: boolean | null = null,
+        cvvVerificationUEnabled: boolean | null = null,
         ) {
         this.success = success;
         this.error = error;
@@ -10562,6 +10678,11 @@ export class MerchantProfileResponse {
         this.gatewayOnly = gatewayOnly;
         this.bankAccounts = bankAccounts;
         this.passthroughSurchargeEnabled = passthroughSurchargeEnabled;
+        this.cvvVerificationEnabled = cvvVerificationEnabled;
+        this.cvvVerificationNEnabled = cvvVerificationNEnabled;
+        this.cvvVerificationPEnabled = cvvVerificationPEnabled;
+        this.cvvVerificationSEnabled = cvvVerificationSEnabled;
+        this.cvvVerificationUEnabled = cvvVerificationUEnabled;
         }
 }
 
@@ -17683,6 +17804,11 @@ export class PaymentMethodResponse {
     avsResponse: AVSResponse | null = null;
 
   /**
+   * The CVV verification result if CVV was submitted.
+   */
+    cvvResponse?: string;
+
+  /**
    * Suggested receipt fields.
    */
     receiptSuggestions: ReceiptSuggestions | null = null;
@@ -17710,6 +17836,7 @@ export class PaymentMethodResponse {
         expMonth: string | undefined = undefined,
         expYear: string | undefined = undefined,
         avsResponse: AVSResponse | null = null,
+        cvvResponse: string | undefined = undefined,
         receiptSuggestions: ReceiptSuggestions | null = null,
         customer: Customer | undefined = undefined,
         customers: Customer[] | null = null,
@@ -17726,6 +17853,7 @@ export class PaymentMethodResponse {
         this.expMonth = expMonth;
         this.expYear = expYear;
         this.avsResponse = avsResponse;
+        this.cvvResponse = cvvResponse;
         this.receiptSuggestions = receiptSuggestions;
         this.customer = customer;
         this.customers = customers;

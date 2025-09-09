@@ -10127,6 +10127,12 @@ export class MerchantProfile {
    */
     avsRule: string | null = null;
 
+  /**
+   * Flag indicating whether or not account updater is enrolled. Note that only
+   * merchant's whose partner is enrolled will be processed by the account updater.
+   */
+    accountUpdaterEnrolled: boolean | null = null;
+
     // Constructor with default values for optional fields
     constructor(
         timeout: number | null = null,
@@ -10189,6 +10195,7 @@ export class MerchantProfile {
         cvvVerificationSEnabled: boolean | null = null,
         cvvVerificationUEnabled: boolean | null = null,
         avsRule: string | null = null,
+        accountUpdaterEnrolled: boolean | null = null,
         ) {
         this.timeout = timeout;
         this.test = test;
@@ -10250,6 +10257,7 @@ export class MerchantProfile {
         this.cvvVerificationSEnabled = cvvVerificationSEnabled;
         this.cvvVerificationUEnabled = cvvVerificationUEnabled;
         this.avsRule = avsRule;
+        this.accountUpdaterEnrolled = accountUpdaterEnrolled;
         }
 }
 
@@ -10576,6 +10584,12 @@ export class MerchantProfileResponse {
    */
     avsRule: string | null = null;
 
+  /**
+   * Flag indicating whether or not account updater is enrolled. Note that only
+   * merchant's whose partner is enrolled will be processed by the account updater.
+   */
+    accountUpdaterEnrolled: boolean | null = null;
+
     // Constructor with default values for optional fields
     constructor(
         success: boolean | null = null,
@@ -10640,6 +10654,7 @@ export class MerchantProfileResponse {
         cvvVerificationSEnabled: boolean | null = null,
         cvvVerificationUEnabled: boolean | null = null,
         avsRule: string | null = null,
+        accountUpdaterEnrolled: boolean | null = null,
         ) {
         this.success = success;
         this.error = error;
@@ -10703,6 +10718,7 @@ export class MerchantProfileResponse {
         this.cvvVerificationSEnabled = cvvVerificationSEnabled;
         this.cvvVerificationUEnabled = cvvVerificationUEnabled;
         this.avsRule = avsRule;
+        this.accountUpdaterEnrolled = accountUpdaterEnrolled;
         }
 }
 

@@ -10137,6 +10137,12 @@ export class MerchantProfile {
    */
     followPartnerAvsSettings: boolean | null = null;
 
+  /**
+   * Flag indicating whether or not account updater is enrolled. Note that only
+   * merchant's whose partner is enrolled will be processed by the account updater.
+   */
+    accountUpdaterEnrolled: boolean | null = null;
+
     // Constructor with default values for optional fields
     constructor(
         timeout: number | null = null,
@@ -10201,6 +10207,7 @@ export class MerchantProfile {
         followPartnerCvvSettings: boolean | null = null,
         avsRule: string | null = null,
         followPartnerAvsSettings: boolean | null = null,
+        accountUpdaterEnrolled: boolean | null = null,
         ) {
         this.timeout = timeout;
         this.test = test;
@@ -10264,6 +10271,7 @@ export class MerchantProfile {
         this.followPartnerCvvSettings = followPartnerCvvSettings;
         this.avsRule = avsRule;
         this.followPartnerAvsSettings = followPartnerAvsSettings;
+        this.accountUpdaterEnrolled = accountUpdaterEnrolled;
         }
 }
 
@@ -10600,6 +10608,12 @@ export class MerchantProfileResponse {
    */
     followPartnerAvsSettings: boolean | null = null;
 
+  /**
+   * Flag indicating whether or not account updater is enrolled. Note that only
+   * merchant's whose partner is enrolled will be processed by the account updater.
+   */
+    accountUpdaterEnrolled: boolean | null = null;
+
     // Constructor with default values for optional fields
     constructor(
         success: boolean | null = null,
@@ -10666,6 +10680,7 @@ export class MerchantProfileResponse {
         followPartnerCvvSettings: boolean | null = null,
         avsRule: string | null = null,
         followPartnerAvsSettings: boolean | null = null,
+        accountUpdaterEnrolled: boolean | null = null,
         ) {
         this.success = success;
         this.error = error;
@@ -10731,6 +10746,7 @@ export class MerchantProfileResponse {
         this.followPartnerCvvSettings = followPartnerCvvSettings;
         this.avsRule = avsRule;
         this.followPartnerAvsSettings = followPartnerAvsSettings;
+        this.accountUpdaterEnrolled = accountUpdaterEnrolled;
         }
 }
 

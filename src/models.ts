@@ -10120,12 +10120,28 @@ export class MerchantProfile {
     cvvVerificationUEnabled: boolean | null = null;
 
   /**
+   * That the merchant follows the partner's CVV settings.
+   */
+    followPartnerCvvSettings: boolean | null = null;
+
+  /**
    * The AVS (Address Verification Service) rule to apply. Allowed values are
    * 'allow_all', 'require_full_match', 'require_zip_match',
    * 'require_address_match'. If avsRule is empty, then merchant follows partner
    * setting
    */
     avsRule: string | null = null;
+
+  /**
+   * That the merchant follows the partner's AVS settings.
+   */
+    followPartnerAvsSettings: boolean | null = null;
+
+  /**
+   * Flag indicating whether or not account updater is enrolled. Note that only
+   * merchant's whose partner is enrolled will be processed by the account updater.
+   */
+    accountUpdaterEnrolled: boolean | null = null;
 
     // Constructor with default values for optional fields
     constructor(
@@ -10188,7 +10204,10 @@ export class MerchantProfile {
         cvvVerificationPEnabled: boolean | null = null,
         cvvVerificationSEnabled: boolean | null = null,
         cvvVerificationUEnabled: boolean | null = null,
+        followPartnerCvvSettings: boolean | null = null,
         avsRule: string | null = null,
+        followPartnerAvsSettings: boolean | null = null,
+        accountUpdaterEnrolled: boolean | null = null,
         ) {
         this.timeout = timeout;
         this.test = test;
@@ -10249,7 +10268,10 @@ export class MerchantProfile {
         this.cvvVerificationPEnabled = cvvVerificationPEnabled;
         this.cvvVerificationSEnabled = cvvVerificationSEnabled;
         this.cvvVerificationUEnabled = cvvVerificationUEnabled;
+        this.followPartnerCvvSettings = followPartnerCvvSettings;
         this.avsRule = avsRule;
+        this.followPartnerAvsSettings = followPartnerAvsSettings;
+        this.accountUpdaterEnrolled = accountUpdaterEnrolled;
         }
 }
 
@@ -10569,12 +10591,28 @@ export class MerchantProfileResponse {
     cvvVerificationUEnabled: boolean | null = null;
 
   /**
+   * That the merchant follows the partner's CVV settings.
+   */
+    followPartnerCvvSettings: boolean | null = null;
+
+  /**
    * The AVS (Address Verification Service) rule to apply. Allowed values are
    * 'allow_all', 'require_full_match', 'require_zip_match',
    * 'require_address_match'. If avsRule is empty, then merchant follows partner
    * setting
    */
     avsRule: string | null = null;
+
+  /**
+   * That the merchant follows the partner's AVS settings.
+   */
+    followPartnerAvsSettings: boolean | null = null;
+
+  /**
+   * Flag indicating whether or not account updater is enrolled. Note that only
+   * merchant's whose partner is enrolled will be processed by the account updater.
+   */
+    accountUpdaterEnrolled: boolean | null = null;
 
     // Constructor with default values for optional fields
     constructor(
@@ -10639,7 +10677,10 @@ export class MerchantProfileResponse {
         cvvVerificationPEnabled: boolean | null = null,
         cvvVerificationSEnabled: boolean | null = null,
         cvvVerificationUEnabled: boolean | null = null,
+        followPartnerCvvSettings: boolean | null = null,
         avsRule: string | null = null,
+        followPartnerAvsSettings: boolean | null = null,
+        accountUpdaterEnrolled: boolean | null = null,
         ) {
         this.success = success;
         this.error = error;
@@ -10702,7 +10743,10 @@ export class MerchantProfileResponse {
         this.cvvVerificationPEnabled = cvvVerificationPEnabled;
         this.cvvVerificationSEnabled = cvvVerificationSEnabled;
         this.cvvVerificationUEnabled = cvvVerificationUEnabled;
+        this.followPartnerCvvSettings = followPartnerCvvSettings;
         this.avsRule = avsRule;
+        this.followPartnerAvsSettings = followPartnerAvsSettings;
+        this.accountUpdaterEnrolled = accountUpdaterEnrolled;
         }
 }
 

@@ -10143,6 +10143,11 @@ export class MerchantProfile {
    */
     accountUpdaterEnrolled: boolean | null = null;
 
+  /**
+   * Whether the merchant should bypass an auth with TSYS on Enrollment.
+   */
+    bypassEnrollAuthEnabled: boolean | null = null;
+
     // Constructor with default values for optional fields
     constructor(
         timeout: number | null = null,
@@ -10208,6 +10213,7 @@ export class MerchantProfile {
         avsRule: string | null = null,
         followPartnerAvsSettings: boolean | null = null,
         accountUpdaterEnrolled: boolean | null = null,
+        bypassEnrollAuthEnabled: boolean | null = null,
         ) {
         this.timeout = timeout;
         this.test = test;
@@ -10272,6 +10278,7 @@ export class MerchantProfile {
         this.avsRule = avsRule;
         this.followPartnerAvsSettings = followPartnerAvsSettings;
         this.accountUpdaterEnrolled = accountUpdaterEnrolled;
+        this.bypassEnrollAuthEnabled = bypassEnrollAuthEnabled;
         }
 }
 
@@ -10614,6 +10621,11 @@ export class MerchantProfileResponse {
    */
     accountUpdaterEnrolled: boolean | null = null;
 
+  /**
+   * Whether the merchant should bypass an auth with TSYS on Enrollment.
+   */
+    bypassEnrollAuthEnabled: boolean | null = null;
+
     // Constructor with default values for optional fields
     constructor(
         success: boolean | null = null,
@@ -10681,6 +10693,7 @@ export class MerchantProfileResponse {
         avsRule: string | null = null,
         followPartnerAvsSettings: boolean | null = null,
         accountUpdaterEnrolled: boolean | null = null,
+        bypassEnrollAuthEnabled: boolean | null = null,
         ) {
         this.success = success;
         this.error = error;
@@ -10747,6 +10760,7 @@ export class MerchantProfileResponse {
         this.avsRule = avsRule;
         this.followPartnerAvsSettings = followPartnerAvsSettings;
         this.accountUpdaterEnrolled = accountUpdaterEnrolled;
+        this.bypassEnrollAuthEnabled = bypassEnrollAuthEnabled;
         }
 }
 

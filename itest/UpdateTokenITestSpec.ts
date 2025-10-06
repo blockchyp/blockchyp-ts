@@ -58,8 +58,8 @@ describe('UpdateToken', function () {
         // setup request object
         const request = new BlockChyp.UpdateTokenRequest();
         request.token = setupResponse.token ?? null;
-        request.expMonth = 12;
-        request.expYear = 2040;
+        request.expiryMonth = '12';
+        request.expiryYear = '2040';
 
         const httpResponse = await client.updateToken(request)
         const response: BlockChyp.UpdateTokenResponse = httpResponse.data;

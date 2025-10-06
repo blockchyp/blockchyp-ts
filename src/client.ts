@@ -516,6 +516,13 @@ export class BlockChypClient {
   }
 
   /**
+   * Updates a payment token.
+   */
+  updateToken(request: Models.UpdateTokenRequest): Promise<AxiosResponse<Models.UpdateTokenResponse>> {
+    return this._gatewayRequest('post', '/api/token/' + request.token, request);
+  }
+
+  /**
    * Deletes a payment token.
    */
   deleteToken(request: Models.DeleteTokenRequest): Promise<AxiosResponse<Models.DeleteTokenResponse>> {

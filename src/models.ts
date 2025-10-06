@@ -1830,6 +1830,133 @@ export class TokenMetadataResponse {
 }
 
   /**
+   * Updates a payment token.
+   */
+export class UpdateTokenRequest {
+
+  /**
+   * The request timeout in seconds.
+   */
+    timeout: number | null = null;
+
+  /**
+   * Whether or not to route transaction to the test gateway.
+   */
+    test: boolean | null = null;
+
+  /**
+   * The token to update.
+   */
+    token: string | null = null;
+
+  /**
+   * Bank account holder type (personal or business).
+   */
+    accountHolderType: string | null = null;
+
+  /**
+   * Bank account type (checking or saving).
+   */
+    accountType: string | null = null;
+
+  /**
+   * Bank name.
+   */
+    bankName: string | null = null;
+
+  /**
+   * Card holder name.
+   */
+    cardHolderName: string | null = null;
+
+  /**
+   * Expiry month.
+   */
+    expiryMonth: string | null = null;
+
+  /**
+   * Expiry year.
+   */
+    expiryYear: string | null = null;
+
+  /**
+   * Address.
+   */
+    address: string | null = null;
+
+  /**
+   * Postal code.
+   */
+    postalCode: string | null = null;
+
+    // Constructor with default values for optional fields
+    constructor(
+        timeout: number | null = null,
+        test: boolean | null = null,
+        token: string | null = null,
+        accountHolderType: string | null = null,
+        accountType: string | null = null,
+        bankName: string | null = null,
+        cardHolderName: string | null = null,
+        expiryMonth: string | null = null,
+        expiryYear: string | null = null,
+        address: string | null = null,
+        postalCode: string | null = null,
+        ) {
+        this.timeout = timeout;
+        this.test = test;
+        this.token = token;
+        this.accountHolderType = accountHolderType;
+        this.accountType = accountType;
+        this.bankName = bankName;
+        this.cardHolderName = cardHolderName;
+        this.expiryMonth = expiryMonth;
+        this.expiryYear = expiryYear;
+        this.address = address;
+        this.postalCode = postalCode;
+        }
+}
+
+  /**
+   * The response to a update token request.
+   */
+export class UpdateTokenResponse {
+
+  /**
+   * Whether or not the request succeeded.
+   */
+    success: boolean | null = null;
+
+  /**
+   * The error, if an error occurred.
+   */
+    error: string | null = null;
+
+  /**
+   * A narrative description of the transaction result.
+   */
+    responseDescription: string | null = null;
+
+  /**
+   * The updated token for a given query.
+   */
+    token: CustomerToken | null = null;
+
+    // Constructor with default values for optional fields
+    constructor(
+        success: boolean | null = null,
+        error: string | null = null,
+        responseDescription: string | null = null,
+        token: CustomerToken | null = null,
+        ) {
+        this.success = success;
+        this.error = error;
+        this.responseDescription = responseDescription;
+        this.token = token;
+        }
+}
+
+  /**
    * Models a customer token.
    */
 export class CustomerToken {

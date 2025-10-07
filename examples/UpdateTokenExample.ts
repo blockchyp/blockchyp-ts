@@ -8,8 +8,8 @@ const client = BlockChyp.newClient({
 
 const request = new BlockChyp.UpdateTokenRequest();
 request.token = '<TOKEN>';
-request.expMonth = 12;
-request.expYear = 2040;
+request.expiryMonth = '12';
+request.expiryYear = '2040';
 
 client.updateToken(request)
 .then(function(httpResponse) {

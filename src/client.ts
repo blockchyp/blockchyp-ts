@@ -10,6 +10,7 @@ import CryptoUtils from './cryptoutils'
 import * as Models from './models'
 import * as nodeHttps from 'https'
 
+/* eslint-disable no-unused-vars */
 export const CardType = Object.freeze({
   CREDIT: 0,
   DEBIT: 1,
@@ -66,6 +67,7 @@ export const HealthcareType = Object.freeze({
   CLINIC: 'clinic',
   DENTAL: 'dental',
 })
+/* eslint-enable no-unused-vars */
 // TODO: Fix this to use the version from package.json
 const VERSION: string = "v1.0.0";
 const USER_AGENT: string = `BlockChyp-TypeScript/${VERSION}`;

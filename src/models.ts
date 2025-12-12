@@ -2561,6 +2561,21 @@ export class AuthorizationRequest {
    */
     cardMetadataLookup?: boolean;
 
+  /**
+   * The shipping cost associated with the transaction
+   */
+    shippingAmount?: string;
+
+  /**
+   * The processor ID associated with the transaction
+   */
+    processorId?: string;
+
+  /**
+   * The external customer ID associated with the transaction
+   */
+    externalCustomerId?: string;
+
     // Constructor with default values for optional fields
     constructor(
         timeout: number | null = null,
@@ -2635,6 +2650,9 @@ export class AuthorizationRequest {
         healthcareTotal: string | undefined = undefined,
         ebtTotal: string | undefined = undefined,
         cardMetadataLookup: boolean = false,
+        shippingAmount: string | undefined = undefined,
+        processorId: string | undefined = undefined,
+        externalCustomerId: string | undefined = undefined,
         ) {
         this.timeout = timeout;
         this.test = test;
@@ -2708,6 +2726,9 @@ export class AuthorizationRequest {
         this.healthcareTotal = healthcareTotal;
         this.ebtTotal = ebtTotal;
         this.cardMetadataLookup = cardMetadataLookup;
+        this.shippingAmount = shippingAmount;
+        this.processorId = processorId;
+        this.externalCustomerId = externalCustomerId;
         }
 }
 

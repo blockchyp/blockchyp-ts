@@ -2017,6 +2017,26 @@ export class CustomerToken {
     bin: string | null = null;
 
   /**
+   * The card postal code.
+   */
+    postalCode?: string;
+
+  /**
+   * The card address.
+   */
+    address?: string;
+
+  /**
+   * The card country.
+   */
+    country?: string;
+
+  /**
+   * The card holder name.
+   */
+    cardHolderName?: string;
+
+  /**
    * Models customer records associated with a payment token.
    */
     customers: Customer[] | null = null;
@@ -2034,6 +2054,10 @@ export class CustomerToken {
         routingNumber: string | null = null,
         tokenHash: string | null = null,
         bin: string | null = null,
+        postalCode: string | undefined = undefined,
+        address: string | undefined = undefined,
+        country: string | undefined = undefined,
+        cardHolderName: string | undefined = undefined,
         customers: Customer[] | null = null,
         ) {
         this.token = token;
@@ -2047,6 +2071,10 @@ export class CustomerToken {
         this.routingNumber = routingNumber;
         this.tokenHash = tokenHash;
         this.bin = bin;
+        this.postalCode = postalCode;
+        this.address = address;
+        this.country = country;
+        this.cardHolderName = cardHolderName;
         this.customers = customers;
         }
 }
@@ -2291,6 +2319,11 @@ export class AuthorizationRequest {
    * The cardholder postal code for use with address verification.
    */
     postalCode?: string;
+
+  /**
+   * The cardholder country.
+   */
+    country?: string;
 
   /**
    * That the payment entry method is a manual keyed transaction. If this is true, no other
@@ -2561,6 +2594,21 @@ export class AuthorizationRequest {
    */
     cardMetadataLookup?: boolean;
 
+  /**
+   * The shipping cost associated with the transaction
+   */
+    shippingAmount?: string;
+
+  /**
+   * The processor ID associated with the transaction
+   */
+    processorId?: string;
+
+  /**
+   * The external customer ID associated with the transaction
+   */
+    externalCustomerId?: string;
+
     // Constructor with default values for optional fields
     constructor(
         timeout: number | null = null,
@@ -2585,6 +2633,7 @@ export class AuthorizationRequest {
         cvv: string | undefined = undefined,
         address: string | undefined = undefined,
         postalCode: string | undefined = undefined,
+        country: string | undefined = undefined,
         manualEntry: boolean = false,
         ksn: string | undefined = undefined,
         pinBlock: string | undefined = undefined,
@@ -2635,6 +2684,9 @@ export class AuthorizationRequest {
         healthcareTotal: string | undefined = undefined,
         ebtTotal: string | undefined = undefined,
         cardMetadataLookup: boolean = false,
+        shippingAmount: string | undefined = undefined,
+        processorId: string | undefined = undefined,
+        externalCustomerId: string | undefined = undefined,
         ) {
         this.timeout = timeout;
         this.test = test;
@@ -2658,6 +2710,7 @@ export class AuthorizationRequest {
         this.cvv = cvv;
         this.address = address;
         this.postalCode = postalCode;
+        this.country = country;
         this.manualEntry = manualEntry;
         this.ksn = ksn;
         this.pinBlock = pinBlock;
@@ -2708,6 +2761,9 @@ export class AuthorizationRequest {
         this.healthcareTotal = healthcareTotal;
         this.ebtTotal = ebtTotal;
         this.cardMetadataLookup = cardMetadataLookup;
+        this.shippingAmount = shippingAmount;
+        this.processorId = processorId;
+        this.externalCustomerId = externalCustomerId;
         }
 }
 
@@ -2931,6 +2987,11 @@ export class CardMetadataRequest {
     postalCode?: string;
 
   /**
+   * The cardholder country.
+   */
+    country?: string;
+
+  /**
    * That the payment entry method is a manual keyed transaction. If this is true, no other
    * payment method will be accepted.
    */
@@ -2996,6 +3057,7 @@ export class CardMetadataRequest {
         cvv: string | undefined = undefined,
         address: string | undefined = undefined,
         postalCode: string | undefined = undefined,
+        country: string | undefined = undefined,
         manualEntry: boolean = false,
         ksn: string | undefined = undefined,
         pinBlock: string | undefined = undefined,
@@ -3027,6 +3089,7 @@ export class CardMetadataRequest {
         this.cvv = cvv;
         this.address = address;
         this.postalCode = postalCode;
+        this.country = country;
         this.manualEntry = manualEntry;
         this.ksn = ksn;
         this.pinBlock = pinBlock;
@@ -3117,6 +3180,21 @@ export class CardMetadataResponse {
     expYear?: string;
 
   /**
+   * The card postal code.
+   */
+    postalCode?: string;
+
+  /**
+   * The card address.
+   */
+    address?: string;
+
+  /**
+   * The card country.
+   */
+    country?: string;
+
+  /**
    * Address verification results if address information was submitted.
    */
     avsResponse: AVSResponse | null = null;
@@ -3162,6 +3240,9 @@ export class CardMetadataResponse {
         cardHolder: string | undefined = undefined,
         expMonth: string | undefined = undefined,
         expYear: string | undefined = undefined,
+        postalCode: string | undefined = undefined,
+        address: string | undefined = undefined,
+        country: string | undefined = undefined,
         avsResponse: AVSResponse | null = null,
         cvvResponse: string | undefined = undefined,
         receiptSuggestions: ReceiptSuggestions | null = null,
@@ -3183,6 +3264,9 @@ export class CardMetadataResponse {
         this.cardHolder = cardHolder;
         this.expMonth = expMonth;
         this.expYear = expYear;
+        this.postalCode = postalCode;
+        this.address = address;
+        this.country = country;
         this.avsResponse = avsResponse;
         this.cvvResponse = cvvResponse;
         this.receiptSuggestions = receiptSuggestions;
@@ -3317,6 +3401,11 @@ export class BalanceRequest {
     postalCode?: string;
 
   /**
+   * The cardholder country.
+   */
+    country?: string;
+
+  /**
    * That the payment entry method is a manual keyed transaction. If this is true, no other
    * payment method will be accepted.
    */
@@ -3377,6 +3466,7 @@ export class BalanceRequest {
         cvv: string | undefined = undefined,
         address: string | undefined = undefined,
         postalCode: string | undefined = undefined,
+        country: string | undefined = undefined,
         manualEntry: boolean = false,
         ksn: string | undefined = undefined,
         pinBlock: string | undefined = undefined,
@@ -3407,6 +3497,7 @@ export class BalanceRequest {
         this.cvv = cvv;
         this.address = address;
         this.postalCode = postalCode;
+        this.country = country;
         this.manualEntry = manualEntry;
         this.ksn = ksn;
         this.pinBlock = pinBlock;
@@ -3544,6 +3635,21 @@ export class BalanceResponse {
     expYear?: string;
 
   /**
+   * The card postal code.
+   */
+    postalCode?: string;
+
+  /**
+   * The card address.
+   */
+    address?: string;
+
+  /**
+   * The card country.
+   */
+    country?: string;
+
+  /**
    * Address verification results if address information was submitted.
    */
     avsResponse: AVSResponse | null = null;
@@ -3598,6 +3704,9 @@ export class BalanceResponse {
         cardHolder: string | undefined = undefined,
         expMonth: string | undefined = undefined,
         expYear: string | undefined = undefined,
+        postalCode: string | undefined = undefined,
+        address: string | undefined = undefined,
+        country: string | undefined = undefined,
         avsResponse: AVSResponse | null = null,
         cvvResponse: string | undefined = undefined,
         receiptSuggestions: ReceiptSuggestions | null = null,
@@ -3628,6 +3737,9 @@ export class BalanceResponse {
         this.cardHolder = cardHolder;
         this.expMonth = expMonth;
         this.expYear = expYear;
+        this.postalCode = postalCode;
+        this.address = address;
+        this.country = country;
         this.avsResponse = avsResponse;
         this.cvvResponse = cvvResponse;
         this.receiptSuggestions = receiptSuggestions;
@@ -3760,6 +3872,11 @@ export class RefundRequest {
    * The cardholder postal code for use with address verification.
    */
     postalCode?: string;
+
+  /**
+   * The cardholder country.
+   */
+    country?: string;
 
   /**
    * That the payment entry method is a manual keyed transaction. If this is true, no other
@@ -3923,6 +4040,7 @@ export class RefundRequest {
         cvv: string | undefined = undefined,
         address: string | undefined = undefined,
         postalCode: string | undefined = undefined,
+        country: string | undefined = undefined,
         manualEntry: boolean = false,
         ksn: string | undefined = undefined,
         pinBlock: string | undefined = undefined,
@@ -3972,6 +4090,7 @@ export class RefundRequest {
         this.cvv = cvv;
         this.address = address;
         this.postalCode = postalCode;
+        this.country = country;
         this.manualEntry = manualEntry;
         this.ksn = ksn;
         this.pinBlock = pinBlock;
@@ -4365,6 +4484,21 @@ export class CaptureResponse {
     expYear?: string;
 
   /**
+   * The card postal code.
+   */
+    postalCode?: string;
+
+  /**
+   * The card address.
+   */
+    address?: string;
+
+  /**
+   * The card country.
+   */
+    country?: string;
+
+  /**
    * Address verification results if address information was submitted.
    */
     avsResponse: AVSResponse | null = null;
@@ -4428,6 +4562,9 @@ export class CaptureResponse {
         cardHolder: string | undefined = undefined,
         expMonth: string | undefined = undefined,
         expYear: string | undefined = undefined,
+        postalCode: string | undefined = undefined,
+        address: string | undefined = undefined,
+        country: string | undefined = undefined,
         avsResponse: AVSResponse | null = null,
         cvvResponse: string | undefined = undefined,
         receiptSuggestions: ReceiptSuggestions | null = null,
@@ -4471,6 +4608,9 @@ export class CaptureResponse {
         this.cardHolder = cardHolder;
         this.expMonth = expMonth;
         this.expYear = expYear;
+        this.postalCode = postalCode;
+        this.address = address;
+        this.country = country;
         this.avsResponse = avsResponse;
         this.cvvResponse = cvvResponse;
         this.receiptSuggestions = receiptSuggestions;
@@ -4722,6 +4862,21 @@ export class VoidResponse {
     expYear?: string;
 
   /**
+   * The card postal code.
+   */
+    postalCode?: string;
+
+  /**
+   * The card address.
+   */
+    address?: string;
+
+  /**
+   * The card country.
+   */
+    country?: string;
+
+  /**
    * Address verification results if address information was submitted.
    */
     avsResponse: AVSResponse | null = null;
@@ -4779,6 +4934,9 @@ export class VoidResponse {
         cardHolder: string | undefined = undefined,
         expMonth: string | undefined = undefined,
         expYear: string | undefined = undefined,
+        postalCode: string | undefined = undefined,
+        address: string | undefined = undefined,
+        country: string | undefined = undefined,
         avsResponse: AVSResponse | null = null,
         cvvResponse: string | undefined = undefined,
         receiptSuggestions: ReceiptSuggestions | null = null,
@@ -4812,6 +4970,9 @@ export class VoidResponse {
         this.cardHolder = cardHolder;
         this.expMonth = expMonth;
         this.expYear = expYear;
+        this.postalCode = postalCode;
+        this.address = address;
+        this.country = country;
         this.avsResponse = avsResponse;
         this.cvvResponse = cvvResponse;
         this.receiptSuggestions = receiptSuggestions;
@@ -4946,6 +5107,11 @@ export class EnrollRequest {
     postalCode?: string;
 
   /**
+   * The cardholder country.
+   */
+    country?: string;
+
+  /**
    * That the payment entry method is a manual keyed transaction. If this is true, no other
    * payment method will be accepted.
    */
@@ -5047,6 +5213,7 @@ export class EnrollRequest {
         cvv: string | undefined = undefined,
         address: string | undefined = undefined,
         postalCode: string | undefined = undefined,
+        country: string | undefined = undefined,
         manualEntry: boolean = false,
         ksn: string | undefined = undefined,
         pinBlock: string | undefined = undefined,
@@ -5085,6 +5252,7 @@ export class EnrollRequest {
         this.cvv = cvv;
         this.address = address;
         this.postalCode = postalCode;
+        this.country = country;
         this.manualEntry = manualEntry;
         this.ksn = ksn;
         this.pinBlock = pinBlock;
@@ -5246,6 +5414,21 @@ export class EnrollResponse {
     expYear?: string;
 
   /**
+   * The card postal code.
+   */
+    postalCode?: string;
+
+  /**
+   * The card address.
+   */
+    address?: string;
+
+  /**
+   * The card country.
+   */
+    country?: string;
+
+  /**
    * Address verification results if address information was submitted.
    */
     avsResponse: AVSResponse | null = null;
@@ -5334,6 +5517,9 @@ export class EnrollResponse {
         cardHolder: string | undefined = undefined,
         expMonth: string | undefined = undefined,
         expYear: string | undefined = undefined,
+        postalCode: string | undefined = undefined,
+        address: string | undefined = undefined,
+        country: string | undefined = undefined,
         avsResponse: AVSResponse | null = null,
         cvvResponse: string | undefined = undefined,
         receiptSuggestions: ReceiptSuggestions | null = null,
@@ -5373,6 +5559,9 @@ export class EnrollResponse {
         this.cardHolder = cardHolder;
         this.expMonth = expMonth;
         this.expYear = expYear;
+        this.postalCode = postalCode;
+        this.address = address;
+        this.country = country;
         this.avsResponse = avsResponse;
         this.cvvResponse = cvvResponse;
         this.receiptSuggestions = receiptSuggestions;
@@ -6525,6 +6714,21 @@ export class AuthorizationResponse {
     expYear?: string;
 
   /**
+   * The card postal code.
+   */
+    postalCode?: string;
+
+  /**
+   * The card address.
+   */
+    address?: string;
+
+  /**
+   * The card country.
+   */
+    country?: string;
+
+  /**
    * Address verification results if address information was submitted.
    */
     avsResponse: AVSResponse | null = null;
@@ -6624,6 +6828,9 @@ export class AuthorizationResponse {
         cardHolder: string | undefined = undefined,
         expMonth: string | undefined = undefined,
         expYear: string | undefined = undefined,
+        postalCode: string | undefined = undefined,
+        address: string | undefined = undefined,
+        country: string | undefined = undefined,
         avsResponse: AVSResponse | null = null,
         cvvResponse: string | undefined = undefined,
         receiptSuggestions: ReceiptSuggestions | null = null,
@@ -6682,6 +6889,9 @@ export class AuthorizationResponse {
         this.cardHolder = cardHolder;
         this.expMonth = expMonth;
         this.expYear = expYear;
+        this.postalCode = postalCode;
+        this.address = address;
+        this.country = country;
         this.avsResponse = avsResponse;
         this.cvvResponse = cvvResponse;
         this.receiptSuggestions = receiptSuggestions;
@@ -7221,6 +7431,21 @@ export class TransactionStatus {
     expYear?: string;
 
   /**
+   * The card postal code.
+   */
+    postalCode?: string;
+
+  /**
+   * The card address.
+   */
+    address?: string;
+
+  /**
+   * The card country.
+   */
+    country?: string;
+
+  /**
    * Address verification results if address information was submitted.
    */
     avsResponse: AVSResponse | null = null;
@@ -7294,6 +7519,9 @@ export class TransactionStatus {
         cardHolder: string | undefined = undefined,
         expMonth: string | undefined = undefined,
         expYear: string | undefined = undefined,
+        postalCode: string | undefined = undefined,
+        address: string | undefined = undefined,
+        country: string | undefined = undefined,
         avsResponse: AVSResponse | null = null,
         cvvResponse: string | undefined = undefined,
         receiptSuggestions: ReceiptSuggestions | null = null,
@@ -7339,6 +7567,9 @@ export class TransactionStatus {
         this.cardHolder = cardHolder;
         this.expMonth = expMonth;
         this.expYear = expYear;
+        this.postalCode = postalCode;
+        this.address = address;
+        this.country = country;
         this.avsResponse = avsResponse;
         this.cvvResponse = cvvResponse;
         this.receiptSuggestions = receiptSuggestions;
@@ -18004,6 +18235,21 @@ export class PaymentMethodResponse {
     expYear?: string;
 
   /**
+   * The card postal code.
+   */
+    postalCode?: string;
+
+  /**
+   * The card address.
+   */
+    address?: string;
+
+  /**
+   * The card country.
+   */
+    country?: string;
+
+  /**
    * Address verification results if address information was submitted.
    */
     avsResponse: AVSResponse | null = null;
@@ -18040,6 +18286,9 @@ export class PaymentMethodResponse {
         cardHolder: string | undefined = undefined,
         expMonth: string | undefined = undefined,
         expYear: string | undefined = undefined,
+        postalCode: string | undefined = undefined,
+        address: string | undefined = undefined,
+        country: string | undefined = undefined,
         avsResponse: AVSResponse | null = null,
         cvvResponse: string | undefined = undefined,
         receiptSuggestions: ReceiptSuggestions | null = null,
@@ -18057,6 +18306,9 @@ export class PaymentMethodResponse {
         this.cardHolder = cardHolder;
         this.expMonth = expMonth;
         this.expYear = expYear;
+        this.postalCode = postalCode;
+        this.address = address;
+        this.country = country;
         this.avsResponse = avsResponse;
         this.cvvResponse = cvvResponse;
         this.receiptSuggestions = receiptSuggestions;
@@ -18303,6 +18555,11 @@ export class PaymentMethod {
     postalCode?: string;
 
   /**
+   * The cardholder country.
+   */
+    country?: string;
+
+  /**
    * That the payment entry method is a manual keyed transaction. If this is true, no other
    * payment method will be accepted.
    */
@@ -18340,6 +18597,7 @@ export class PaymentMethod {
         cvv: string | undefined = undefined,
         address: string | undefined = undefined,
         postalCode: string | undefined = undefined,
+        country: string | undefined = undefined,
         manualEntry: boolean = false,
         ksn: string | undefined = undefined,
         pinBlock: string | undefined = undefined,
@@ -18357,6 +18615,7 @@ export class PaymentMethod {
         this.cvv = cvv;
         this.address = address;
         this.postalCode = postalCode;
+        this.country = country;
         this.manualEntry = manualEntry;
         this.ksn = ksn;
         this.pinBlock = pinBlock;

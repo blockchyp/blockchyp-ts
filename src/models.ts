@@ -1,5 +1,5 @@
 /**
- * Copyright 2019-2025 BlockChyp, Inc. All rights reserved. Use of this code is governed
+ * Copyright 2019-2026 BlockChyp, Inc. All rights reserved. Use of this code is governed
  * by a license that can be found in the LICENSE file.
  *
  * This file was generated automatically by the BlockChyp SDK Generator. Changes to this
@@ -9617,6 +9617,16 @@ export class BatchDetailsResponse {
    */
     volumeByTerminal: TerminalVolume[] | null = null;
 
+  /**
+   * The net volume for this batch, usually expected volume less daily fees volume.
+   */
+    netDeposit: string | null = null;
+
+  /**
+   * The daily fees for this batch
+   */
+    dailyFees: string | null = null;
+
     // Constructor with default values for optional fields
     constructor(
         success: boolean | null = null,
@@ -9637,6 +9647,8 @@ export class BatchDetailsResponse {
         openDate: Date | null = null,
         closeDate: Date | null = null,
         volumeByTerminal: TerminalVolume[] | null = null,
+        netDeposit: string | null = null,
+        dailyFees: string | null = null,
         ) {
         this.success = success;
         this.error = error;
@@ -9656,6 +9668,8 @@ export class BatchDetailsResponse {
         this.openDate = openDate;
         this.closeDate = closeDate;
         this.volumeByTerminal = volumeByTerminal;
+        this.netDeposit = netDeposit;
+        this.dailyFees = dailyFees;
         }
 }
 

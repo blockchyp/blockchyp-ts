@@ -1,6 +1,6 @@
 {
   "name": "@blockchyp/blockchyp-ts",
-  "version": "2.27.1",
+  "version": "2.27.2",
   "description": "BlockChyp Typescript Client",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

@@ -1,6 +1,6 @@
 {
   "name": "@blockchyp/blockchyp-ts",
-  "version": "2.27.2",
+  "version": "2.28.0",
   "description": "BlockChyp Typescript Client",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -39,7 +39,6 @@
   "devDependencies": {
     "@types/aes-js": "^3.1.4",
     "@types/create-hmac": "^1.1.3",
-    "@types/elliptic": "^6.4.18",
     "@types/is-windows": "^1.0.2",
     "@types/jasmine": "^5.1.4",
     "@types/node": "^20.12.12",
@@ -69,15 +68,11 @@
     "bn.js": "^4.12.2",
     "buffer": "^6.0.3",
     "cached-path-relative": "^1.0.2",
-    "create-hmac": "^1.1.7",
-    "crypto-browserify": "^3.12.1",
-    "elliptic": "^6.6.1",
+    "@noble/curves": "^1.6.0",
+    "@noble/hashes": "^1.5.0",
     "glob": "^13.0.0",
     "moment": "^2.22.2",
     "npm": "^11.6.3",
-    "randombytes": "^2.0.6",
-    "pbkdf2": "^3.1.5",
-    "sha.js": "^2.4.12",
     "stream-browserify": "^3.0.0",
     "uuidv4": "^6.2.13"
   }

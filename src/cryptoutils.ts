@@ -1,12 +1,13 @@
-import createHmac from 'create-hmac'
-import randomBytes from 'randombytes'
+import { hmac } from '@noble/hashes/hmac'
+import { sha256 } from '@noble/hashes/sha256'
+import { randomBytes, bytesToHex, utf8ToBytes } from '@noble/hashes/utils'
 import  moment from 'moment'
 const base32 = require('base32')
-import shajs from 'sha.js'
-import * as EC from 'elliptic'
+import { p256 } from '@noble/curves/nist'
 import * as aesjs from 'aes-js'
 import { Buffer } from 'buffer';
 import { BlockChypCredentials } from './client'
+
 
 export class BlockChypCrypto {
   generateGatewayHeaders (creds: BlockChypCredentials) {
@@ -14,9 +15,8 @@ export class BlockChypCrypto {
     const ts = this.generateIsoTimestamp()
     const toSign = creds.apiKey + creds.bearerToken + ts + nonce
     const key = Buffer.from(creds.signingKey, 'hex')
-    const hmac = createHmac('sha256', key)
-    hmac.update(toSign)
-    const sig = hmac.digest('hex')
+    const mac = hmac(sha256, key, utf8ToBytes(toSign))
+    const sig = bytesToHex(mac)
 
     const results = {
       'Nonce': nonce,
@@ -38,18 +38,32 @@ export class BlockChypCrypto {
     const plainBytes = aesjs.padding.pkcs7.pad(aesjs.utils.utf8.toBytes(plainText))
     const encryptedBytes = aesCbc.encrypt(plainBytes)
 
-    return iv.toString('hex') + aesjs.utils.hex.fromBytes(encryptedBytes)
+    return bytesToHex(iv) + aesjs.utils.hex.fromBytes(encryptedBytes)
   }
 
   sha256Hash (msg: string) {
-    return shajs('sha256').update(msg, 'hex').digest('hex')
+    const msgBytes = Buffer.from(msg, 'hex')
+    return bytesToHex(sha256(msgBytes))
   }
 
   validateSignature (publicKey: any, msg: string, sig: any) {
-    const ec = new EC.ec('p256')
-    const key = ec.keyFromPublic({x: publicKey.x, y: publicKey.y})
     const msgHash = this.sha256Hash(msg)
-    return key.verify(msgHash, {r: sig.r, s: sig.s})
+    const msgHashBytes = Buffer.from(msgHash, 'hex')
+
+    const pubKeyPoint = p256.ProjectivePoint.fromAffine({
+      x: BigInt('0x' + publicKey.x),
+      y: BigInt('0x' + publicKey.y)
+    })
+    const pubKeyBytes = pubKeyPoint.toRawBytes(false)
+
+    const signature = new p256.Signature(
+      BigInt('0x' + sig.r),
+      BigInt('0x' + sig.s)
+    )
+    const sigBytes = signature.toCompactRawBytes()
+
+    // Verify signature (prehash: true means we already hashed the message)
+    return p256.verify(sigBytes, msgHashBytes, pubKeyBytes, { prehash: true })
   }
 
   decrypt (hexKey: string, cipherText: string) {

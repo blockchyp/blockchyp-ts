@@ -29,8 +29,8 @@ var config = {
       "http": false,
       "https": false,
       "stream": require.resolve('stream-browserify'),
-      "crypto": require.resolve('crypto-browserify'),
       "vm": require.resolve("vm-browserify"),
+      "crypto": false,
     }
   },
   devtool: 'source-map',

@@ -72,7 +72,6 @@
     "@noble/hashes": "^1.5.0",
     "glob": "^13.0.0",
     "moment": "^2.22.2",
-    "npm": "^11.6.3",
     "stream-browserify": "^3.0.0",
     "uuidv4": "^6.2.13"
   }

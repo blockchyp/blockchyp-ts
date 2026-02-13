@@ -2595,19 +2595,53 @@ export class AuthorizationRequest {
     cardMetadataLookup?: boolean;
 
   /**
-   * The shipping cost associated with the transaction
+   * The total discount amount for the transaction, and will overide additive logic for
+   * line item discounts.
+   */
+    totalDiscountAmount?: string;
+
+  /**
+   * The shipping cost associated with the transaction.
    */
     shippingAmount?: string;
 
   /**
-   * The processor ID associated with the transaction
+   * The duty amount associated with the transaction.
+   */
+    dutyAmount?: string;
+
+  /**
+   * The processor ID associated with the transaction.
    */
     processorId?: string;
 
   /**
-   * The external customer ID associated with the transaction
+   * The external customer ID associated with the transaction.
    */
     externalCustomerId?: string;
+
+  /**
+   * Three character, numeric, ship-to country code. Defaults to '840' (USA) if not
+   * specified.
+   */
+    destinationCountryCode?: string;
+
+  /**
+   * Nine character postal code for shipping origin addresses. For US addresses, this is a
+   * 5+4 ZIP or five digit ZIP.
+   */
+    shipFromPostalCode?: string;
+
+  /**
+   * Nine character postal code for shipping destination addresses. For US addresses,
+   * this is a 5+4 ZIP or five digit ZIP.
+   */
+    shipToPostalCode?: string;
+
+  /**
+   * The purchase order date.
+   */
+    orderDate?: Date;
 
     // Constructor with default values for optional fields
     constructor(
@@ -2684,9 +2718,15 @@ export class AuthorizationRequest {
         healthcareTotal: string | undefined = undefined,
         ebtTotal: string | undefined = undefined,
         cardMetadataLookup: boolean = false,
+        totalDiscountAmount: string | undefined = undefined,
         shippingAmount: string | undefined = undefined,
+        dutyAmount: string | undefined = undefined,
         processorId: string | undefined = undefined,
         externalCustomerId: string | undefined = undefined,
+        destinationCountryCode: string | undefined = undefined,
+        shipFromPostalCode: string | undefined = undefined,
+        shipToPostalCode: string | undefined = undefined,
+        orderDate: Date | undefined = undefined,
         ) {
         this.timeout = timeout;
         this.test = test;
@@ -2761,9 +2801,15 @@ export class AuthorizationRequest {
         this.healthcareTotal = healthcareTotal;
         this.ebtTotal = ebtTotal;
         this.cardMetadataLookup = cardMetadataLookup;
+        this.totalDiscountAmount = totalDiscountAmount;
         this.shippingAmount = shippingAmount;
+        this.dutyAmount = dutyAmount;
         this.processorId = processorId;
         this.externalCustomerId = externalCustomerId;
+        this.destinationCountryCode = destinationCountryCode;
+        this.shipFromPostalCode = shipFromPostalCode;
+        this.shipToPostalCode = shipToPostalCode;
+        this.orderDate = orderDate;
         }
 }
 
@@ -7660,6 +7706,22 @@ export class TransactionDisplayItem {
    */
     discounts: TransactionDisplayDiscount[] | null = null;
 
+  /**
+   * The amount of any value added taxes which apply to the item.
+   */
+    taxAmount?: string;
+
+  /**
+   * The tax rate as a percentage. Example: '8.5' for 8.5% tax rate.
+   */
+    taxRate?: string;
+
+  /**
+   * How tax was applied to discounted items. '0' = no discount, '1' = tax calculated after
+   * discount, '2' = taxcalculated before discount.
+   */
+    discountCode?: string;
+
     // Constructor with default values for optional fields
     constructor(
         id: string | null = null,
@@ -7671,6 +7733,9 @@ export class TransactionDisplayItem {
         commodityCode: string | null = null,
         productCode: string | null = null,
         discounts: TransactionDisplayDiscount[] | null = null,
+        taxAmount: string | undefined = undefined,
+        taxRate: string | undefined = undefined,
+        discountCode: string | undefined = undefined,
         ) {
         this.id = id;
         this.description = description;
@@ -7681,6 +7746,9 @@ export class TransactionDisplayItem {
         this.commodityCode = commodityCode;
         this.productCode = productCode;
         this.discounts = discounts;
+        this.taxAmount = taxAmount;
+        this.taxRate = taxRate;
+        this.discountCode = discountCode;
         }
 }
 

@@ -4282,6 +4282,12 @@ export class CaptureRequest {
    */
     shipmentNumber: number | null = null;
 
+  /**
+   * A passthrough surcharge amount. This surcharge amount will be passed directly to the
+   * gateway and is not directly calculated.
+   */
+    passthroughSurcharge?: string;
+
     // Constructor with default values for optional fields
     constructor(
         timeout: number | null = null,
@@ -4305,6 +4311,7 @@ export class CaptureRequest {
         taxAmount: string | undefined = undefined,
         shipmentCount: number | null = null,
         shipmentNumber: number | null = null,
+        passthroughSurcharge: string | undefined = undefined,
         ) {
         this.timeout = timeout;
         this.test = test;
@@ -4327,6 +4334,7 @@ export class CaptureRequest {
         this.taxAmount = taxAmount;
         this.shipmentCount = shipmentCount;
         this.shipmentNumber = shipmentNumber;
+        this.passthroughSurcharge = passthroughSurcharge;
         }
 }
 

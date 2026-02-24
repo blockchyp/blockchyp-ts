@@ -318,6 +318,13 @@ export class BlockChypClient {
   }
 
   /**
+   * Calculates surcharge information for a payment request.
+   */
+  surchargeReview(request: Models.PricingRequest): Promise<AxiosResponse<Models.PricingResponse>> {
+    return this._gatewayRequest('post', '/api/surcharge-review', request);
+  }
+
+  /**
    * Captures a preauthorization.
    */
   capture(request: Models.CaptureRequest): Promise<AxiosResponse<Models.CaptureResponse>> {

@@ -2595,19 +2595,53 @@ export class AuthorizationRequest {
     cardMetadataLookup?: boolean;
 
   /**
-   * The shipping cost associated with the transaction
+   * The total discount amount for the transaction, and will overide additive logic for
+   * line item discounts.
+   */
+    totalDiscountAmount?: string;
+
+  /**
+   * The shipping cost associated with the transaction.
    */
     shippingAmount?: string;
 
   /**
-   * The processor ID associated with the transaction
+   * The duty amount associated with the transaction.
+   */
+    dutyAmount?: string;
+
+  /**
+   * The processor ID associated with the transaction.
    */
     processorId?: string;
 
   /**
-   * The external customer ID associated with the transaction
+   * The external customer ID associated with the transaction.
    */
     externalCustomerId?: string;
+
+  /**
+   * Three character, numeric, ship-to country code. Defaults to '840' (USA) if not
+   * specified.
+   */
+    destinationCountryCode?: string;
+
+  /**
+   * Nine character postal code for shipping origin addresses. For US addresses, this is a
+   * 5+4 ZIP or five digit ZIP.
+   */
+    shipFromPostalCode?: string;
+
+  /**
+   * Nine character postal code for shipping destination addresses. For US addresses,
+   * this is a 5+4 ZIP or five digit ZIP.
+   */
+    shipToPostalCode?: string;
+
+  /**
+   * The purchase order date.
+   */
+    orderDate?: Date;
 
     // Constructor with default values for optional fields
     constructor(
@@ -2684,9 +2718,15 @@ export class AuthorizationRequest {
         healthcareTotal: string | undefined = undefined,
         ebtTotal: string | undefined = undefined,
         cardMetadataLookup: boolean = false,
+        totalDiscountAmount: string | undefined = undefined,
         shippingAmount: string | undefined = undefined,
+        dutyAmount: string | undefined = undefined,
         processorId: string | undefined = undefined,
         externalCustomerId: string | undefined = undefined,
+        destinationCountryCode: string | undefined = undefined,
+        shipFromPostalCode: string | undefined = undefined,
+        shipToPostalCode: string | undefined = undefined,
+        orderDate: Date | undefined = undefined,
         ) {
         this.timeout = timeout;
         this.test = test;
@@ -2761,9 +2801,15 @@ export class AuthorizationRequest {
         this.healthcareTotal = healthcareTotal;
         this.ebtTotal = ebtTotal;
         this.cardMetadataLookup = cardMetadataLookup;
+        this.totalDiscountAmount = totalDiscountAmount;
         this.shippingAmount = shippingAmount;
+        this.dutyAmount = dutyAmount;
         this.processorId = processorId;
         this.externalCustomerId = externalCustomerId;
+        this.destinationCountryCode = destinationCountryCode;
+        this.shipFromPostalCode = shipFromPostalCode;
+        this.shipToPostalCode = shipToPostalCode;
+        this.orderDate = orderDate;
         }
 }
 
@@ -4236,6 +4282,12 @@ export class CaptureRequest {
    */
     shipmentNumber: number | null = null;
 
+  /**
+   * A passthrough surcharge amount. This surcharge amount will be passed directly to the
+   * gateway and is not directly calculated.
+   */
+    passthroughSurcharge?: string;
+
     // Constructor with default values for optional fields
     constructor(
         timeout: number | null = null,
@@ -4259,6 +4311,7 @@ export class CaptureRequest {
         taxAmount: string | undefined = undefined,
         shipmentCount: number | null = null,
         shipmentNumber: number | null = null,
+        passthroughSurcharge: string | undefined = undefined,
         ) {
         this.timeout = timeout;
         this.test = test;
@@ -4281,6 +4334,7 @@ export class CaptureRequest {
         this.taxAmount = taxAmount;
         this.shipmentCount = shipmentCount;
         this.shipmentNumber = shipmentNumber;
+        this.passthroughSurcharge = passthroughSurcharge;
         }
 }
 
@@ -7660,6 +7714,22 @@ export class TransactionDisplayItem {
    */
     discounts: TransactionDisplayDiscount[] | null = null;
 
+  /**
+   * The amount of any value added taxes which apply to the item.
+   */
+    taxAmount?: string;
+
+  /**
+   * The tax rate as a percentage. Example: '8.5' for 8.5% tax rate.
+   */
+    taxRate?: string;
+
+  /**
+   * How tax was applied to discounted items. '0' = no discount, '1' = tax calculated after
+   * discount, '2' = taxcalculated before discount.
+   */
+    discountCode?: string;
+
     // Constructor with default values for optional fields
     constructor(
         id: string | null = null,
@@ -7671,6 +7741,9 @@ export class TransactionDisplayItem {
         commodityCode: string | null = null,
         productCode: string | null = null,
         discounts: TransactionDisplayDiscount[] | null = null,
+        taxAmount: string | undefined = undefined,
+        taxRate: string | undefined = undefined,
+        discountCode: string | undefined = undefined,
         ) {
         this.id = id;
         this.description = description;
@@ -7681,6 +7754,9 @@ export class TransactionDisplayItem {
         this.commodityCode = commodityCode;
         this.productCode = productCode;
         this.discounts = discounts;
+        this.taxAmount = taxAmount;
+        this.taxRate = taxRate;
+        this.discountCode = discountCode;
         }
 }
 
@@ -17664,6 +17740,427 @@ export class SubmitApplicationRequest {
         this.subscriptionsSupported = subscriptionsSupported;
         this.subscriptionFrequency = subscriptionFrequency;
         this.signerName = signerName;
+        }
+}
+
+  /**
+   * Models settings related to state checks for a merchant.
+   */
+export class StateCheckSettings {
+
+  /**
+   * If state checks are enabled for the merchant.
+   */
+    enabled: boolean | null = null;
+
+  /**
+   * The list of states that are exempt from surcharges.
+   */
+    surchargeExemptStates: string[] | null = null;
+
+    // Constructor with default values for optional fields
+    constructor(
+        enabled: boolean | null = null,
+        surchargeExemptStates: string[] | null = null,
+        ) {
+        this.enabled = enabled;
+        this.surchargeExemptStates = surchargeExemptStates;
+        }
+}
+
+  /**
+   * Models merchant settings and configuration.
+   */
+export class PricingMerchantSettings {
+
+  /**
+   * The merchant account identifier.
+   */
+    account: string | null = null;
+
+  /**
+   * The gateway identifier.
+   */
+    gateway: string | null = null;
+
+  /**
+   * Whether surcharging is enabled for the merchant.
+   */
+    surchargingEnabled: boolean | null = null;
+
+  /**
+   * The custom surcharge percentage, if applicable.
+   */
+    customSurchargePercent?: number;
+
+  /**
+   * If reduced rate pricing is enabled.
+   */
+    reducedRate?: boolean;
+
+  /**
+   * If inverse pricing is enabled.
+   */
+    inversePricingEnabled?: boolean;
+
+  /**
+   * The credit discount rate, if applicable.
+   */
+    creditDiscountRate?: number;
+
+  /**
+   * The acquiring solution identifier.
+   */
+    acquiringSolution: string | null = null;
+
+  /**
+   * Whether the merchant accepts debit cards.
+   */
+    acceptDebit?: boolean;
+
+  /**
+   * State check settings for the merchant.
+   */
+    stateCheckSettings?: StateCheckSettings;
+
+    // Constructor with default values for optional fields
+    constructor(
+        account: string | null = null,
+        gateway: string | null = null,
+        surchargingEnabled: boolean | null = null,
+        customSurchargePercent: number = 0,
+        reducedRate: boolean = false,
+        inversePricingEnabled: boolean = false,
+        creditDiscountRate: number = 0,
+        acquiringSolution: string | null = null,
+        acceptDebit: boolean = false,
+        stateCheckSettings: StateCheckSettings | undefined = undefined,
+        ) {
+        this.account = account;
+        this.gateway = gateway;
+        this.surchargingEnabled = surchargingEnabled;
+        this.customSurchargePercent = customSurchargePercent;
+        this.reducedRate = reducedRate;
+        this.inversePricingEnabled = inversePricingEnabled;
+        this.creditDiscountRate = creditDiscountRate;
+        this.acquiringSolution = acquiringSolution;
+        this.acceptDebit = acceptDebit;
+        this.stateCheckSettings = stateCheckSettings;
+        }
+}
+
+  /**
+   * Models the attributes for a pricing request.
+   */
+export class PricingRequestAttributes {
+
+  /**
+   * The card number for the pricing request.
+   */
+    cardNumber?: string;
+
+  /**
+   * The payment token.
+   */
+    token: string | null = null;
+
+  /**
+   * The merchant identifier.
+   */
+    merchantIdentifier?: string;
+
+  /**
+   * The transaction amount.
+   */
+    amount: number | null = null;
+
+  /**
+   * The country code.
+   */
+    country?: string;
+
+  /**
+   * The postal code.
+   */
+    postalCode?: string;
+
+  /**
+   * The state or province.
+   */
+    state?: string;
+
+  /**
+   * Merchant settings for the pricing request.
+   */
+    merchantSettings?: PricingMerchantSettings;
+
+    // Constructor with default values for optional fields
+    constructor(
+        cardNumber: string | undefined = undefined,
+        token: string | null = null,
+        merchantIdentifier: string | undefined = undefined,
+        amount: number | null = null,
+        country: string | undefined = undefined,
+        postalCode: string | undefined = undefined,
+        state: string | undefined = undefined,
+        merchantSettings: PricingMerchantSettings | undefined = undefined,
+        ) {
+        this.cardNumber = cardNumber;
+        this.token = token;
+        this.merchantIdentifier = merchantIdentifier;
+        this.amount = amount;
+        this.country = country;
+        this.postalCode = postalCode;
+        this.state = state;
+        this.merchantSettings = merchantSettings;
+        }
+}
+
+  /**
+   * Models the data wrapper for a pricing request.
+   */
+export class PricingRequestData {
+
+  /**
+   * The type of the request.
+   */
+    type: string | null = null;
+
+  /**
+   * The pricing request attributes.
+   */
+    attributes: PricingRequestAttributes | null = null;
+
+    // Constructor with default values for optional fields
+    constructor(
+        type: string | null = null,
+        attributes: PricingRequestAttributes | null = null,
+        ) {
+        this.type = type;
+        this.attributes = attributes;
+        }
+}
+
+  /**
+   * Models a pricing request.
+   */
+export class PricingRequest {
+
+  /**
+   * The request timeout in seconds.
+   */
+    timeout: number | null = null;
+
+  /**
+   * Whether or not to route transaction to the test gateway.
+   */
+    test: boolean | null = null;
+
+  /**
+   * The pricing request data.
+   */
+    data: PricingRequestData | null = null;
+
+    // Constructor with default values for optional fields
+    constructor(
+        timeout: number | null = null,
+        test: boolean | null = null,
+        data: PricingRequestData | null = null,
+        ) {
+        this.timeout = timeout;
+        this.test = test;
+        this.data = data;
+        }
+}
+
+  /**
+   * Models pricing response data for new handler for pricing api responses.
+   */
+export class PricingResponseAttributes {
+
+  /**
+   * The surcharge percentage.
+   */
+    surchargePercent: number | null = null;
+
+  /**
+   * The surcharge amount.
+   */
+    surchargeAmount: number | null = null;
+
+  /**
+   * If the transaction is exempt from surcharges.
+   */
+    surchargeExempt: boolean | null = null;
+
+  /**
+   * The type of card.
+   */
+    cardType: string | null = null;
+
+  /**
+   * The card token.
+   */
+    cardToken?: string;
+
+  /**
+   * The card brand.
+   */
+    brand: string | null = null;
+
+  /**
+   * The bank identification number.
+   */
+    bin: string | null = null;
+
+  /**
+   * The commercial card indicator.
+   */
+    commercialIndicator: string | null = null;
+
+  /**
+   * The disclosure statement.
+   */
+    disclosure?: string;
+
+  /**
+   * The debit card category.
+   */
+    debitCategory: string | null = null;
+
+  /**
+   * The country where the card was issued.
+   */
+    countryIssued: string | null = null;
+
+  /**
+   * The unique identifier for the pricing response.
+   */
+    uuid: string | null = null;
+
+    // Constructor with default values for optional fields
+    constructor(
+        surchargePercent: number | null = null,
+        surchargeAmount: number | null = null,
+        surchargeExempt: boolean | null = null,
+        cardType: string | null = null,
+        cardToken: string | undefined = undefined,
+        brand: string | null = null,
+        bin: string | null = null,
+        commercialIndicator: string | null = null,
+        disclosure: string | undefined = undefined,
+        debitCategory: string | null = null,
+        countryIssued: string | null = null,
+        uuid: string | null = null,
+        ) {
+        this.surchargePercent = surchargePercent;
+        this.surchargeAmount = surchargeAmount;
+        this.surchargeExempt = surchargeExempt;
+        this.cardType = cardType;
+        this.cardToken = cardToken;
+        this.brand = brand;
+        this.bin = bin;
+        this.commercialIndicator = commercialIndicator;
+        this.disclosure = disclosure;
+        this.debitCategory = debitCategory;
+        this.countryIssued = countryIssued;
+        this.uuid = uuid;
+        }
+}
+
+  /**
+   * Models the data wrapper for a pricing response.
+   */
+export class PricingResponseData {
+
+  /**
+   * The type of the response.
+   */
+    type: string | null = null;
+
+  /**
+   * The pricing response attributes.
+   */
+    attributes: PricingResponseAttributes | null = null;
+
+    // Constructor with default values for optional fields
+    constructor(
+        type: string | null = null,
+        attributes: PricingResponseAttributes | null = null,
+        ) {
+        this.type = type;
+        this.attributes = attributes;
+        }
+}
+
+  /**
+   * Models an error response.
+   */
+export class ErrorType {
+
+  /**
+   * The HTTP status code.
+   */
+    status: number | null = null;
+
+  /**
+   * The error title.
+   */
+    title: string | null = null;
+
+  /**
+   * The detailed error message.
+   */
+    detail: string | null = null;
+
+    // Constructor with default values for optional fields
+    constructor(
+        status: number | null = null,
+        title: string | null = null,
+        detail: string | null = null,
+        ) {
+        this.status = status;
+        this.title = title;
+        this.detail = detail;
+        }
+}
+
+  /**
+   * Models a pricing response.
+   */
+export class PricingResponse {
+
+  /**
+   * Whether or not the request succeeded.
+   */
+    success: boolean | null = null;
+
+  /**
+   * The error, if an error occurred.
+   */
+    error: string | null = null;
+
+  /**
+   * A narrative description of the transaction result.
+   */
+    responseDescription: string | null = null;
+
+  /**
+   * The pricing response data.
+   */
+    data: PricingResponseData | null = null;
+
+    // Constructor with default values for optional fields
+    constructor(
+        success: boolean | null = null,
+        error: string | null = null,
+        responseDescription: string | null = null,
+        data: PricingResponseData | null = null,
+        ) {
+        this.success = success;
+        this.error = error;
+        this.responseDescription = responseDescription;
+        this.data = data;
         }
 }
 

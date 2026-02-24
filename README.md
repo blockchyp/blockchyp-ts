@@ -70,6 +70,46 @@ These are the core payment APIs used to execute and work with payment transactio
 
 
 
+#### Surcharge Review
+
+
+
+* **API Credential Types:** Merchant
+* **Required Role:** Payment API Access
+
+This API calculates surcharge information for a payment request.
+
+If you're using BlockChyp's surcharging features, you can use this endpoint
+to preview the surcharge amounts before processing a transaction. This allows
+you to display accurate pricing information to customers before completing
+the payment.
+
+
+
+
+```typescript
+import * as BlockChyp from '@blockchyp/blockchyp-ts';
+
+const client = BlockChyp.newClient({
+  apiKey: 'ZDSMMZLGRPBPRTJUBTAFBYZ33Q',
+  bearerToken: 'ZLBW5NR4U5PKD5PNP3ZP3OZS5U',
+  signingKey: '9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947'
+});
+
+const request = new BlockChyp.PricingRequest();
+
+
+client.surchargeReview(request)
+.then(function(httpResponse) {
+    const response: BlockChyp.PricingResponse = httpResponse.data;
+    console.log('Response: ' + JSON.stringify(response));
+  })
+  .catch(function (error: any) {
+    console.log(error);
+  });
+
+```
+
 #### Charge
 
 

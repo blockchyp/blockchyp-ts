@@ -2643,6 +2643,16 @@ export class AuthorizationRequest {
    */
     orderDate?: Date;
 
+  /**
+   * The number of shipments the original authorization will be broken into.
+   */
+    shipmentCount: number | null = null;
+
+  /**
+   * Which shipment this particular capture is for.
+   */
+    shipmentNumber: number | null = null;
+
     // Constructor with default values for optional fields
     constructor(
         timeout: number | null = null,
@@ -2727,6 +2737,8 @@ export class AuthorizationRequest {
         shipFromPostalCode: string | undefined = undefined,
         shipToPostalCode: string | undefined = undefined,
         orderDate: Date | undefined = undefined,
+        shipmentCount: number | null = null,
+        shipmentNumber: number | null = null,
         ) {
         this.timeout = timeout;
         this.test = test;
@@ -2810,6 +2822,8 @@ export class AuthorizationRequest {
         this.shipFromPostalCode = shipFromPostalCode;
         this.shipToPostalCode = shipToPostalCode;
         this.orderDate = orderDate;
+        this.shipmentCount = shipmentCount;
+        this.shipmentNumber = shipmentNumber;
         }
 }
 

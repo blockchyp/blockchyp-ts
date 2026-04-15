@@ -4591,6 +4591,11 @@ export class CaptureResponse {
    */
     customers: Customer[] | null = null;
 
+  /**
+   * Whether enhanced data was passed for the transaction.
+   */
+    enhancedDataPassed?: boolean;
+
     // Constructor with default values for optional fields
     constructor(
         success: boolean | null = null,
@@ -4638,6 +4643,7 @@ export class CaptureResponse {
         receiptSuggestions: ReceiptSuggestions | null = null,
         customer: Customer | undefined = undefined,
         customers: Customer[] | null = null,
+        enhancedDataPassed: boolean = false,
         ) {
         this.success = success;
         this.error = error;
@@ -4684,6 +4690,7 @@ export class CaptureResponse {
         this.receiptSuggestions = receiptSuggestions;
         this.customer = customer;
         this.customers = customers;
+        this.enhancedDataPassed = enhancedDataPassed;
         }
 }
 
@@ -6847,6 +6854,11 @@ export class AuthorizationResponse {
    */
     cardMetadata?: CardMetadata;
 
+  /**
+   * Whether enhanced data was passed for the transaction.
+   */
+    enhancedDataPassed?: boolean;
+
     // Constructor with default values for optional fields
     constructor(
         success: boolean | null = null,
@@ -6909,6 +6921,7 @@ export class AuthorizationResponse {
         storeAndForward: boolean | null = null,
         status: string | null = null,
         cardMetadata: CardMetadata | undefined = undefined,
+        enhancedDataPassed: boolean = false,
         ) {
         this.success = success;
         this.error = error;
@@ -6970,6 +6983,7 @@ export class AuthorizationResponse {
         this.storeAndForward = storeAndForward;
         this.status = status;
         this.cardMetadata = cardMetadata;
+        this.enhancedDataPassed = enhancedDataPassed;
         }
 }
 

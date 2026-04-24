@@ -325,6 +325,13 @@ export class BlockChypClient {
   }
 
   /**
+   * Generates a short-lived API key scoped to terminal and payment operations.
+   */
+  transientKey(request: Models.TransientKeyRequest): Promise<AxiosResponse<Models.TransientKeyResponse>> {
+    return this._gatewayRequest('post', '/api/transient-credentials', request);
+  }
+
+  /**
    * Captures a preauthorization.
    */
   capture(request: Models.CaptureRequest): Promise<AxiosResponse<Models.CaptureResponse>> {

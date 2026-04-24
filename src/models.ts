@@ -18131,6 +18131,91 @@ export class SurchargeReviewResponse {
         }
 }
 
+  /**
+   * Models a request for short-lived API credentials.
+   */
+export class TransientKeyRequest {
+
+  /**
+   * The request timeout in seconds.
+   */
+    timeout: number | null = null;
+
+  /**
+   * Whether or not to route transaction to the test gateway.
+   */
+    test: boolean | null = null;
+
+  /**
+   * Restricts the returned credentials to a single API call when true.
+   */
+    oneTime?: boolean;
+
+    // Constructor with default values for optional fields
+    constructor(
+        timeout: number | null = null,
+        test: boolean | null = null,
+        oneTime: boolean = false,
+        ) {
+        this.timeout = timeout;
+        this.test = test;
+        this.oneTime = oneTime;
+        }
+}
+
+  /**
+   * Models a response containing short-lived API credentials.
+   */
+export class TransientKeyResponse {
+
+  /**
+   * Whether or not the request succeeded.
+   */
+    success: boolean | null = null;
+
+  /**
+   * The error, if an error occurred.
+   */
+    error: string | null = null;
+
+  /**
+   * A narrative description of the transaction result.
+   */
+    responseDescription: string | null = null;
+
+  /**
+   * The transient API key.
+   */
+    apiKey: string | null = null;
+
+  /**
+   * The transient bearer token.
+   */
+    bearerToken: string | null = null;
+
+  /**
+   * The transient signing key.
+   */
+    signingKey: string | null = null;
+
+    // Constructor with default values for optional fields
+    constructor(
+        success: boolean | null = null,
+        error: string | null = null,
+        responseDescription: string | null = null,
+        apiKey: string | null = null,
+        bearerToken: string | null = null,
+        signingKey: string | null = null,
+        ) {
+        this.success = success;
+        this.error = error;
+        this.responseDescription = responseDescription;
+        this.apiKey = apiKey;
+        this.bearerToken = bearerToken;
+        this.signingKey = signingKey;
+        }
+}
+
 
 
 

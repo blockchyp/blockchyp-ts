@@ -2037,6 +2037,11 @@ export class CustomerToken {
     cardHolderName?: string;
 
   /**
+   * Whether the token was enrolled with a CVV value present.
+   */
+    hasCvv: boolean | null = null;
+
+  /**
    * Models customer records associated with a payment token.
    */
     customers: Customer[] | null = null;
@@ -2058,6 +2063,7 @@ export class CustomerToken {
         address: string | undefined = undefined,
         country: string | undefined = undefined,
         cardHolderName: string | undefined = undefined,
+        hasCvv: boolean | null = null,
         customers: Customer[] | null = null,
         ) {
         this.token = token;
@@ -2075,6 +2081,7 @@ export class CustomerToken {
         this.address = address;
         this.country = country;
         this.cardHolderName = cardHolderName;
+        this.hasCvv = hasCvv;
         this.customers = customers;
         }
 }
@@ -5571,6 +5578,11 @@ export class EnrollResponse {
    */
     bin?: string;
 
+  /**
+   * Whether the token was enrolled with a CVV value present.
+   */
+    hasCvv: boolean | null = null;
+
     // Constructor with default values for optional fields
     constructor(
         success: boolean | null = null,
@@ -5614,6 +5626,7 @@ export class EnrollResponse {
         bankName: string | undefined = undefined,
         tokenHash: string | undefined = undefined,
         bin: string | undefined = undefined,
+        hasCvv: boolean | null = null,
         ) {
         this.success = success;
         this.error = error;
@@ -5656,6 +5669,7 @@ export class EnrollResponse {
         this.bankName = bankName;
         this.tokenHash = tokenHash;
         this.bin = bin;
+        this.hasCvv = hasCvv;
         }
 }
 
@@ -9734,7 +9748,7 @@ export class BatchDetailsResponse {
     netDeposit: string | null = null;
 
   /**
-   * The daily fees for this batch
+   * The daily fees for this batch.
    */
     dailyFees: string | null = null;
 

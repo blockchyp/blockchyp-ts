@@ -2665,6 +2665,21 @@ export class AuthorizationRequest {
    */
     externalPartnerMetadata?: string;
 
+  /**
+   * The external customer's email address.
+   */
+    externalCustomerEmail?: string;
+
+  /**
+   * The external customer's phone number.
+   */
+    externalCustomerPhone?: string;
+
+  /**
+   * The external customer's company name.
+   */
+    externalCustomerCompany?: string;
+
     // Constructor with default values for optional fields
     constructor(
         timeout: number | null = null,
@@ -2752,6 +2767,9 @@ export class AuthorizationRequest {
         shipmentCount: number | null = null,
         shipmentNumber: number | null = null,
         externalPartnerMetadata: string | undefined = undefined,
+        externalCustomerEmail: string | undefined = undefined,
+        externalCustomerPhone: string | undefined = undefined,
+        externalCustomerCompany: string | undefined = undefined,
         ) {
         this.timeout = timeout;
         this.test = test;
@@ -2838,6 +2856,9 @@ export class AuthorizationRequest {
         this.shipmentCount = shipmentCount;
         this.shipmentNumber = shipmentNumber;
         this.externalPartnerMetadata = externalPartnerMetadata;
+        this.externalCustomerEmail = externalCustomerEmail;
+        this.externalCustomerPhone = externalCustomerPhone;
+        this.externalCustomerCompany = externalCustomerCompany;
         }
 }
 

@@ -10666,6 +10666,16 @@ export class MerchantProfile {
    */
     bypassEnrollAuthEnabled: boolean | null = null;
 
+  /**
+   * That the merchant follows the partner's service fee settings.
+   */
+    followPartnerServiceFeeEnabled: boolean | null = null;
+
+  /**
+   * That the merchant is configured to apply a service fee.
+   */
+    serviceFeeEnabled: boolean | null = null;
+
     // Constructor with default values for optional fields
     constructor(
         timeout: number | null = null,
@@ -10732,6 +10742,8 @@ export class MerchantProfile {
         followPartnerAvsSettings: boolean | null = null,
         accountUpdaterEnrolled: boolean | null = null,
         bypassEnrollAuthEnabled: boolean | null = null,
+        followPartnerServiceFeeEnabled: boolean | null = null,
+        serviceFeeEnabled: boolean | null = null,
         ) {
         this.timeout = timeout;
         this.test = test;
@@ -10797,6 +10809,8 @@ export class MerchantProfile {
         this.followPartnerAvsSettings = followPartnerAvsSettings;
         this.accountUpdaterEnrolled = accountUpdaterEnrolled;
         this.bypassEnrollAuthEnabled = bypassEnrollAuthEnabled;
+        this.followPartnerServiceFeeEnabled = followPartnerServiceFeeEnabled;
+        this.serviceFeeEnabled = serviceFeeEnabled;
         }
 }
 
@@ -11144,6 +11158,16 @@ export class MerchantProfileResponse {
    */
     bypassEnrollAuthEnabled: boolean | null = null;
 
+  /**
+   * That the merchant follows the partner's service fee settings.
+   */
+    followPartnerServiceFeeEnabled: boolean | null = null;
+
+  /**
+   * That the merchant is configured to apply a service fee.
+   */
+    serviceFeeEnabled: boolean | null = null;
+
     // Constructor with default values for optional fields
     constructor(
         success: boolean | null = null,
@@ -11212,6 +11236,8 @@ export class MerchantProfileResponse {
         followPartnerAvsSettings: boolean | null = null,
         accountUpdaterEnrolled: boolean | null = null,
         bypassEnrollAuthEnabled: boolean | null = null,
+        followPartnerServiceFeeEnabled: boolean | null = null,
+        serviceFeeEnabled: boolean | null = null,
         ) {
         this.success = success;
         this.error = error;
@@ -11279,6 +11305,8 @@ export class MerchantProfileResponse {
         this.followPartnerAvsSettings = followPartnerAvsSettings;
         this.accountUpdaterEnrolled = accountUpdaterEnrolled;
         this.bypassEnrollAuthEnabled = bypassEnrollAuthEnabled;
+        this.followPartnerServiceFeeEnabled = followPartnerServiceFeeEnabled;
+        this.serviceFeeEnabled = serviceFeeEnabled;
         }
 }
 

@@ -10676,6 +10676,16 @@ export class MerchantProfile {
    */
     serviceFeeEnabled: boolean | null = null;
 
+  /**
+   * That the merchant follows the partner's CVV cache settings.
+   */
+    followPartnerCvvCacheEnabled: boolean | null = null;
+
+  /**
+   * That the merchant is configured to apply a CVV cache.
+   */
+    cvvCacheEnabled: boolean | null = null;
+
     // Constructor with default values for optional fields
     constructor(
         timeout: number | null = null,
@@ -10744,6 +10754,8 @@ export class MerchantProfile {
         bypassEnrollAuthEnabled: boolean | null = null,
         followPartnerServiceFeeEnabled: boolean | null = null,
         serviceFeeEnabled: boolean | null = null,
+        followPartnerCvvCacheEnabled: boolean | null = null,
+        cvvCacheEnabled: boolean | null = null,
         ) {
         this.timeout = timeout;
         this.test = test;
@@ -10811,6 +10823,8 @@ export class MerchantProfile {
         this.bypassEnrollAuthEnabled = bypassEnrollAuthEnabled;
         this.followPartnerServiceFeeEnabled = followPartnerServiceFeeEnabled;
         this.serviceFeeEnabled = serviceFeeEnabled;
+        this.followPartnerCvvCacheEnabled = followPartnerCvvCacheEnabled;
+        this.cvvCacheEnabled = cvvCacheEnabled;
         }
 }
 
@@ -11168,6 +11182,16 @@ export class MerchantProfileResponse {
    */
     serviceFeeEnabled: boolean | null = null;
 
+  /**
+   * That the merchant follows the partner's CVV cache settings.
+   */
+    followPartnerCvvCacheEnabled: boolean | null = null;
+
+  /**
+   * That the merchant is configured to apply a CVV cache.
+   */
+    cvvCacheEnabled: boolean | null = null;
+
     // Constructor with default values for optional fields
     constructor(
         success: boolean | null = null,
@@ -11238,6 +11262,8 @@ export class MerchantProfileResponse {
         bypassEnrollAuthEnabled: boolean | null = null,
         followPartnerServiceFeeEnabled: boolean | null = null,
         serviceFeeEnabled: boolean | null = null,
+        followPartnerCvvCacheEnabled: boolean | null = null,
+        cvvCacheEnabled: boolean | null = null,
         ) {
         this.success = success;
         this.error = error;
@@ -11307,6 +11333,8 @@ export class MerchantProfileResponse {
         this.bypassEnrollAuthEnabled = bypassEnrollAuthEnabled;
         this.followPartnerServiceFeeEnabled = followPartnerServiceFeeEnabled;
         this.serviceFeeEnabled = serviceFeeEnabled;
+        this.followPartnerCvvCacheEnabled = followPartnerCvvCacheEnabled;
+        this.cvvCacheEnabled = cvvCacheEnabled;
         }
 }
 

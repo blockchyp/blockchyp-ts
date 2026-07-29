@@ -17937,7 +17937,7 @@ export class SurchargeReviewRequest {
   /**
    * If foreign cards are exempt.
    */
-    exemptForeignCards: boolean | null = null;
+    exemptForeignCards?: boolean;
 
   /**
    * The surcharging mode.
@@ -17963,7 +17963,7 @@ export class SurchargeReviewRequest {
         excludedMerchantStates: string[] | null = null,
         zip: string | null = null,
         state: string | null = null,
-        exemptForeignCards: boolean | null = null,
+        exemptForeignCards: boolean = false,
         surchargingMode: string | null = null,
         pricingPlan: string | null = null,
         ) {

@@ -2270,7 +2270,7 @@ export class AuthorizationRequest {
 
   /**
    * The payment token to be used for this transaction. This should be used for recurring
-   * transactions.
+   * transactions. The /enroll endpoint ignores this field.
    */
     token?: string;
 
@@ -3024,7 +3024,7 @@ export class CardMetadataRequest {
 
   /**
    * The payment token to be used for this transaction. This should be used for recurring
-   * transactions.
+   * transactions. The /enroll endpoint ignores this field.
    */
     token?: string;
 
@@ -3438,7 +3438,7 @@ export class BalanceRequest {
 
   /**
    * The payment token to be used for this transaction. This should be used for recurring
-   * transactions.
+   * transactions. The /enroll endpoint ignores this field.
    */
     token?: string;
 
@@ -3911,7 +3911,7 @@ export class RefundRequest {
 
   /**
    * The payment token to be used for this transaction. This should be used for recurring
-   * transactions.
+   * transactions. The /enroll endpoint ignores this field.
    */
     token?: string;
 
@@ -4627,6 +4627,11 @@ export class CaptureResponse {
     customers: Customer[] | null = null;
 
   /**
+   * The current status of a transaction.
+   */
+    status?: string;
+
+  /**
    * Whether enhanced data was passed for the transaction.
    */
     enhancedDataPassed?: boolean;
@@ -4678,6 +4683,7 @@ export class CaptureResponse {
         receiptSuggestions: ReceiptSuggestions | null = null,
         customer: Customer | undefined = undefined,
         customers: Customer[] | null = null,
+        status: string | undefined = undefined,
         enhancedDataPassed: boolean = false,
         ) {
         this.success = success;
@@ -4725,6 +4731,7 @@ export class CaptureResponse {
         this.receiptSuggestions = receiptSuggestions;
         this.customer = customer;
         this.customers = customers;
+        this.status = status;
         this.enhancedDataPassed = enhancedDataPassed;
         }
 }
@@ -5016,6 +5023,11 @@ export class VoidResponse {
    */
     sigFile?: string;
 
+  /**
+   * The current status of a transaction.
+   */
+    status?: string;
+
     // Constructor with default values for optional fields
     constructor(
         success: boolean | null = null,
@@ -5053,6 +5065,7 @@ export class VoidResponse {
         customer: Customer | undefined = undefined,
         customers: Customer[] | null = null,
         sigFile: string | undefined = undefined,
+        status: string | undefined = undefined,
         ) {
         this.success = success;
         this.error = error;
@@ -5089,6 +5102,7 @@ export class VoidResponse {
         this.customer = customer;
         this.customers = customers;
         this.sigFile = sigFile;
+        this.status = status;
         }
 }
 
@@ -5159,7 +5173,7 @@ export class EnrollRequest {
 
   /**
    * The payment token to be used for this transaction. This should be used for recurring
-   * transactions.
+   * transactions. The /enroll endpoint ignores this field.
    */
     token?: string;
 
@@ -17937,7 +17951,7 @@ export class SurchargeReviewRequest {
   /**
    * If foreign cards are exempt.
    */
-    exemptForeignCards: boolean | null = null;
+    exemptForeignCards?: boolean;
 
   /**
    * The surcharging mode.
@@ -17963,7 +17977,7 @@ export class SurchargeReviewRequest {
         excludedMerchantStates: string[] | null = null,
         zip: string | null = null,
         state: string | null = null,
-        exemptForeignCards: boolean | null = null,
+        exemptForeignCards: boolean = false,
         surchargingMode: string | null = null,
         pricingPlan: string | null = null,
         ) {
@@ -19151,7 +19165,7 @@ export class PaymentMethod {
 
   /**
    * The payment token to be used for this transaction. This should be used for recurring
-   * transactions.
+   * transactions. The /enroll endpoint ignores this field.
    */
     token?: string;
 

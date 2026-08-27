@@ -168,6 +168,11 @@ export class ReceiptSuggestions {
    */
     cashDiscount?: string;
 
+  /**
+   * The amount added to the transaction to cover processing fees.
+   */
+    serviceFeeAmount?: string;
+
     // Constructor with default values for optional fields
     constructor(
         aid: string | undefined = undefined,
@@ -194,6 +199,7 @@ export class ReceiptSuggestions {
         cashBackAmount: string | undefined = undefined,
         surcharge: string | undefined = undefined,
         cashDiscount: string | undefined = undefined,
+        serviceFeeAmount: string | undefined = undefined,
         ) {
         this.aid = aid;
         this.arqc = arqc;
@@ -219,6 +225,7 @@ export class ReceiptSuggestions {
         this.cashBackAmount = cashBackAmount;
         this.surcharge = surcharge;
         this.cashDiscount = cashDiscount;
+        this.serviceFeeAmount = serviceFeeAmount;
         }
 }
 

@@ -17970,6 +17970,16 @@ export class SurchargeReviewRequest {
    */
     pricingPlan: string | null = null;
 
+  /**
+   * The Stax merchant UUID for cross-system tracing.
+   */
+    staxMerchantId?: string;
+
+  /**
+   * The Stax transaction UUID for cross-system tracing.
+   */
+    staxTransactionId?: string;
+
     // Constructor with default values for optional fields
     constructor(
         timeout: number | null = null,
@@ -17987,6 +17997,8 @@ export class SurchargeReviewRequest {
         exemptForeignCards: boolean = false,
         surchargingMode: string | null = null,
         pricingPlan: string | null = null,
+        staxMerchantId: string | undefined = undefined,
+        staxTransactionId: string | undefined = undefined,
         ) {
         this.timeout = timeout;
         this.test = test;
@@ -18003,6 +18015,8 @@ export class SurchargeReviewRequest {
         this.exemptForeignCards = exemptForeignCards;
         this.surchargingMode = surchargingMode;
         this.pricingPlan = pricingPlan;
+        this.staxMerchantId = staxMerchantId;
+        this.staxTransactionId = staxTransactionId;
         }
 }
 

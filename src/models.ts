@@ -18277,15 +18277,22 @@ export class TransientKeyRequest {
    */
     oneTime?: boolean;
 
+  /**
+   * The user ID associated with the transient credentials.
+   */
+    userId?: string;
+
     // Constructor with default values for optional fields
     constructor(
         timeout: number | null = null,
         test: boolean | null = null,
         oneTime: boolean = false,
+        userId: string | undefined = undefined,
         ) {
         this.timeout = timeout;
         this.test = test;
         this.oneTime = oneTime;
+        this.userId = userId;
         }
 }
 

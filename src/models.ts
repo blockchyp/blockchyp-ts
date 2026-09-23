@@ -168,6 +168,11 @@ export class ReceiptSuggestions {
    */
     cashDiscount?: string;
 
+  /**
+   * The amount added to the transaction to cover processing fees.
+   */
+    serviceFeeAmount?: string;
+
     // Constructor with default values for optional fields
     constructor(
         aid: string | undefined = undefined,
@@ -194,6 +199,7 @@ export class ReceiptSuggestions {
         cashBackAmount: string | undefined = undefined,
         surcharge: string | undefined = undefined,
         cashDiscount: string | undefined = undefined,
+        serviceFeeAmount: string | undefined = undefined,
         ) {
         this.aid = aid;
         this.arqc = arqc;
@@ -219,6 +225,7 @@ export class ReceiptSuggestions {
         this.cashBackAmount = cashBackAmount;
         this.surcharge = surcharge;
         this.cashDiscount = cashDiscount;
+        this.serviceFeeAmount = serviceFeeAmount;
         }
 }
 
@@ -17963,6 +17970,16 @@ export class SurchargeReviewRequest {
    */
     pricingPlan: string | null = null;
 
+  /**
+   * The Stax merchant UUID for cross-system tracing.
+   */
+    staxMerchantId?: string;
+
+  /**
+   * The Stax transaction UUID for cross-system tracing.
+   */
+    staxTransactionId?: string;
+
     // Constructor with default values for optional fields
     constructor(
         timeout: number | null = null,
@@ -17980,6 +17997,8 @@ export class SurchargeReviewRequest {
         exemptForeignCards: boolean = false,
         surchargingMode: string | null = null,
         pricingPlan: string | null = null,
+        staxMerchantId: string | undefined = undefined,
+        staxTransactionId: string | undefined = undefined,
         ) {
         this.timeout = timeout;
         this.test = test;
@@ -17996,6 +18015,8 @@ export class SurchargeReviewRequest {
         this.exemptForeignCards = exemptForeignCards;
         this.surchargingMode = surchargingMode;
         this.pricingPlan = pricingPlan;
+        this.staxMerchantId = staxMerchantId;
+        this.staxTransactionId = staxTransactionId;
         }
 }
 
@@ -18256,15 +18277,22 @@ export class TransientKeyRequest {
    */
     oneTime?: boolean;
 
+  /**
+   * The user ID associated with the transient credentials.
+   */
+    userId?: string;
+
     // Constructor with default values for optional fields
     constructor(
         timeout: number | null = null,
         test: boolean | null = null,
         oneTime: boolean = false,
+        userId: string | undefined = undefined,
         ) {
         this.timeout = timeout;
         this.test = test;
         this.oneTime = oneTime;
+        this.userId = userId;
         }
 }
 
@@ -18318,6 +18346,120 @@ export class TransientKeyResponse {
         this.apiKey = apiKey;
         this.bearerToken = bearerToken;
         this.signingKey = signingKey;
+        }
+}
+
+  /**
+   * Models a request for terminal service fees.
+   */
+export class ServiceFeeRequest {
+
+  /**
+   * The request timeout in seconds.
+   */
+    timeout: number | null = null;
+
+  /**
+   * Whether or not to route transaction to the test gateway.
+   */
+    test: boolean | null = null;
+
+  /**
+   * The name of the target payment terminal.
+   */
+    terminalName?: string;
+
+  /**
+   * Forces the terminal cloud connection to be reset while a transactions is in flight.
+   * This is a diagnostic settings that can be used only for test transactions.
+   */
+    resetConnection: boolean | null = null;
+
+  /**
+   * The primary account number (PAN) of the card.
+   */
+    pan: string | null = null;
+
+  /**
+   * The transaction amount.
+   */
+    amount: string | null = null;
+
+  /**
+   * The terminal DUKPT key for the request.
+   */
+    terminalDukptKey: string | null = null;
+
+  /**
+   * The hex encoded transaction entropy used to derive the DUKPT transaction key.
+   */
+    transactionEntropy: string | null = null;
+
+    // Constructor with default values for optional fields
+    constructor(
+        timeout: number | null = null,
+        test: boolean | null = null,
+        terminalName: string | undefined = undefined,
+        resetConnection: boolean | null = null,
+        pan: string | null = null,
+        amount: string | null = null,
+        terminalDukptKey: string | null = null,
+        transactionEntropy: string | null = null,
+        ) {
+        this.timeout = timeout;
+        this.test = test;
+        this.terminalName = terminalName;
+        this.resetConnection = resetConnection;
+        this.pan = pan;
+        this.amount = amount;
+        this.terminalDukptKey = terminalDukptKey;
+        this.transactionEntropy = transactionEntropy;
+        }
+}
+
+  /**
+   * Models a response for terminal service fees.
+   */
+export class ServiceFeeResponse {
+
+  /**
+   * Whether or not the request succeeded.
+   */
+    success: boolean | null = null;
+
+  /**
+   * The error, if an error occurred.
+   */
+    error: string | null = null;
+
+  /**
+   * A narrative description of the transaction result.
+   */
+    responseDescription: string | null = null;
+
+  /**
+   * The amount of the service fee.
+   */
+    serviceFeeAmount: string | null = null;
+
+  /**
+   * The total transaction amount including the service fee.
+   */
+    totalWithServiceFee: string | null = null;
+
+    // Constructor with default values for optional fields
+    constructor(
+        success: boolean | null = null,
+        error: string | null = null,
+        responseDescription: string | null = null,
+        serviceFeeAmount: string | null = null,
+        totalWithServiceFee: string | null = null,
+        ) {
+        this.success = success;
+        this.error = error;
+        this.responseDescription = responseDescription;
+        this.serviceFeeAmount = serviceFeeAmount;
+        this.totalWithServiceFee = totalWithServiceFee;
         }
 }
 
@@ -18584,6 +18726,20 @@ export class TerminalDeleteQueuedTransactionRequest {
     request: DeleteQueuedTransactionRequest;
 
     constructor(APICredentials: APICredentials, request: DeleteQueuedTransactionRequest) {
+        this.APICredentials = APICredentials;
+        this.request = request;
+    }
+}
+
+
+  /**
+   * Models a request for terminal service fees.
+   */
+export class TerminalServiceFeeRequest {
+    APICredentials: APICredentials;
+    request: ServiceFeeRequest;
+
+    constructor(APICredentials: APICredentials, request: ServiceFeeRequest) {
         this.APICredentials = APICredentials;
         this.request = request;
     }

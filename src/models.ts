@@ -2687,6 +2687,12 @@ export class AuthorizationRequest {
    */
     externalCustomerCompany?: string;
 
+  /**
+   * The external merchant's own reference for the transaction. It is stored with the
+   * transaction and echoed back on the response, and is not used for duplicate detection.
+   */
+    externalTransactionRef?: string;
+
     // Constructor with default values for optional fields
     constructor(
         timeout: number | null = null,
@@ -2777,6 +2783,7 @@ export class AuthorizationRequest {
         externalCustomerEmail: string | undefined = undefined,
         externalCustomerPhone: string | undefined = undefined,
         externalCustomerCompany: string | undefined = undefined,
+        externalTransactionRef: string | undefined = undefined,
         ) {
         this.timeout = timeout;
         this.test = test;
@@ -2866,6 +2873,7 @@ export class AuthorizationRequest {
         this.externalCustomerEmail = externalCustomerEmail;
         this.externalCustomerPhone = externalCustomerPhone;
         this.externalCustomerCompany = externalCustomerCompany;
+        this.externalTransactionRef = externalTransactionRef;
         }
 }
 
@@ -6922,6 +6930,12 @@ export class AuthorizationResponse {
    */
     enhancedDataPassed?: boolean;
 
+  /**
+   * The external merchant's own reference for the transaction. It is stored with the
+   * transaction and echoed back on the response, and is not used for duplicate detection.
+   */
+    externalTransactionRef?: string;
+
     // Constructor with default values for optional fields
     constructor(
         success: boolean | null = null,
@@ -6985,6 +6999,7 @@ export class AuthorizationResponse {
         status: string | null = null,
         cardMetadata: CardMetadata | undefined = undefined,
         enhancedDataPassed: boolean = false,
+        externalTransactionRef: string | undefined = undefined,
         ) {
         this.success = success;
         this.error = error;
@@ -7047,6 +7062,7 @@ export class AuthorizationResponse {
         this.status = status;
         this.cardMetadata = cardMetadata;
         this.enhancedDataPassed = enhancedDataPassed;
+        this.externalTransactionRef = externalTransactionRef;
         }
 }
 

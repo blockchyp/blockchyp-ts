@@ -290,6 +290,13 @@ export class BlockChypClient {
   }
 
   /**
+   * Calculates the service fee for a transaction.
+   */
+  async serviceFee(request: Models.ServiceFeeRequest): Promise<AxiosResponse<Models.ServiceFeeResponse>> {
+    return this.routeTerminalRequest('post', request, '/api/service-fee', '/api/service-fee');
+  }
+
+  /**
    * Returns a list of queued transactions on a terminal.
    */
   async listQueuedTransactions(request: Models.ListQueuedTransactionsRequest): Promise<AxiosResponse<Models.ListQueuedTransactionsResponse>> {

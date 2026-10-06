@@ -10420,6 +10420,11 @@ export class MerchantProfile {
     contactNumber: string | null = null;
 
   /**
+   * The contact email address for the merchant.
+   */
+    contactEmail: string | null = null;
+
+  /**
    * The location name.
    */
     locationName: string | null = null;
@@ -10734,6 +10739,7 @@ export class MerchantProfile {
         invoiceName: string | null = null,
         contactName: string | null = null,
         contactNumber: string | null = null,
+        contactEmail: string | null = null,
         locationName: string | null = null,
         storeNumber: string | null = null,
         partnerRef: string | null = null,
@@ -10803,6 +10809,7 @@ export class MerchantProfile {
         this.invoiceName = invoiceName;
         this.contactName = contactName;
         this.contactNumber = contactNumber;
+        this.contactEmail = contactEmail;
         this.locationName = locationName;
         this.storeNumber = storeNumber;
         this.partnerRef = partnerRef;
@@ -10924,6 +10931,11 @@ export class MerchantProfileResponse {
    * The contact number for the merchant.
    */
     contactNumber: string | null = null;
+
+  /**
+   * The contact email address for the merchant.
+   */
+    contactEmail: string | null = null;
 
   /**
    * The location name.
@@ -11242,6 +11254,7 @@ export class MerchantProfileResponse {
         invoiceName: string | null = null,
         contactName: string | null = null,
         contactNumber: string | null = null,
+        contactEmail: string | null = null,
         locationName: string | null = null,
         storeNumber: string | null = null,
         partnerRef: string | null = null,
@@ -11313,6 +11326,7 @@ export class MerchantProfileResponse {
         this.invoiceName = invoiceName;
         this.contactName = contactName;
         this.contactNumber = contactNumber;
+        this.contactEmail = contactEmail;
         this.locationName = locationName;
         this.storeNumber = storeNumber;
         this.partnerRef = partnerRef;
